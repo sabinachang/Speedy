@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "655318421427",
+    "firebase_url": "https://flashcardapp-dcda7.firebaseio.com",
+    "project_id": "flashcardapp-dcda7",
+    "storage_bucket": "flashcardapp-dcda7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655318421427:android:789eef208ef63a21",
+        "android_client_info": {
+          "package_name": "com.enhan.sabina.speedy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655318421427-lc3q3m6a0mr408tmetkgd3hdaufva07f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enhan.sabina.speedy",
+            "certificate_hash": "f870025d8f413d269bd8df0ff72c267bb8f2be16"
+          }
+        },
+        {
+          "client_id": "655318421427-j57m23tlg0uvukiu1gv6g94u777cp8vd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaWRk_ZFgTP2zdTdWQ11sS_5xlX6GIxAo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655318421427-j57m23tlg0uvukiu1gv6g94u777cp8vd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
