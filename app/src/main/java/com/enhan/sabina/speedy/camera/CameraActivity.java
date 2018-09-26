@@ -2,31 +2,29 @@ package com.enhan.sabina.speedy.camera;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.enhan.sabina.speedy.R;
-import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
 import com.enhan.sabina.speedy.callbacks.TakePhotoCallback;
+import com.enhan.sabina.speedy.data.DataRepository;
+import com.enhan.sabina.speedy.data.constants.AndroidData;
 
-public class CameraActivity extends AppCompatActivity implements TakePhotoCallback,PreviewPhotoCallback {
+public class CameraActivity extends AppCompatActivity implements CameraContract.View,TakePhotoCallback,PreviewPhotoCallback {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 101;
     private static final String TAKE_PHOTO = "TAKE_PHOTO";
@@ -42,57 +40,47 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     private TakePhotoFragment mTakePhotoFragment;
     private PreviewPhotoFragment mPreviewPhotoFragment;
+    private DataRepository mDataRepository;
+
+    public static final int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.CAMERA
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        if (ContextCompat.checkSelfPermission(CameraActivity.this,
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(CameraActivity.this, Manifest.permission.CAMERA)) {
-
-
-            } else {
-                ActivityCompat.requestPermissions(CameraActivity.this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-            }
-
-        } else {
-            transToTakePhoto();
-        }
-
-
-
+        mDataRepository = DataRepository.getInstance(AndroidData.getInstance());
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    transToTakePhoto();
-                }
-            }
-        }
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"onresumed");
     }
 
     private void transToTakePhoto() {
+        Log.d(TAG,"transToTakePhoto");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
+        new TakePhotoPresenter(takePhotoFragment,mDataRepository);
 //        if (fragmentManager.findFragmentByTag(PREVIEW_PHOTO) != )
 //        if (mTakePhotoFragment == null) mTakePhotoFragment = TakePhotoFragment.newInstance();
 //        if (mPreviewPhotoFragment != null ) transaction.hide(mPreviewPhotoFragment);
-        transaction.replace(R.id.fragment_holder,TakePhotoFragment.newInstance());
+        transaction.replace(R.id.fragment_holder,takePhotoFragment);
         transaction.commit();
     }
 
-    private void transToPreviewPhoto(Bitmap bitmap) {
+    private void transToPreviewPhoto(Uri path) {
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable("bitmap_image",bitmap);
+        bundle.putString("image_path",path.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PreviewPhotoFragment fragment = PreviewPhotoFragment.newInstance();
@@ -103,9 +91,14 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        Log.d(TAG,"onpause activity");
+    }
 
-//    private void prepareCamera() {
+    //    private void prepareCamera() {
 //        mCamera = checkCameraHardware(SpeedyApplication.getAppContext());
 //        mCameraPreview = new CameraPreview(CameraActivity.this,mCamera,mButton,mCapturedImageView);
 //
@@ -128,11 +121,28 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 //    }
 
     @Override
-    public void onPhotoTaken(Bitmap bitmap) {
-        mBitmap = bitmap;
-        transToPreviewPhoto(bitmap);
+    public void onPhotoTaken(Uri uri) {
+
+
+        transToPreviewPhoto(uri);
     }
 
+//    private Uri createImageFile(Bitmap bitmap) {
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "Speedy_" + timeStamp + "_";
+//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//
+//        File imageDir = new File(storageDir,imageFileName);
+//        try {
+//            OutputStream stream = null;
+//            stream = new FileOutputStream(imageDir);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG,90,stream);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        Log.d(TAG,imageDir.getAbsolutePath());
+//        return Uri.fromFile(imageDir);
+//    }
 
 
     @Override
@@ -149,7 +159,13 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     public void onPhotoDenied() {
         mBitmap = null;
+
         Log.d(TAG,"photo denied");
         transToTakePhoto();
+    }
+
+    @Override
+    public void setPresenter(CameraContract.Presenter presenter) {
+
     }
 }
