@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageUtils {
-    public static Bitmap getCompressBitmap(Context context, Uri imageUri,int w) {
+    public static Bitmap getCompressBitmap(Context context, String stringPath) {
+        Uri imageUri = Uri.parse(stringPath);
         InputStream inputStream = null;
         try {
             inputStream = context.getContentResolver().openInputStream(imageUri);
@@ -25,7 +26,6 @@ public class ImageUtils {
             if (originalHeight == -1 || originalWidth == -1) return null;
             float height = 1280f;
             float width =  980f;
-            Log.d("imageutil","width: "+w);
             int noCompress = 1;
             if (originalWidth > originalHeight && originalWidth > width) {
                 noCompress = (int) (originalWidth / width);

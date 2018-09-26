@@ -2,6 +2,7 @@ package com.enhan.sabina.speedy.camera;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -24,7 +25,7 @@ import com.enhan.sabina.speedy.callbacks.TakePhotoCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
 
-public class CameraActivity extends AppCompatActivity implements CameraContract.View,TakePhotoCallback,PreviewPhotoCallback {
+public class CameraActivity extends AppCompatActivity implements TakePhotoCallback,PreviewPhotoCallback {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 101;
     private static final String TAKE_PHOTO = "TAKE_PHOTO";
@@ -70,21 +71,17 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
         new TakePhotoPresenter(takePhotoFragment,mDataRepository,this);
-//        if (fragmentManager.findFragmentByTag(PREVIEW_PHOTO) != )
-//        if (mTakePhotoFragment == null) mTakePhotoFragment = TakePhotoFragment.newInstance();
-//        if (mPreviewPhotoFragment != null ) transaction.hide(mPreviewPhotoFragment);
         transaction.replace(R.id.fragment_holder,takePhotoFragment);
         transaction.commit();
     }
 
     private void transToPreviewPhoto(Uri path) {
 
-        Bundle bundle = new Bundle();
-        bundle.putString("image_path",path.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PreviewPhotoFragment fragment = PreviewPhotoFragment.newInstance();
-        fragment.setArguments(bundle);
+        new PreviewPhotoPresenter(fragment,this,path.toString());
+
         transaction.replace(R.id.fragment_holder,fragment);
         transaction.commit();
 
@@ -152,6 +149,9 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
     public void onPhotoAccepted() {
         // call appropriate activity
         Log.d(TAG,"photo accepted");
+        Intent 
+        startActivities();
+
     }
 
     @Override
@@ -162,8 +162,4 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         transToTakePhoto();
     }
 
-    @Override
-    public void setPresenter(CameraContract.Presenter presenter) {
-
-    }
 }
