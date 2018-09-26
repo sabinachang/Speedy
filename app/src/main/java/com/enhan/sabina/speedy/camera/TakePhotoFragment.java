@@ -83,52 +83,13 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        dispatchTakePictureIntent();
+        mPresenter.launchCamera();
 //        mCameraPreviewLayout = view.findViewById(R.id.camera_preview);
 //        mButton = view.findViewById(R.id.btn_capture);
 //        mCameraPreview = new CameraPreview(getActivity());
 //        mCameraPreview.getHolder().addCallback(this);
 //        mCameraPreviewLayout.addView(mCameraPreview);
 
-    }
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-//        // Save a file: path for use with ACTION_VIEW intents
-//        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                 mPhotoUri = FileProvider.getUriForFile(getActivity(),
-                        "com.enhan.sabina.speedy.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
     }
 
     @Override
@@ -139,7 +100,8 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
                 case REQUEST_TAKE_PHOTO :
                     if (null != mPhotoUri) {
                         mLocalUri = mPhotoUri;
-                        mTakePhotoCallback.onPhotoTaken(mLocalUri);
+                        mPresenter.onPhotoReceived(mLocalUri);
+
                     }
             }
         }
@@ -173,13 +135,9 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     }
 
     @Override
-    public Context provideActivity() {
-        return getActivity();
-    }
-
-    @Override
-    public String providePictureDirectory() {
-        return Environment.DIRECTORY_PICTURES;
+    public void startCameraIntent(Intent intent,Uri photoUri) {
+        mPhotoUri = photoUri;
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 
 //

@@ -2,6 +2,7 @@ package com.enhan.sabina.speedy.camera;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -17,11 +18,16 @@ import java.util.Date;
 public class TakePhotoPresenter implements TakePhotoContract.Presenter{
     private final TakePhotoContract.View mTakePhotoView;
     private final DataRepository mDataRepository;
+    private final CameraActivity mCameraActivity;
+    private final TakePhotoCallback mTakePhotoCallback;
+    private String FILEPROVIDER_PATH = "com.enhan.sabina.speedy.fileprovider";
 
-    public TakePhotoPresenter(TakePhotoContract.View takePhotoView, DataRepository dataRepository) {
+    public TakePhotoPresenter(TakePhotoContract.View takePhotoView, DataRepository dataRepository,CameraActivity activity) {
         mTakePhotoView = takePhotoView;
         mTakePhotoView.setPresenter(this);
         mDataRepository = dataRepository;
+        mCameraActivity = activity;
+        mTakePhotoCallback = (TakePhotoCallback) activity;
     }
 
     @Override
@@ -30,48 +36,45 @@ public class TakePhotoPresenter implements TakePhotoContract.Presenter{
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
+
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = mTakePhotoView.provideActivity().getExternalFilesDir(mTakePhotoView.providePictureDirectory());
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+        File storageDir = mCameraActivity.getExternalFilesDir(mDataRepository.providePictureDirectory());
+        return File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
         );
-        return image;
     }
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
+        Intent takePictureIntent = mDataRepository.getPhotoIntent();
+        if (takePictureIntent.resolveActivity(mCameraActivity.getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
 
             }
-            // Continue only if the File was successfully created
+
             if (photoFile != null) {
-                mPhotoUri = FileProvider.getUriForFile(getActivity(),
-                        "com.enhan.sabina.speedy.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                Uri photoUri = mDataRepository.getUriFromFileProvider(mCameraActivity,FILEPROVIDER_PATH,photoFile);
+                takePictureIntent.putExtra(mDataRepository.getMediaOutputString(), photoUri);
+                mTakePhotoView.startCameraIntent(takePictureIntent,photoUri);
+
             }
         }
     }
 
+
     @Override
-    public void takePhoto() {
-        createImageFile();
+    public void onPhotoReceived(Uri uri) {
+
+        mTakePhotoCallback.onPhotoTaken(uri);
     }
 
     @Override
     public void launchCamera() {
-
+        dispatchTakePictureIntent();
     }
 }

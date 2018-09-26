@@ -42,11 +42,11 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
     private PreviewPhotoFragment mPreviewPhotoFragment;
     private DataRepository mDataRepository;
 
-    public static final int PERMISSION_ALL = 1;
-    String[] PERMISSIONS = {
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.CAMERA
-    };
+//    public static final int PERMISSION_ALL = 1;
+//    String[] PERMISSIONS = {
+//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            android.Manifest.permission.CAMERA
+//    };
 
 
     @Override
@@ -69,7 +69,7 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
-        new TakePhotoPresenter(takePhotoFragment,mDataRepository);
+        new TakePhotoPresenter(takePhotoFragment,mDataRepository,this);
 //        if (fragmentManager.findFragmentByTag(PREVIEW_PHOTO) != )
 //        if (mTakePhotoFragment == null) mTakePhotoFragment = TakePhotoFragment.newInstance();
 //        if (mPreviewPhotoFragment != null ) transaction.hide(mPreviewPhotoFragment);
@@ -122,8 +122,6 @@ public class CameraActivity extends AppCompatActivity implements CameraContract.
 
     @Override
     public void onPhotoTaken(Uri uri) {
-
-
         transToPreviewPhoto(uri);
     }
 
