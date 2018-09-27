@@ -14,6 +14,9 @@ import java.io.File;
 public class AndroidData implements DataSource.Constants{
     private static AndroidData INSTANCE = null;
 
+    private AndroidData() {
+
+    }
     public static AndroidData getInstance() {
         if (INSTANCE == null) {
             return new AndroidData();

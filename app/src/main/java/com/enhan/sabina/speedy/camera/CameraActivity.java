@@ -24,6 +24,8 @@ import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
 import com.enhan.sabina.speedy.callbacks.TakePhotoCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
+import com.enhan.sabina.speedy.data.local.LocalDataRepository;
+import com.enhan.sabina.speedy.detect.DetectActivity;
 
 public class CameraActivity extends AppCompatActivity implements TakePhotoCallback,PreviewPhotoCallback {
 
@@ -55,8 +57,9 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        mDataRepository = DataRepository.getInstance(AndroidData.getInstance());
+        mDataRepository = DataRepository.getInstance(AndroidData.getInstance(), LocalDataRepository.getInstance());
 
+        transToTakePhoto();
     }
 
     @Override
@@ -76,16 +79,13 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     }
 
     private void transToPreviewPhoto(Uri path) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PreviewPhotoFragment fragment = PreviewPhotoFragment.newInstance();
-        new PreviewPhotoPresenter(fragment,this,path.toString());
+        new PreviewPhotoPresenter(fragment,mDataRepository,this,path.toString());
 
         transaction.replace(R.id.fragment_holder,fragment);
         transaction.commit();
-
-
     }
 
     @Override
@@ -95,50 +95,10 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         Log.d(TAG,"onpause activity");
     }
 
-    //    private void prepareCamera() {
-//        mCamera = checkCameraHardware(SpeedyApplication.getAppContext());
-//        mCameraPreview = new CameraPreview(CameraActivity.this,mCamera,mButton,mCapturedImageView);
-//
-//        mCameraPreviewLayout.addView(mCameraPreview);
-//    }
-
-//    private Camera checkCameraHardware(Context context) {
-//        Camera camera = null;
-//        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-//            try {
-//                camera = Camera.open();
-//
-//            } catch (Exception e) {
-//                Log.d("Camera Activity","Sth wrong");
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        return camera;
-//    }
-
     @Override
     public void onPhotoTaken(Uri uri) {
         transToPreviewPhoto(uri);
     }
-
-//    private Uri createImageFile(Bitmap bitmap) {
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "Speedy_" + timeStamp + "_";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//
-//        File imageDir = new File(storageDir,imageFileName);
-//        try {
-//            OutputStream stream = null;
-//            stream = new FileOutputStream(imageDir);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG,90,stream);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        Log.d(TAG,imageDir.getAbsolutePath());
-//        return Uri.fromFile(imageDir);
-//    }
-
 
     @Override
     public void onFailed() {
@@ -149,8 +109,9 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     public void onPhotoAccepted() {
         // call appropriate activity
         Log.d(TAG,"photo accepted");
-        Intent 
-        startActivities();
+        Intent detectionActivity = new Intent(this, DetectActivity.class);
+
+        startActivity(detectionActivity);
 
     }
 

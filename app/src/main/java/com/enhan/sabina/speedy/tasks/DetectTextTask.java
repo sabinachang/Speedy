@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.data.DataSource;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -15,7 +16,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 
-public class DetectTextTask extends AsyncTask<Bitmap,Void,String> {
+public class DetectTextTask extends AsyncTask<Bitmap,Void,Void> {
 
     private DetectTextCallback mDetectTextCallback;
 
@@ -24,7 +25,7 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,String> {
     }
 
     @Override
-    protected String doInBackground(Bitmap... bitmaps) {
+    protected Void doInBackground(Bitmap... bitmaps) {
         final String[] detectedText = new String[1];
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmaps[0]);
         FirebaseVisionDocumentTextRecognizer textRecognizer = FirebaseVision.getInstance()
@@ -34,8 +35,8 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,String> {
                 .addOnSuccessListener(new OnSuccessListener<FirebaseVisionDocumentText>() {
                     @Override
                     public void onSuccess(FirebaseVisionDocumentText firebaseVisionText) {
-                        detectedText[0] = firebaseVisionText.getText();
-
+//                        detectedText[0] = firebaseVisionText.getText();
+//                        Log.d("Detecttask","size - " + detectedText[0]);
 
 //                        for (FirebaseVisionDocumentText.Block block: firebaseVisionText.getBlocks()) {
 //                            String blockText = block.getText();
@@ -62,6 +63,7 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,String> {
 //                                }
 //                            }
 //                        }
+                        mDetectTextCallback.onDetectSuccessful(detectedText[0]);
                     }
                 })
                 .addOnFailureListener(
@@ -74,17 +76,20 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,String> {
                         }
                 );
 
-        return detectedText[0];
+        return null;
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if (s != null) {
-            mDetectTextCallback.onDetectSuccessful(s);
-        } else {
-            mDetectTextCallback.onDetectFailed();
-        }
-
-    }
+//    @Override
+//    protected void onPostExecute(String s) {
+//        super.onPostExecute(s);
+//        if (s != null) {
+//            Log.d("detected","success");
+//            mDetectTextCallback.onDetectSuccessful(s);
+//        } else {
+//
+//            Log.d("detected","failed");
+//            mDetectTextCallback.onDetectFailed();
+//        }
+//
+//    }
 }

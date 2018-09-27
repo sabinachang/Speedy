@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
 import com.enhan.sabina.speedy.callbacks.TakePhotoCallback;
+import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.utils.ImageUtils;
 
 public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContract.View{
@@ -28,6 +29,8 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
     private Button mAcceptBtn;
     private Button mDenyBtn;
     private PreviewPhotoContract.Presenter mPresenter;
+    private DataRepository mDataRepository;
+    private Bitmap mBitmap;
 
     public PreviewPhotoFragment() {
 
@@ -58,6 +61,7 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
         mAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPresenter.provideDataRepository().storeImage(mBitmap);
                 mPresenter.onPhotoAccepted();
             }
         });
@@ -75,11 +79,15 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
 //                mPreviewImageView.setImageBitmap(bitmap[0]);
 //            }
 //        });
-        mPreviewImageView.setImageBitmap(ImageUtils.getCompressBitmap(getActivity(),imagePath));
+
+        mBitmap = ImageUtils.getCompressBitmap(getActivity(),imagePath);
+
+        mPreviewImageView.setImageBitmap(mBitmap);
     }
 
     @Override
     public void setPresenter(PreviewPhotoContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
 }

@@ -1,4 +1,15 @@
 package com.enhan.sabina.speedy.detect;
 
-public class DisplayTextConstract {
+import com.enhan.sabina.speedy.BasePresenter;
+import com.enhan.sabina.speedy.BaseView;
+
+public interface DisplayTextConstract {
+    interface View extends BaseView<Presenter> {
+        void displayDetectedText(String detectedText);
+    }
+
+    interface Presenter extends BasePresenter {
+
+
+    }
 }

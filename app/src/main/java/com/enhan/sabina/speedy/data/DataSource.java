@@ -2,6 +2,7 @@ package com.enhan.sabina.speedy.data;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
@@ -20,5 +21,12 @@ public interface DataSource {
         Uri getUriFromFileProvider(Activity activity, String authority, File file);
         String getMediaOutputString();
         String providePictureDirectory();
+        void storeImage(Bitmap bitmap);
+        Bitmap retrieveImageForGoogle();
+    }
+
+    interface Local {
+        void storeImageForGoogle(Bitmap bitmap);
+        Bitmap retrieveImageForGoogle();
     }
 }

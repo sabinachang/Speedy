@@ -2,6 +2,7 @@ package com.enhan.sabina.speedy;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
 
         } else {
-//            transToTakePhoto();
+            transToTakePhoto();
         }
+    }
+
+    private void transToTakePhoto() {
+
+        Intent takePhotoIntent = new Intent(this,CameraActivity.class);
+        startActivity(takePhotoIntent);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             case ConstantVariable.PERMISSION_ALL_REQUEST_CODE: {
                 if (grantResults.length > 0 ) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-//                        transToTakePhoto();
+                        transToTakePhoto();
                     }
 
                 }
@@ -73,13 +80,5 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-//    private void identifyImage() {
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inSampleSize = 4;
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.testtwo,options);
-//
-//
-//    }
 
 }
