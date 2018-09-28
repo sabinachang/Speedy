@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
+import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
+
 import java.io.File;
 
 public interface DataSource {
@@ -23,6 +26,7 @@ public interface DataSource {
         String providePictureDirectory();
         void storeImage(Bitmap bitmap);
         Bitmap retrieveImageForGoogle();
+        void startTextDetection(DetectTextCallback callback, Bitmap bitmap);
     }
 
     interface Local {

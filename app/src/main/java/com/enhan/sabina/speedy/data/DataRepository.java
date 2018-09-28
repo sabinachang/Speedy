@@ -7,8 +7,11 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 
+import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
 import com.enhan.sabina.speedy.data.local.LocalDataRepository;
+import com.enhan.sabina.speedy.data.remote.GoogleTextDetectionApi;
 
 import java.io.File;
 
@@ -54,6 +57,11 @@ public class DataRepository implements DataSource.Repository{
     public void storeImage(Bitmap bitmap) {
         mLocalDataRepository.storeImageForGoogle(bitmap);
 
+    }
+
+    @Override
+    public void startTextDetection(DetectTextCallback callback, Bitmap bitmap) {
+        GoogleTextDetectionApi.getInstance().detectText(callback,bitmap);
     }
 
     @Override

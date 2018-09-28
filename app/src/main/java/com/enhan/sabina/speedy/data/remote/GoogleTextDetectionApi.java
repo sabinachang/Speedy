@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.tasks.DetectTextTask;
+import com.enhan.sabina.speedy.utils.ProcessTextUtil;
 import com.google.firebase.FirebaseApp;
 
 public class GoogleTextDetectionApi {
@@ -22,22 +24,10 @@ public class GoogleTextDetectionApi {
         return INSTANCE;
     }
 
-    public String detectText(Bitmap bitmap) {
-        final String[] detectedText = new String[1];
-         new DetectTextTask(new DetectTextCallback() {
-             @Override
-             public void onDetectSuccessful(String result) {
-                 detectedText[0] = result;
-             }
-
-             @Override
-             public void onDetectFailed() {
-
-             }
-         }).execute(bitmap);
-
-         return detectedText[0];
+    public void detectText(DetectTextCallback callback,Bitmap bitmap) {
+        new DetectTextTask(callback).execute(bitmap);
     }
+
 
 
 }

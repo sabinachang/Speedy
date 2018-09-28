@@ -63,7 +63,7 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,Void> {
 //                                }
 //                            }
 //                        }
-                        mDetectTextCallback.onDetectSuccessful(detectedText[0]);
+                        mDetectTextCallback.onDetectSuccessful(firebaseVisionText);
                     }
                 })
                 .addOnFailureListener(
