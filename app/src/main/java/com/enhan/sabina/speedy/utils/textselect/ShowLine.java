@@ -1,5 +1,7 @@
 package com.enhan.sabina.speedy.utils.textselect;
 
+import android.util.Log;
+
 import java.util.List;
 
 public class ShowLine {
@@ -17,6 +19,8 @@ public class ShowLine {
         for(ShowChar c:CharsData){
             linedata = linedata+c.chardata;
         }
+
+        Log.d("Show line" , "line data = " + linedata);
         return linedata;
     }
 }

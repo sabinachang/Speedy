@@ -6,11 +6,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.enhan.sabina.speedy.R;
+import com.enhan.sabina.speedy.SpeedyApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +59,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
     private float Tounch_X = 0, Tounch_Y = 0;
     private float Down_X = -1, Down_Y = -1;
     private Mode mCurrentMode = Mode.Normal;
-    private int LinePadding = 30;
+    private int LinePadding = 25;
     private float LineYPosition = 0;
     private float TextHeight = 0;
 
@@ -87,14 +93,16 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
         Log.d(TAG,"canvas"+ canvas.getHeight());
 
         Log.d(TAG,"canvas"+ canvas.getWidth());
+        Log.d(TAG,"line #" + mLinseData.size());
         for (ShowLine line : mLinseData) {
             DrawLineText(line, canvas);
 
         }
 
-//        if (mCurrentMode != Mode.Normal) {
-//            DrawSelectText(canvas);
-//        }
+        if (mCurrentMode != Mode.Normal) {
+            Log.d(TAG,"not normal mode");
+            DrawSelectText(canvas);
+        }
     }
 
     private Paint mPaint = null;
@@ -106,17 +114,18 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setTextSize(39);
+        mPaint.setTextSize(60);
 
         mTextSelectPaint = new Paint();
         mTextSelectPaint.setAntiAlias(true);
-        mTextSelectPaint.setTextSize(19);
+        mTextSelectPaint.setTextSize(40);
         mTextSelectPaint.setColor(TextSelectColor);
 
         mBorderPointPaint = new Paint();
         mBorderPointPaint.setAntiAlias(true);
-        mBorderPointPaint.setTextSize(19);
+        mBorderPointPaint.setTextSize(40);
         mBorderPointPaint.setColor(BorderPointColor);
+        this.setBackgroundColor(SpeedyApplication.getAppContext().getColor(R.color.colorAccent));
 
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         TextHeight = Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent);
@@ -152,19 +161,324 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
     private ShowChar FirstSelectShowChar = null;
     private ShowChar LastSelectShowChar = null;
 
-//    private void DrawSelectText(Canvas canvas) {
-//        if (mCurrentMode == Mode.PressSelectText) {
-//            DrawPressSelectText(canvas);
-//        } else if (mCurrentMode == Mode.SelectMoveForward) {
-//            DrawMoveSelectText(canvas);
-//        } else if (mCurrentMode == Mode.SelectMoveBack) {
-//            DrawMoveSelectText(canvas);
-//        }
-//    }
+    private void DrawSelectText(Canvas canvas) {
+
+        if (mCurrentMode == Mode.PressSelectText) {
+            Log.d(TAG,"press select mode");
+
+            DrawPressSelectText(canvas);
+        } else if (mCurrentMode == Mode.SelectMoveForward) {
+            DrawMoveSelectText(canvas);
+        } else if (mCurrentMode == Mode.SelectMoveBack) {
+            DrawMoveSelectText(canvas);
+        }
+
+    }
+
+    private List<ShowLine> mSelectLines = new ArrayList<ShowLine>();
+
+    private void DrawMoveSelectText(Canvas canvas) {
+        if (FirstSelectShowChar == null || LastSelectShowChar == null)
+            return;
+        GetSelectData();
+        DrawSeletLines(canvas);
+        DrawBorderPoint(canvas);
+    }
+
+    private void DrawSeletLines(Canvas canvas) {
+        // DrawRectangleSeletLinesBg(canvas);
+        DrawOaleSeletLinesBg(canvas);
+    }
+
+    private void GetSelectData() {
+
+        Boolean Started = false;
+        Boolean Ended = false;
+
+        mSelectLines.clear();
+
+        // 找到选择的字符数据，转化为选择的行，然后将行选择背景画出来
+        for (ShowLine l : mLinseData) {
+
+            ShowLine selectline = new ShowLine();
+            selectline.CharsData = new ArrayList<ShowChar>();
+
+            for (ShowChar c : l.CharsData) {
+
+                if (!Started) {
+                    if (c.Index == FirstSelectShowChar.Index) {
+                        Started = true;
+                        selectline.CharsData.add(c);
+                        if (c.Index == LastSelectShowChar.Index) {
+                            Ended = true;
+                            break;
+                        }
+                    }
+                } else {
+
+                    if (c.Index == LastSelectShowChar.Index) {
+                        Ended = true;
+                        if (!selectline.CharsData.contains(c)) {
+                            selectline.CharsData.add(c);
+                        }
+                        break;
+                    } else {
+                        selectline.CharsData.add(c);
+                    }
+                }
+            }
+
+            mSelectLines.add(selectline);
+
+            if (Started && Ended) {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        Tounch_X = event.getX();
+        Tounch_Y = event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Down_X = Tounch_X;
+                Down_Y = Tounch_Y;
+
+                if (mCurrentMode != Mode.Normal) {
+                    Boolean isTrySelectMove = CheckIfTrySelectMove(Down_X, Down_Y);
+
+                    if (!isTrySelectMove) {// 如果不是准备滑动选择文字，转变为正常模式，隐藏选择框
+                        mCurrentMode = Mode.Normal;
+                        invalidate();
+                    }
+                }
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+                if (mCurrentMode == Mode.SelectMoveForward) {
+
+                    if (CanMoveForward(event.getX(), event.getY())) {// 判断是否是向上移动
+
+                        Log.e("is CanMoveForward", "CanMoveForward");
+
+                        ShowChar firstselectchar = DetectPressShowChar(event.getX(), event.getY());
+                        if (firstselectchar != null) {
+                            FirstSelectShowChar = firstselectchar;
+                            invalidate();
+                        } else {
+                            Log.e("firstselectchar", "firstselectchar is null");
+                        }
+
+                    } else {
+                        Log.e("is CanMoveForward", "CanMoveForward");
+                    }
+
+                } else if (mCurrentMode == Mode.SelectMoveBack) {
+
+                    if (CanMoveBack(event.getX(), event.getY())) {// 判断是否可以向下移动
+                        Log.e("CanMoveBack", "not CanMoveBack");
+
+                        ShowChar lastselectchar = DetectPressShowChar(event.getX(), event.getY());
+
+                        if (lastselectchar != null) {
+                            LastSelectShowChar = lastselectchar;
+                            invalidate();
+                        } else {
+                            Log.e("is lastselectchar", "lastselectchar is null");
+                        }
+
+                    } else {
+                        Log.e("is CanMoveBack", "not CanMoveBack");
+                    }
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+                Release();
+
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+
+    private boolean CanMoveBack(float Tounchx, float Tounchy) {
+
+        Path p = new Path();
+        p.moveTo(FirstSelectShowChar.TopLeftPosition.x, FirstSelectShowChar.TopLeftPosition.y);
+        p.lineTo(getWidth(), FirstSelectShowChar.TopLeftPosition.y);
+        p.lineTo(getWidth(), getHeight());
+        p.lineTo(0, getHeight());
+        p.lineTo(0, FirstSelectShowChar.BottomLeftPosition.y);
+        p.lineTo(FirstSelectShowChar.BottomLeftPosition.x, FirstSelectShowChar.BottomLeftPosition.y);
+        p.lineTo(FirstSelectShowChar.TopLeftPosition.x, FirstSelectShowChar.TopLeftPosition.y);
+
+        return computeRegion(p).contains((int) Tounchx, (int) Tounchy);
+    }
+
+    private boolean CanMoveForward(float Tounchx, float Tounchy) {
+
+        Path p = new Path();
+        p.moveTo(LastSelectShowChar.TopRightPosition.x, LastSelectShowChar.TopRightPosition.y);
+        p.lineTo(getWidth(), LastSelectShowChar.TopRightPosition.y);
+        p.lineTo(getWidth(), 0);
+        p.lineTo(0, 0);
+        p.lineTo(0, LastSelectShowChar.BottomRightPosition.y);
+        p.lineTo(LastSelectShowChar.BottomRightPosition.x, LastSelectShowChar.BottomRightPosition.y);
+        p.lineTo(LastSelectShowChar.TopRightPosition.x, LastSelectShowChar.TopRightPosition.y);
+
+        return computeRegion(p).contains((int) Tounchx, (int) Tounchy);
+    }
+
+    private Region computeRegion(Path path) {
+        Region region = new Region();
+        RectF f = new RectF();
+        path.computeBounds(f, true);
+        region.setPath(path, new Region((int) f.left, (int) f.top, (int) f.right, (int) f.bottom));
+        return region;
+    }
+
+    private void Release() {
+        Down_X = -1;// 释放
+        Down_Y = -1;
+    }
+
+    private Boolean CheckIfTrySelectMove(float xposition, float yposition) {// 检测是否准备滑动选择文字
+        if (FirstSelectShowChar == null || LastSelectShowChar == null) {
+            return false;
+        }
+
+        float flx, fty, frx, fby;
+
+        float hPadding = FirstSelectShowChar.charWidth;
+        hPadding = hPadding < 10 ? 10 : hPadding;
+
+        flx = FirstSelectShowChar.TopLeftPosition.x - hPadding;
+        frx = FirstSelectShowChar.TopLeftPosition.x;
+
+        fty = FirstSelectShowChar.TopLeftPosition.y;
+        fby = FirstSelectShowChar.BottomLeftPosition.y;
+
+        float llx, lty, lrx, lby;
+
+        llx = LastSelectShowChar.BottomRightPosition.x;
+        lrx = LastSelectShowChar.BottomRightPosition.x + hPadding;
+
+        lty = LastSelectShowChar.TopRightPosition.y;
+        lby = LastSelectShowChar.BottomRightPosition.y;
+
+        if ((xposition >= flx && xposition <= frx) && (yposition >= fty && yposition <= fby)) {
+            mCurrentMode = Mode.SelectMoveForward;
+            return true;
+        }
+
+        if ((xposition >= llx && xposition <= lrx) && (yposition >= lty && yposition <= lby)) {
+            mCurrentMode = Mode.SelectMoveBack;
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private void DrawOaleSeletLinesBg(Canvas canvas) {// 绘制椭圆型的选中背景
+        for (ShowLine l : mSelectLines) {
+            Log.e("selectline", l.getLineData() + "");
+
+            if (l.CharsData != null && l.CharsData.size() > 0) {
+
+
+                ShowChar fistchar = l.CharsData.get(0);
+                ShowChar lastchar = l.CharsData.get(l.CharsData.size() - 1);
+
+                float fw = fistchar.charWidth;
+                float lw = lastchar.charWidth;
+
+                RectF rect = new RectF(fistchar.TopLeftPosition.x, fistchar.TopLeftPosition.y,
+                        lastchar.TopRightPosition.x, lastchar.BottomRightPosition.y);
+
+                canvas.drawRoundRect(rect, fw / 2,
+                        TextHeight / 2, mTextSelectPaint);
+
+            }
+        }
+    }
+
+
+
+    private void DrawPressSelectText(Canvas canvas) {
+        ShowChar p = DetectPressShowChar(Down_X, Down_Y);
+
+        if (p != null) {// 找到了选择的字符
+
+            FirstSelectShowChar = LastSelectShowChar = p;
+            mSelectTextPath.reset();
+            mSelectTextPath.moveTo(p.TopLeftPosition.x, p.TopLeftPosition.y);
+            mSelectTextPath.lineTo(p.TopRightPosition.x, p.TopRightPosition.y);
+            mSelectTextPath.lineTo(p.BottomRightPosition.x, p.BottomRightPosition.y);
+            mSelectTextPath.lineTo(p.BottomLeftPosition.x, p.BottomLeftPosition.y);
+            canvas.drawPath(mSelectTextPath, mTextSelectPaint);
+
+            DrawBorderPoint(canvas);
+        }
+    }
+
+    private ShowChar DetectPressShowChar(float down_X2, float down_Y2) {
+
+        for (ShowLine l : mLinseData) {
+            for (ShowChar c : l.CharsData) {
+                if (down_Y2 > c.BottomLeftPosition.y) {
+                    break;// 说明是在下一行
+                }
+                if (down_X2 >= c.BottomLeftPosition.x && down_X2 <= c.BottomRightPosition.x) {
+                    return c;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private void DrawBorderPoint(Canvas canvas) {
+        if (FirstSelectShowChar != null && LastSelectShowChar != null) {
+            DrawPoint(canvas);
+            //DrawRectangle(canvas);
+        }
+    }
+
+    private float BorderPointradius = 10;
+
+    private void DrawPoint(Canvas canvas) {
+        float Padding = 0;
+
+        canvas.drawCircle(FirstSelectShowChar.TopLeftPosition.x - Padding,
+                FirstSelectShowChar.TopLeftPosition.y - Padding, BorderPointradius, mBorderPointPaint);
+
+        canvas.drawCircle(LastSelectShowChar.BottomRightPosition.x + Padding,
+                LastSelectShowChar.BottomRightPosition.y + Padding, BorderPointradius, mBorderPointPaint);
+
+        canvas.drawLine(FirstSelectShowChar.TopLeftPosition.x - Padding,
+                FirstSelectShowChar.TopLeftPosition.y - Padding, FirstSelectShowChar.BottomLeftPosition.x - Padding,
+                FirstSelectShowChar.BottomLeftPosition.y, mBorderPointPaint);
+
+        canvas.drawLine(LastSelectShowChar.BottomRightPosition.x + Padding,
+                LastSelectShowChar.BottomRightPosition.y + Padding, LastSelectShowChar.TopRightPosition.x + Padding,
+                LastSelectShowChar.TopRightPosition.y, mBorderPointPaint);
+    }
+
 //
 //
 //    private void DrawMoveSelectText(Canvas canvas) {
-//        if (FirstSelectShowChar == null || LastSelectShowChar == null)
+//        if (FirstSelectShowChar == null || LastSelectbShowChar == null)
 //            return;
 //        GetSelectData();
 //        DrawSeletLines(canvas);
@@ -174,15 +488,18 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
     private List<ShowLine> BreakText(int viewwidth, int viewheight) {
         List<ShowLine> showLines = new ArrayList<ShowLine>();
         while (TextData.length() > 0) {
-            BreakResult breakResult = TextBreakUtil.BreakText(TextData, viewwidth, 0, mPaint);
+            BreakResult breakResult = TextBreakUtil.BreakText(TextData, viewwidth, 20, mPaint);
 
             if (breakResult != null && breakResult.HasData()) {
                 ShowLine showLine = new ShowLine();
                 showLine.CharsData = breakResult.showChars;
+                Log.d(TAG,"line data = " + showLine.toString());
                 showLines.add(showLine);
-
             } else {
                 break;
+            }
+            for (ShowChar word : breakResult.showChars) {
+                Log.d(TAG,"word = " + word.chardata);
             }
 
             TextData = TextData.substring(breakResult.ChartNums);
@@ -203,38 +520,38 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView 
 
 
     private void DrawLineText(ShowLine line, Canvas canvas) {
-        canvas.drawText(line.getLineData(), 0, LineYPosition, mPaint);
+        canvas.drawText(line.getLineData(), 20, LineYPosition, mPaint);
         //canvas.drawLine(0f, LineYPosition, 680f, LineYPosition, mTextSelectPaint);
         Log.d(TAG,"draw line text ");
         float leftposition = 0;
         float rightposition = 0;
         float bottomposition = LineYPosition + mPaint.getFontMetrics().descent;
 
-        for (ShowChar c : line.CharsData) {
-            rightposition = leftposition + c.charWidth;
-            Point tlp = new Point();
-            c.TopLeftPosition = tlp;
-            tlp.x = (int) leftposition;
-            tlp.y = (int) (bottomposition - TextHeight);
-
-            Point blp = new Point();
-            c.BottomLeftPosition = blp;
-            blp.x = (int) leftposition;
-            blp.y = (int) bottomposition;
-
-            Point trp = new Point();
-            c.TopRightPosition = trp;
-            trp.x = (int) rightposition;
-            trp.y = (int) (bottomposition - TextHeight);
-
-            Point brp = new Point();
-            c.BottomRightPosition = brp;
-            brp.x = (int) rightposition;
-            brp.y = (int) bottomposition;
-
-            leftposition = rightposition;
-
-        }
+//        for (ShowChar c : line.CharsData) {
+//            rightposition = leftposition + c.charWidth;
+//            Point tlp = new Point();
+//            c.TopLeftPosition = tlp;
+//            tlp.x = (int) leftposition;
+//            tlp.y = (int) (bottomposition - TextHeight);
+//
+//            Point blp = new Point();
+//            c.BottomLeftPosition = blp;
+//            blp.x = (int) leftposition;
+//            blp.y = (int) bottomposition;
+//
+//            Point trp = new Point();
+//            c.TopRightPosition = trp;
+//            trp.x = (int) rightposition;
+//            trp.y = (int) (bottomposition - TextHeight);
+//
+//            Point brp = new Point();
+//            c.BottomRightPosition = brp;
+//            brp.x = (int) rightposition;
+//            brp.y = (int) bottomposition;
+//
+//            leftposition = rightposition;
+//
+//        }
         LineYPosition = LineYPosition + TextHeight + LinePadding;
     }
 

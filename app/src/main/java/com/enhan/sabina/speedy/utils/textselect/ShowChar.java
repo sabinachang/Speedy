@@ -3,7 +3,8 @@ package com.enhan.sabina.speedy.utils.textselect;
 import android.graphics.Point;
 
 public class ShowChar {
-        public char chardata ;
+//        public char chardata ;
+        public String chardata;
 
         public Boolean Selected =false;
 
@@ -14,6 +15,7 @@ public class ShowChar {
 
         public float charWidth = 0;
         public int Index = 0;
+
 
         @Override
         public String toString() {

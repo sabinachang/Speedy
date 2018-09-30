@@ -59,15 +59,24 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
     }
 
     @Override
-    public void displayDetectedText(String detectedText) {
+    public void displayDetectedText(final String detectedText) {
         Log.d("DisplayText","text = " + detectedText);
 //        ((TextSelectView)view.findViewById(R.id.text_detect)).setTextData(detectedText);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        mLinearLayout.setLayoutParams(params);
-        ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
+//        ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
+//        Log.d("Display text", "w ="+ layoutParams.width);
+        mLinearLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = mLinearLayout.getWidth();
+                int height = mLinearLayout.getHeight();
+                Log.d("displayText","w+" + width);
+                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText),width,height);
 
-        mLinearLayout.addView(new TextSelectView(getActivity(),detectedText),layoutParams.width-10,layoutParams.height);
+            }
+        });
 
 
 //        mDisplayTextView.setText(detectedText);
