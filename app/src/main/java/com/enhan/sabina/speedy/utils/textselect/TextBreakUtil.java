@@ -25,7 +25,7 @@ public class TextBreakUtil {
     public static BreakResult BreakText(char[] cs, float measuredWidth, float textpadding, Paint paint) {
         if(cs==null||cs.length==0){return null;}
 //        measuredWidth -= 2*textpadding;
-        measuredWidth *= 2;
+//        measuredWidth *= 2;
         BreakResult breakResult = new BreakResult();
         Log.d("TB","measuredwidth" + measuredWidth);
         breakResult.showChars = new ArrayList<ShowChar>();
@@ -53,15 +53,15 @@ public class TextBreakUtil {
                     return breakResult;
                 } else {
                     if (currentString.length() == 0) {
-                        currentString = new StringBuilder();
-                        currentWidth = 0;
+//                        currentString = new StringBuilder();
+//                        currentWidth = 0;
                         Log.d("TB","continue");
 
                     } else {
                         ShowChar word = new ShowChar();
                         word.chardata = currentString.toString();
                         word.charWidth = currentWidth;
-                        width += currentWidth;
+//                        width += currentWidth;
                         breakResult.showChars.add(word);
 
                         currentString = new StringBuilder();

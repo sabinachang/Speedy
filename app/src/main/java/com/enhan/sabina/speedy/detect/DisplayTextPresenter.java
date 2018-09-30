@@ -14,15 +14,6 @@ public class DisplayTextPresenter implements DisplayTextConstract.Presenter,Proc
             "\n" +
             "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
             "\n" +
-            "Mr Musk called the action \"unjustified\" saying he acted in the \"best interests of truth, transparency and investors\".\n" +
-            "\n" +
-            "\"Integrity is the most important value in my life and the facts will show I never compromised this in any way,\" he said in a statement.\n" +
-            "\n" +
-            "Tesla's board of directors said in a statement that they were \"fully confident in Elon, his integrity and his leadership of the company\".\n" +
-            "\n" +
-            "Will Elon Musk be forced to leave Tesla?\n" +
-            "Read the SEC's claims against Elon Musk here\n" +
-            "The weird and wonderful life of Elon Musk\n" +
             "Mr Musk startled the business world last month when he took to Twitter to announce that he was considering a plan that would de-list the company from the stock exchange.\n";
 
     public DisplayTextPresenter(DisplayTextConstract.View detectPhotoView,DetectActivity activity,DataRepository dataRepository) {

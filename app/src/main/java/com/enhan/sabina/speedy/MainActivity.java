@@ -28,14 +28,19 @@ import com.google.firebase.ml.vision.text.RecognizedLanguage;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView mGreetingTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mGreetingTextView = findViewById(R.id.greetings);
+
         checkPermissionStatus();
     }
 
@@ -45,8 +50,27 @@ public class MainActivity extends AppCompatActivity {
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
 
         } else {
-            transToTakePhoto();
+//            transToTakePhoto();
+
+            determineTime();
         }
+    }
+
+    private void determineTime() {
+
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            mGreetingTextView.setText(R.string.morning_greeting);
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+           mGreetingTextView.setText(R.string.afternoon_greeting);
+        }else if(timeOfDay >= 16 && timeOfDay < 24) {
+            mGreetingTextView.setText(R.string.evening_greeting);
+        }
+//        else if(timeOfDay >= 21 && timeOfDay < 24){
+//            Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private void transToTakePhoto() {
@@ -61,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
             case ConstantVariable.PERMISSION_ALL_REQUEST_CODE: {
                 if (grantResults.length > 0 ) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                        transToTakePhoto();
+//                        transToTakePhoto();
+                        determineTime();
                     }
 
                 }

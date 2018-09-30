@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Speedy</string>
+    <string name="morning_greeting">Good Morning!</string>
+    <string name="afternoon_greeting">Good Afternoon!</string>
+    <string name="evening_greeting">Good Evening!</string>
+    <string name="create_new_word">Create New Vocabs</string>
+    <string name="pep_talk">Keep up the good work</string>
+    <string name="review_word">Review Old Vocabs</string>
 </resources>
