@@ -11,10 +11,18 @@ public class DisplayTextPresenter implements DisplayTextConstract.Presenter,Proc
     private DataRepository mDataRepository;
 
     private String mString = "The US financial regulator says Mr Musk's claims that he had secured funding to take the electric carmaker private were \"false and misleading\".\n" +
-            "\n" +
+            "\n"  +
             "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
             "\n" +
-            "Mr Musk startled the business world last month when he took to Twitter to announce that he was considering a plan that would de-list the company from the stock exchange.\n";
+            "Mr Musk startled the business world last month when he took to Twitter to announce that he was considering a plan that would de-list the company from the stock exchange.\n" +
+            "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
+            "\n" +
+            "Mr " +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
+            "\n" +
+            "Mr" +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
+            "\n" +
+            "Mr " +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
+            "\n";
 
     public DisplayTextPresenter(DisplayTextConstract.View detectPhotoView,DetectActivity activity,DataRepository dataRepository) {
         mDetectPhotoView = detectPhotoView;

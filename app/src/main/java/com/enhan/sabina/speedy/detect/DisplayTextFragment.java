@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
@@ -21,6 +23,7 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
     private DisplayTextConstract.Presenter mPresenter;
     private TextView mDisplayTextView;
     private LinearLayout mLinearLayout;
+    private ScrollView mScrollView;
     private TextSelectView mTextSelectView;
     private View view;
 
@@ -48,6 +51,8 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        mDisplayTextView = view.findViewById(R.id.detected_text);
         mLinearLayout = view.findViewById(R.id.layout_text);
+        mScrollView = view.findViewById(R.id.scroll_view);
+//        mLinearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.primaryColor));
 //        mTextSelectView = view.findViewById(R.id.text_detect);
 //        this.view = view;
     }
@@ -67,16 +72,22 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
 //        mLinearLayout.setLayoutParams(params);
 //        ViewGroup.LayoutParams layoutParams = mLinearLayout.getLayoutParams();
 //        Log.d("Display text", "w ="+ layoutParams.width);
-        mLinearLayout.post(new Runnable() {
+        mScrollView.post(new Runnable() {
             @Override
             public void run() {
-                int width = mLinearLayout.getWidth();
-                int height = mLinearLayout.getHeight();
-                Log.d("displayText","w+" + width);
-                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText),width,height);
-
+                int width = mScrollView.getWidth();
+                int height = mScrollView.getHeight();
+                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText,width));
             }
         });
+
+//                int width = mLinearLayout.getWidth();
+//                int height = mLinearLayout.getHeight();
+//                Log.d("displayText","w+" + width);
+//                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText),width,height);
+//
+//            }
+
 
 
 //        mDisplayTextView.setText(detectedText);

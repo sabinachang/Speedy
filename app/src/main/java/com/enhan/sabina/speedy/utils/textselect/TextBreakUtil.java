@@ -27,6 +27,7 @@ public class TextBreakUtil {
 //        measuredWidth -= 2*textpadding;
 //        measuredWidth *= 2;
         BreakResult breakResult = new BreakResult();
+        measuredWidth -= 2 * textpadding;
         Log.d("TB","measuredwidth" + measuredWidth);
         breakResult.showChars = new ArrayList<ShowChar>();
         float width = 0;
@@ -69,6 +70,7 @@ public class TextBreakUtil {
                     }
                     ShowChar showChar = new ShowChar();
                     showChar.chardata = currentchar;
+                    showChar.charWidth = charWidth;
                     breakResult.showChars.add(showChar);
                     i ++;
                     width += charWidth;
