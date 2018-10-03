@@ -1,6 +1,7 @@
 package com.enhan.sabina.speedy.data;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,8 +9,11 @@ import android.support.v4.content.FileProvider;
 
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
+import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.io.File;
+import java.util.List;
 
 public interface DataSource {
     interface Constants {
@@ -27,6 +31,13 @@ public interface DataSource {
         void storeImage(Bitmap bitmap);
         Bitmap retrieveImageForGoogle();
         void startTextDetection(DetectTextCallback callback, Bitmap bitmap);
+        void insertWord(WordEntity wordEntity);
+        void updateWord(WordEntity wordEntity);
+        void deleteWord(WordEntity wordEntity);
+        List<WordEntity> getWordsinStack(String stackName);
+        void deleteStack(StackEntity stackEntity);
+        StackEntity getStackInfo(String stackName);
+        LiveData<List<StackEntity>> getAllStacks();
     }
 
     interface Local {

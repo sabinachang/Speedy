@@ -57,7 +57,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        mDataRepository = DataRepository.getInstance(AndroidData.getInstance(), LocalDataRepository.getInstance());
+        mDataRepository = DataRepository.getInstance();
 
         transToTakePhoto();
     }

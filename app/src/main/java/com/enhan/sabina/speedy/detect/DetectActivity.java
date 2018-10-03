@@ -50,7 +50,7 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        mDataRepository = DataRepository.getInstance(AndroidData.getInstance(), LocalDataRepository.getInstance());
+        mDataRepository = DataRepository.getInstance();
 //        transToDetectPhoto();
         mFragmentList = new ArrayList<>();
         DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();

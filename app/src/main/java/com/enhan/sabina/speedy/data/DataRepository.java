@@ -1,34 +1,53 @@
 package com.enhan.sabina.speedy.data;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Database;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 
+import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
 import com.enhan.sabina.speedy.data.local.LocalDataRepository;
 import com.enhan.sabina.speedy.data.remote.GoogleTextDetectionApi;
+import com.enhan.sabina.speedy.data.roomdb.AppDatabase;
+import com.enhan.sabina.speedy.data.roomdb.dao.StackDao;
+import com.enhan.sabina.speedy.data.roomdb.dao.WordDao;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
+import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
+import com.enhan.sabina.speedy.tasks.DeleteStackTask;
+import com.enhan.sabina.speedy.tasks.DeleteWordTask;
+import com.enhan.sabina.speedy.tasks.InsertWordTask;
+import com.enhan.sabina.speedy.tasks.UpdateWordTask;
 
 import java.io.File;
+import java.util.List;
 
 public class DataRepository implements DataSource.Repository{
 
     private static DataRepository INSTANCE = null;
-    private final AndroidData mAndroidDataSource;
-    private final LocalDataRepository mLocalDataRepository;
+    private AndroidData mAndroidDataSource;
+    private LocalDataRepository mLocalDataRepository;
+    private WordDao mWordDao;
+    private StackDao mStackDao;
+    private LiveData<List<StackEntity>> mAllStacks;
 
-    private DataRepository(AndroidData androidDataSource,LocalDataRepository localDataRepository) {
-        mAndroidDataSource = androidDataSource;
-        mLocalDataRepository = localDataRepository;
+    private DataRepository() {
+        AppDatabase db = AppDatabase.getsInstance(SpeedyApplication.getAppContext());
+        mAndroidDataSource = AndroidData.getInstance();
+        mLocalDataRepository = LocalDataRepository.getInstance();
+        mWordDao = db.wordDao();
+        mStackDao = db.stackDao();
     }
 
-    public static DataRepository getInstance(AndroidData androidDataSource, LocalDataRepository localDataRepository) {
+    public static DataRepository getInstance() {
             if (INSTANCE == null) {
-                INSTANCE = new DataRepository(androidDataSource,localDataRepository);
+                INSTANCE = new DataRepository();
             }
             return INSTANCE;
     }
@@ -59,9 +78,45 @@ public class DataRepository implements DataSource.Repository{
 
     }
 
+
     @Override
     public void startTextDetection(DetectTextCallback callback, Bitmap bitmap) {
         GoogleTextDetectionApi.getInstance().detectText(callback,bitmap);
+    }
+
+    @Override
+    public void insertWord(WordEntity wordEntity) {
+        new InsertWordTask(mWordDao).execute(wordEntity);
+    }
+
+    @Override
+    public void updateWord(WordEntity wordEntity) {
+        new UpdateWordTask(mWordDao).execute(wordEntity);
+    }
+
+    @Override
+    public void deleteWord(WordEntity wordEntity) {
+        new DeleteWordTask(mWordDao).execute(wordEntity);
+    }
+
+    @Override
+    public List<WordEntity> getWordsinStack(String stackName) {
+        return mWordDao.getWordsInStack(stackName);
+    }
+
+    @Override
+    public void deleteStack(StackEntity stack) {
+        new DeleteStackTask(mStackDao).execute(stack);
+    }
+
+    @Override
+    public StackEntity getStackInfo(String stackName) {
+        return null ;
+    }
+
+    @Override
+    public LiveData<List<StackEntity>> getAllStacks() {
+        return mStackDao.getAllStacks();
     }
 
     @Override
