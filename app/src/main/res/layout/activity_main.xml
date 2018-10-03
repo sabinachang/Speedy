@@ -66,6 +66,7 @@
         android:orientation="vertical">
 
         <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/camera_page"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_marginBottom="25dp"
@@ -79,11 +80,12 @@
             fancy:fb_iconResource="@drawable/ic_photo_camera_dark"
             fancy:fb_radius="8dp"
             fancy:fb_text="@string/create_new_word"
-            fancy:fb_textColor="@color/primaryTextColorAlpha"
+            fancy:fb_textColor="@color/primaryTextColor"
             fancy:fb_textGravity="right"
             fancy:fb_textSize="19sp" />
 
         <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/review_page"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_marginBottom="20dp"
@@ -97,7 +99,7 @@
             fancy:fb_iconResource="@drawable/ic_book"
             fancy:fb_radius="8dp"
             fancy:fb_text="@string/review_word"
-            fancy:fb_textColor="@color/primaryTextColorAlpha"
+            fancy:fb_textColor="@color/primaryTextColor"
             fancy:fb_textSize="19sp" />
 
     </LinearLayout>

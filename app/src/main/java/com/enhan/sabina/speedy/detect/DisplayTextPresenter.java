@@ -9,7 +9,7 @@ import com.enhan.sabina.speedy.utils.ProcessTextUtil;
 public class DisplayTextPresenter implements DisplayTextConstract.Presenter,ProcessTextCallback{
     private DisplayTextConstract.View mDetectPhotoView;
     private DataRepository mDataRepository;
-
+//
     private String mString = "The US financial regulator says Mr Musk's claims that he had secured funding to take the electric carmaker private were \"false and misleading\".\n" +
             "\n"  +
             "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
@@ -39,14 +39,14 @@ public class DisplayTextPresenter implements DisplayTextConstract.Presenter,Proc
 
     @Override
     public void processedText(String text) {
-        mDetectPhotoView.displayDetectedText(text);
+//        mDetectPhotoView.displayDetectedText(text);
     }
 
 //    @Override
 //    public void onDetectSuccessful(Fire) {
 //        mDetectPhotoView.displayDetectedText(result);
 //    }
-
+//
 //    @Override
 //    public void onDetectFailed() {
 //

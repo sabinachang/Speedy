@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.camera.CameraActivity;
@@ -31,15 +33,22 @@ import org.w3c.dom.Text;
 import java.util.Calendar;
 import java.util.List;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mGreetingTextView;
+    private FancyButton mCameraButton;
+    private FancyButton mReviewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mGreetingTextView = findViewById(R.id.greetings);
+
+        mCameraButton = findViewById(R.id.camera_page);
+        mReviewButton = findViewById(R.id.review_page);
 
         checkPermissionStatus();
     }
@@ -50,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
 
         } else {
+            mCameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    transToTakePhoto();
+                }
+            });
 //            transToTakePhoto();
 
             determineTime();
@@ -86,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 ) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
 //                        transToTakePhoto();
+                        mCameraButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                transToTakePhoto();
+                            }
+                        });
                         determineTime();
                     }
 

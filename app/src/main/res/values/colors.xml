@@ -9,12 +9,12 @@
     <!--<color name="primaryTextColor">#616161</color>-->
     <!--<color name="secondaryTextColor">#9e9e9e</color>-->
 
-    <color name="primaryColor">#ffcc80</color>
-    <color name="primaryColorApha">#fff3e0</color>
+    <color name="primaryColor">#ffa726</color>
+    <color name="primaryColorApha">#ffe0b2</color>
     <color name="primaryLightColor">#ffffb0</color>
     <color name="primaryDarkColor">#ca9b52</color>
     <color name="primaryTextColor">#757575</color>
-    <color name="primaryTextColorAlpha">#a1887f</color>
+    <color name="primaryTextColorAlpha">#ffffff</color>
 
     <color name="colorAccent">#fffff7</color>
     <color name="colorPrimaryDark">#616161</color>

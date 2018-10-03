@@ -1,10 +1,14 @@
 package com.enhan.sabina.speedy.detect;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +19,21 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
+import com.enhan.sabina.speedy.callbacks.SelectTextCallback;
 import com.enhan.sabina.speedy.camera.TakePhotoFragment;
 import com.enhan.sabina.speedy.utils.textselect.TextSelectView;
 
-public class DisplayTextFragment extends Fragment implements DisplayTextConstract.View {
+public class DisplayTextFragment extends Fragment implements DisplayTextConstract.View, SelectTextCallback {
 
     private DisplayTextConstract.Presenter mPresenter;
     private TextView mDisplayTextView;
     private LinearLayout mLinearLayout;
-    private ScrollView mScrollView;
+    private NestedScrollView mScrollView;
     private TextSelectView mTextSelectView;
     private View view;
+    private DetectActivity mTagCallbackListener;
+    private SelectTextCallback mTextSelectCallback;
+
 
     public DisplayTextFragment() {
 
@@ -48,10 +56,22 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            mTagCallbackListener = (DetectActivity) context;
+        }
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        mDisplayTextView = view.findViewById(R.id.detected_text);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((DetectActivity)getActivity()).setSupportActionBar(toolbar);
         mLinearLayout = view.findViewById(R.id.layout_text);
         mScrollView = view.findViewById(R.id.scroll_view);
+        mTextSelectCallback = this;
+
 //        mLinearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.primaryColor));
 //        mTextSelectView = view.findViewById(R.id.text_detect);
 //        this.view = view;
@@ -77,7 +97,7 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
             public void run() {
                 int width = mScrollView.getWidth();
                 int height = mScrollView.getHeight();
-                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText,width));
+                mLinearLayout.addView(new TextSelectView(getActivity(),detectedText,width,mTextSelectCallback));
             }
         });
 
@@ -91,5 +111,10 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
 
 
 //        mDisplayTextView.setText(detectedText);
+    }
+
+    @Override
+    public void onWordSelected(String word) {
+        mTagCallbackListener.updateTagline(word);
     }
 }

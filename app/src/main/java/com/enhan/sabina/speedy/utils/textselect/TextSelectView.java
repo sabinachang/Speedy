@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.text.method.ScrollingMovementMethod;
@@ -16,9 +18,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
+import com.enhan.sabina.speedy.callbacks.SelectTextCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     private GestureDetector mGestureDetector;
     private int offset = 20;
     private Context mContext;
+    private SelectTextCallback mSelectTextCallback;
 
 
 //    String TextData = "jEh话说天下大势，分久必合，合久必分。周末七国分争，并入于秦。及秦灭之后，楚、汉分争，又并入于汉。汉朝自高祖斩白蛇而起义，一统天下，后来光武中兴，传至献帝，遂分为三国。推其致乱之由，殆始于桓、灵二帝。桓帝禁锢善类，崇信宦官。及桓帝崩，灵帝即位，大将军窦武、太傅陈蕃共相辅佐。时有宦官曹节等弄权，窦武、陈蕃谋诛之，机事不密，反为所害，中涓自此愈横"
@@ -39,11 +44,15 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
 
     String TextData;
-    public TextSelectView(Context context, String textData,int width) {
+    private Canvas mCanvas;
+    private ShowChar mLastSelectedText;
+
+    public TextSelectView(Context context, String textData,int width,SelectTextCallback selectTextCallback) {
         super(context);
         TextData = textData;
         mContext = context;
         mParentWidth = width;
+        mSelectTextCallback = selectTextCallback;
         Log.d(TAG,"textviewinit");
 //        mViewGroup = vg;
 
@@ -72,6 +81,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     private float LineYPosition = 0;
     private float TextHeight = 0;
     private int mViewHeight;
+    private int mFirstTimeFlag = 0;
 
     List<ShowLine> mLinseData = null;
 
@@ -85,8 +95,8 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 //        int viewwidth = getMeasuredWidth();
 //        int viewheight = getMeasuredHeight();
         initData(mParentWidth);
-        Log.d(TAG,"view width = " + mParentWidth);
-        Log.d(TAG,"view height = " + mViewHeight);
+//        Log.d(TAG,"view width = " + mParentWidth);
+//        Log.d(TAG,"view height = " + mViewHeight);
 
 
 
@@ -100,17 +110,22 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     protected void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-//        Log.d(TAG,"in onDraw");
+        Log.d(TAG,"in onDraw");
+
+        mCanvas = canvas;
         LineYPosition = TextHeight + LinePadding;
 
 //        Log.d(TAG,"canvas"+ canvas.getHeight());
 //
 //        Log.d(TAG,"canvas"+ canvas.getWidth());
 //        Log.d(TAG,"line #" + mLinseData.size());
-        for (ShowLine line : mLinseData) {
-            DrawLineText(line, canvas);
 
-        }
+            for (ShowLine line : mLinseData) {
+                DrawLineText(line, canvas);
+
+            }
+
+
 
         if (mCurrentMode != Mode.Normal) {
             Log.d(TAG,"not normal mode");
@@ -122,21 +137,23 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     private Paint mTextSelectPaint = null;
     private Paint mBorderPointPaint = null;
     private int TextSelectColor = Color.parseColor("#77fadb08");
+    private int TextColor = Color.parseColor("#757575");
     private int BorderPointColor = Color.RED;
 
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setTextSize(60);
+        mPaint.setTextSize(52);
+        mPaint.setColor(TextColor);
 
         mTextSelectPaint = new Paint();
         mTextSelectPaint.setAntiAlias(true);
-        mTextSelectPaint.setTextSize(40);
+        mTextSelectPaint.setTextSize(32);
         mTextSelectPaint.setColor(TextSelectColor);
 
         mBorderPointPaint = new Paint();
         mBorderPointPaint.setAntiAlias(true);
-        mBorderPointPaint.setTextSize(40);
+        mBorderPointPaint.setTextSize(32);
         mBorderPointPaint.setColor(BorderPointColor);
         setPadding(0,0,0,10);
 //        this.setVerticalScrollBarEnabled(true);
@@ -472,18 +489,43 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
     private void DrawPressSelectText(Canvas canvas) {
         ShowChar p = DetectPressShowChar(Down_X, Down_Y);
+//        if (mLastSelectedText != null) {
+//            Paint clearPaint = new Paint();
+//            clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+//
+//            canvas.drawRect(mLastSelectedText.TopLeftPosition.x,mLastSelectedText.TopLeftPosition.y,mLastSelectedText.BottomRightPosition.x,mLastSelectedText.BottomRightPosition.y,clearPaint);
+//
+//        }
 
+//        Log.d(TAG,"draw pressed ");
 
-        if (p != null) {// 找到了选择的字符
+        if (p != null) {
 
-            Log.d(TAG,"detectedword = " + p.chardata );
+            if (mLastSelectedText != null) {
+                boolean tlpx = mLastSelectedText.TopLeftPosition.x == p.TopLeftPosition.x;
+                boolean tlpy = mLastSelectedText.TopLeftPosition.y == p.TopLeftPosition.y;
+                boolean blpx = mLastSelectedText.BottomLeftPosition.x == p.BottomLeftPosition.x;
+                boolean blpy = mLastSelectedText.BottomRightPosition.y == p.BottomRightPosition.y;
+                if (! (tlpx && tlpy && blpx && blpy)) {
+                    canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+//                                Toast.makeText(mContext,"not null detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
+                    mSelectTextCallback.onWordSelected(p.chardata);
+                }
+            } else {
+                canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+                            Toast.makeText(mContext," null detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
+                    mSelectTextCallback.onWordSelected(p.chardata);
+            }
 
-            FirstSelectShowChar = LastSelectShowChar = p;
+//            Toast.makeText(mContext,"detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
+
+//            FirstSelectShowChar = LastSelectShowChar = p;
 //            Paint rectPaint = new Paint();
 //            rectPaint.setStyle(Paint.Style.FILL);
 //
 //            mSelectTextPath.reset();
-            canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+
+
 //            mSelectTextPath.moveTo(, Down_Y);
 //            mSelectTextPath.lineTo(p.TopRightPosition.x, p.TopRightPosition.y);
 //            mSelectTextPath.lineTo(p.BottomRightPosition.x, p.BottomRightPosition.y);
@@ -497,6 +539,8 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
 //            DrawBorderPoint(canvas);
         }
+
+        mLastSelectedText = p;
     }
 
     private ShowChar DetectPressShowChar(float down_X2, float down_Y2) {
@@ -507,7 +551,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
                     break;// 说明是在下一行
                 }
                 if (down_X2 >= c.BottomLeftPosition.x && down_X2 <= c.BottomRightPosition.x) {
-                    Log.d(TAG,"selected text = " + c.chardata);
+//                    Log.d(TAG,"selected text = " + c.chardata);
                     return c;
                 }
             }
@@ -585,7 +629,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         int theight = (int) (Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent));
-        Log.d(TAG,"total lines =" +showLines.size());
+//        Log.d(TAG,"total lines =" +showLines.size());
         mViewHeight = 30 + (theight + 25) * showLines.size();
 
 
@@ -604,7 +648,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
         float bottomposition = LineYPosition + mPaint.getFontMetrics().descent;
 
         for (ShowChar c : line.CharsData) {
-            Log.d(TAG,"char = " + c.chardata + "width = " + c.charWidth);
+//            Log.d(TAG,"char = " + c.chardata + "width = " + c.charWidth);
 //            Paint measurePaint = new Paint();
 //            float wordLength = measurePaint.measureText(c.chardata);
             rightposition = leftposition + c.charWidth;
@@ -635,7 +679,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
         }
         LineYPosition = LineYPosition + TextHeight + LinePadding;
-        Log.d(TAG,"lineyposition :" + LineYPosition);
+//        Log.d(TAG,"lineyposition :" + LineYPosition);
     }
 
 
@@ -671,7 +715,9 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
             Down_X = motionEvent.getX();
             Down_Y = motionEvent.getY();
             mCurrentMode = Mode.PressSelectText;
-            postInvalidate();
+//            Log.d(TAG,"long pressed detected");
+//            DrawPressSelectText(new Canvas());
+//            postInvalidate();
         }
 
         @Override
