@@ -8,5 +8,5 @@
     <string name="review_word">Review Old Vocabs</string>
     <string name="scan_result">Result</string>
     <string name="new_vocab">Words</string>
-    <string name="word_found">Chosen Word</string>
+    <string name="word_found">Choose A Word</string>
 </resources>

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/display_coordinator_layout"
-    android:background="@color/primaryTextColorAlpha"
-   >
+    android:background="@color/primaryLightColor"   >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/display_appbar"
@@ -17,10 +16,10 @@
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
 
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleMarginStart="4dp"
             app:expandedTitleMarginEnd="8dp"
             >
@@ -35,64 +34,101 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
 
-                android:background="@drawable/background"
+                android:background="@drawable/flashcard_preview_background"
                 android:gravity="center"
-                app:layout_collapseMode="parallax">
+                >
 
-                <TextView
+                <!--<TextView-->
 
-                    android:id="@+id/word_preview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Venture"/>
+                    <!--android:id="@+id/word_preview"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:layout_width="300dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/colorAccent"-->
+
+                    <!--android:textSize="19dp"-->
+                    <!--android:text="Venture"/>-->
                 <TextView
 
                     android:id="@+id/definition_preview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:maxLines="3"
+                    android:ellipsize="marquee"
                     android:layout_height="wrap_content"
-                    android:text="a risky or daring journey or undertaking."/>
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16dp"
+                    android:textStyle="italic"
+                    android:text="a risky or daring journey or undertaking.a risky or daring journey or undertaking."/>
             </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/word_tagline"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+
+
+                >
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/word_tagline"-->
+                    <!--android:text="ABX"-->
+
+                    <!--/>-->
+            </android.support.v7.widget.Toolbar>
+                <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="55dp"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:fitsSystemWindows="true"-->
+                    <!--xmlns:tools="http://schemas.android.com/tools"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:background="@drawable/tag_text_preview_background"-->
+                    <!--android:gravity="bottom|center"-->
+                    <!--&gt;-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/word_tagline"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:textSize="18dp"-->
+                <!--android:text="@string/word_found"/>-->
+                <!--</LinearLayout>-->
+
+
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <!--<include layout = "@layout/flashcard_preview"/>-->
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:orientation="horizontal"
-
-            android:background="@drawable/background"
-            android:gravity="center"
-            >
-            <TextView
-                android:id="@+id/word_tagline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/word_found"/>
-
-            <!--<T-->
 
 
 
 
-        </LinearLayout>
-
+        <!---->
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorHeight="4dp"
-            android:fitsSystemWindows="true"
-            />
-        <!---->
+            app:tabIndicatorHeight="2dp"
+            android:background="@color/colorAccent"
+            app:tabTextColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/secondaryColorDark"
+            app:tabIndicatorColor="@color/secondaryColorDark"
+
+
+            android:fitsSystemWindows="true"/>
 
 
 

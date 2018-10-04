@@ -34,6 +34,10 @@ public class StackEntity {
         return mId;
     }
 
+    public void setId(int id) {
+        mId = id;
+    }
+
     public String getStackName() {
         return mStackName;
     }

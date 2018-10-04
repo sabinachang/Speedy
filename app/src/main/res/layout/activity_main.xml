@@ -39,7 +39,7 @@
             android:id="@+id/greetings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColorAlpha"
+            android:textColor="@color/primaryTextColor"
             android:textSize="28sp"
             tools:text="Good morning!" />
 
@@ -49,7 +49,7 @@
             android:paddingStart="44dp"
             android:text="Keep up the good work!"
             android:textAlignment="center"
-            android:textColor="@color/primaryTextColorAlpha"
+            android:textColor="@color/primaryTextColor"
             android:textSize="14sp"
             android:textStyle="italic" />
 
@@ -72,7 +72,7 @@
             android:layout_marginBottom="25dp"
             fancy:fb_borderColor="@color/primaryColor"
 
-            fancy:fb_defaultColor="@color/primaryColorApha"
+            fancy:fb_defaultColor="@color/primaryLightColor"
             fancy:fb_iconPaddingRight="14dp"
 
 
@@ -92,7 +92,7 @@
             fancy:fb_borderColor="@color/primaryColor"
 
 
-            fancy:fb_defaultColor="@color/primaryColorApha"
+            fancy:fb_defaultColor="@color/primaryLightColor"
             fancy:fb_iconPaddingRight="18dp"
             fancy:fb_iconPaddingTop="12dp"
 
@@ -110,6 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:layout_marginTop="24dp"
+
         app:theme="@style/TransparentBar">
 
         <!--<TextView-->

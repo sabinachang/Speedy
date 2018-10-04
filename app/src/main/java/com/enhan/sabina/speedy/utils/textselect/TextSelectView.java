@@ -137,7 +137,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     private Paint mTextSelectPaint = null;
     private Paint mBorderPointPaint = null;
     private int TextSelectColor = Color.parseColor("#77fadb08");
-    private int TextColor = Color.parseColor("#757575");
+    private int TextColor = Color.parseColor("#9e9e9e");
     private int BorderPointColor = Color.RED;
 
     private void init() {

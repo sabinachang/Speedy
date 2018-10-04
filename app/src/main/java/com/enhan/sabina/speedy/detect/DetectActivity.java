@@ -13,10 +13,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.UpdateTaglineCallback;
@@ -32,7 +35,7 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
     private DataRepository mDataRepository;
     private List<Fragment> mFragmentList;
-    private TextView mWordTagline;
+    private Toolbar mWordTagline;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +69,9 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
         ViewPager viewPager = findViewById(R.id.viewpager);
         TabLayout tabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
+        mWordTagline.setTitle("");
+        setSupportActionBar(mWordTagline);
+
 
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
@@ -75,7 +81,10 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
     @Override
     public void updateTagline(String word) {
-        mWordTagline.setText(word);
+        Log.d("detect","update");
+        mWordTagline.setTitle("");
+
+        mWordTagline.setTitle(word);
 
     }
 
