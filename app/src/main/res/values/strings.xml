@@ -9,4 +9,5 @@
     <string name="scan_result">Result</string>
     <string name="new_vocab">Words</string>
     <string name="word_found">Choose A Word</string>
+    <string name="add_stack">Add New Stack</string>
 </resources>
