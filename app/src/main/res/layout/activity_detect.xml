@@ -19,7 +19,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:expandedTitleMarginStart="4dp"
             app:expandedTitleMarginEnd="8dp"
             >
@@ -72,7 +72,7 @@
                 android:id="@+id/word_tagline"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
+
 
 
                 >
@@ -138,7 +138,69 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottomsheet_background"
+            android:orientation="vertical"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+            <LinearLayout
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+
+                    android:background="@drawable/ic_cancel"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="25dp"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:text="Pick one stack"/>
+            </LinearLayout>
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="50dp"
+
+
+                    android:textSize="20dp"
+                    android:text="@string/add_stack"/>
+                <ImageView
+                    android:background="@drawable/ic_add"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
 
     <!--<android.support.v4.widget.NestedScrollView-->
         <!--app:layout_behavior=" @string/appbar_scrolling_view_behavior"-->

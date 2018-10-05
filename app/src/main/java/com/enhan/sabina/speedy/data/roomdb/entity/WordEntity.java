@@ -3,6 +3,7 @@ package com.enhan.sabina.speedy.data.roomdb.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -17,11 +18,11 @@ import android.support.annotation.NonNull;
         })
 public class WordEntity {
 
-    public WordEntity(String word, String definition, String stackName, int stackId) {
+    public WordEntity(String word, String definition) {
         mWord = word;
         mDefinition = definition;
-        mStackId = stackId;
-        mStackName = stackName;
+//        mStackId = stackId;
+//        mStackName = stackName;
     }
 
     @NonNull
@@ -40,6 +41,9 @@ public class WordEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
+
+    @Ignore
+    private boolean isSelected = false;
 
     @NonNull
     public String getWord() {
@@ -80,5 +84,13 @@ public class WordEntity {
 
     public void setStackName(String stackName) {
         mStackName = stackName;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

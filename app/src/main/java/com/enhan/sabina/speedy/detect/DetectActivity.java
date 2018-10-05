@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,6 +37,7 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
     private DataRepository mDataRepository;
     private List<Fragment> mFragmentList;
     private Toolbar mWordTagline;
+    private AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
         new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
 
+        mAppBarLayout = findViewById(R.id.display_appbar);
+
 
         mFragmentList.add(displayTextFragment);
         mFragmentList.add(chosenWordFragment);
@@ -74,6 +78,27 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
 
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if (i == 1) {
+                    mAppBarLayout.setExpanded(false);
+                } else {
+                    mAppBarLayout.setExpanded(true);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
         tabLayout.setupWithViewPager(viewPager);
 
 

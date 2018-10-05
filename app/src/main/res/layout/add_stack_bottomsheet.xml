@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="25dp"
                 android:textStyle="bold"
-
                 android:textSize="18dp"
                 android:text="Pick one stack"/>
         </LinearLayout>
