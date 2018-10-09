@@ -21,7 +21,7 @@
     <item
         android:right="-80dp"
         android:left="-5dp"
-        android:top="40dp"
+        android:top="30dp"
         android:bottom="-200dp">
         <rotate
             android:fromDegrees="20"
@@ -34,22 +34,22 @@
             </shape>
         </rotate>
     </item>
-    <item
-        android:right="-80dp"
-        android:left="-10dp"
-        android:top="-60dp"
-        android:bottom="-200dp">
-        <rotate
-            android:fromDegrees="20"
-            android:pivotX="12%"
-            android:pivotY="0%">
-            <shape
-                android:shape="rectangle">
-                <solid android:color="@color/colorAccentAlpha">
-                </solid>
-            </shape>
-        </rotate>
-    </item>
+    <!--<item-->
+        <!--android:right="-80dp"-->
+        <!--android:left="-10dp"-->
+        <!--android:top="-60dp"-->
+        <!--android:bottom="-200dp">-->
+        <!--<rotate-->
+            <!--android:fromDegrees="20"-->
+            <!--android:pivotX="12%"-->
+            <!--android:pivotY="0%">-->
+            <!--<shape-->
+                <!--android:shape="rectangle">-->
+                <!--<solid android:color="@color/colorAccentAlpha">-->
+                <!--</solid>-->
+            <!--</shape>-->
+        <!--</rotate>-->
+    <!--</item>-->
 
     <!--<item-->
         <!--android:right="-70dp"-->

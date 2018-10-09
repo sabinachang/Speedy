@@ -32,7 +32,8 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".detect.DetectActivity">
+        <activity android:name=".detect.DetectActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

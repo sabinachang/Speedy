@@ -3,21 +3,25 @@
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--<item-->
+
+        <!--&gt;-->
+        <!--<shape >-->
+            <!--<solid android:color="@color/colorPrimaryLight"/>-->
+            <!--<corners android:topLeftRadius="20dp"-->
+                <!--android:topRightRadius="20dp"/>-->
+
+
+        <!--</shape>-->
+    <!--</item>-->
     <item
-
-        >
-        <shape >
-            <solid android:color="@color/primaryColor"/>
-
-            <corners android:topLeftRadius="20dp"
-                android:topRightRadius="20dp"/>
-
-        </shape>
-    </item>
-    <item
-        android:top="20dp">
+       android:top="20dp">
        <shape >
-           <solid android:color="@color/colorAccent"/>
+           <corners android:topLeftRadius="20dp"
+               android:topRightRadius="20dp"/>
+
+           <solid android:color="@color/colorWhite"/>
+
 
            <!--<corners android:topLeftRadius="30dp"-->
                <!--android:topRightRadius="30dp"/>-->

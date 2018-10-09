@@ -500,6 +500,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 //        Log.d(TAG,"draw pressed ");
 
         if (p != null) {
+            canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
 
             if (mLastSelectedText != null) {
                 boolean tlpx = mLastSelectedText.TopLeftPosition.x == p.TopLeftPosition.x;
@@ -507,13 +508,13 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
                 boolean blpx = mLastSelectedText.BottomLeftPosition.x == p.BottomLeftPosition.x;
                 boolean blpy = mLastSelectedText.BottomRightPosition.y == p.BottomRightPosition.y;
                 if (! (tlpx && tlpy && blpx && blpy)) {
-                    canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+//                    canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
 //                                Toast.makeText(mContext,"not null detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
                     mSelectTextCallback.onWordSelected(p.chardata);
                 }
             } else {
-                canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
-                            Toast.makeText(mContext," null detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
+//                canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+//                            Toast.makeText(mContext," null detected text =" + p.chardata, Toast.LENGTH_SHORT).show();
                     mSelectTextCallback.onWordSelected(p.chardata);
             }
 

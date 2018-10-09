@@ -2,12 +2,10 @@ package com.enhan.sabina.speedy.detect;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
@@ -25,6 +23,7 @@ class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<Ch
     public ChosenWorAdapter(List<WordEntity> wordEntiyList, ChosenWordCallback chosenWordCallback) {
         mWordEntityList = wordEntiyList;
         mChosenWordCallback = chosenWordCallback;
+
     }
 
     @NonNull
@@ -36,8 +35,16 @@ class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<Ch
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder wordViewHolder, int i) {
-        wordViewHolder.mWordTextView.setText(mWordEntityList.get(i).getWord());
 
+        wordViewHolder.mWordTextView.setText(mWordEntityList.get(i).getWord());
+        if (mWordEntityList.get(i).isSelected()) {
+            wordViewHolder.mButton.setBackgroundResource(R.drawable.ic_verified);
+            wordViewHolder.mWordTextView.setTextColor(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark));
+        } else {
+            wordViewHolder.mButton.setBackgroundResource(R.drawable.ic_add_light);
+            wordViewHolder.mWordTextView.setTextColor(SpeedyApplication.getAppContext().getColor(R.color.colorPrimary));
+
+        }
     }
 
     @Override
@@ -61,7 +68,7 @@ class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<Ch
                     if (! chosenWord.isSelected()) {
                         mButton.setBackgroundResource(R.drawable.ic_verified);
                         chosenWord.setSelected(true);
-                        mChosenWordCallback.onAdded(chosenWord);
+                        mChosenWordCallback.onSelected(chosenWord);
                         mWordTextView.setTextColor(SpeedyApplication.getAppContext().getResources().getColor(R.color.secondaryColorDark));
                     } else {
                         mButton.setBackgroundResource(R.drawable.ic_add_light);
@@ -74,5 +81,20 @@ class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<Ch
             });
 
         }
+    }
+
+    public void resetChosenWordsColor() {
+        for (WordEntity w : mWordEntityList) {
+            if (w.isSelected()) {
+                w.setSelected(false);
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void addWord(WordEntity wordEntity) {
+        mWordEntityList.add(wordEntity);
+        notifyDataSetChanged();
     }
 }

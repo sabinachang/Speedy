@@ -1,5 +1,7 @@
 package com.enhan.sabina.speedy.detect;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
+import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.util.ArrayList;
@@ -26,10 +30,11 @@ import java.util.List;
 public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ChosenWorAdapter mAdapter;
     private FloatingActionButton mFab;
     private List<WordEntity> mWordEntityList = new ArrayList<>();
     private List<WordEntity> mChosenWords = new ArrayList<>();
+    private ControlBottomSheetCallback mControlBottomSheetCallback;
 
 
     public ChosenWordFragment() {
@@ -45,6 +50,14 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            mControlBottomSheetCallback = (DetectActivity) context;
+        }
     }
 
     @Nullable
@@ -65,7 +78,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startBottomSheet();
+                mControlBottomSheetCallback.onFabButtonClicked(mChosenWords);
             }
         });
 
@@ -82,43 +95,43 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
 
         Log.d("chosen word","in Init");
 
-        WordEntity wordEntity = new WordEntity("Venture","a risky undertaking or adventure");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("enhance","to improve the quality, amount, or strength of something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("strength","the ability to do something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("weakness","to improve the quality, amount, or strength of something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("accept","the ability to do something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("character","the ability to do something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("character","the ability to do something");
-        mWordEntityList.add(wordEntity);
-        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
-        mWordEntityList.add(wordEntity);
-
-        wordEntity = new WordEntity("character","the ability to do something");
-        mWordEntityList.add(wordEntity);
+//        WordEntity wordEntity = new WordEntity("Venture","a risky undertaking or adventure");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("enhance","to improve the quality, amount, or strength of something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("strength","the ability to do something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("weakness","to improve the quality, amount, or strength of something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("accept","the ability to do something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("character","the ability to do something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("character","the ability to do something");
+//        mWordEntityList.add(wordEntity);
+//        wordEntity = new WordEntity("drawing","to improve the quality, amount, or strength of something");
+//        mWordEntityList.add(wordEntity);
+//
+//        wordEntity = new WordEntity("character","the ability to do something");
+//        mWordEntityList.add(wordEntity);
 
 
     }
 
     @Override
-    public void onAdded(WordEntity wordEntity) {
+    public void onSelected(WordEntity wordEntity) {
         if (mChosenWords.isEmpty()) {
             mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.secondaryColorDark)));
             mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_selected));
@@ -158,5 +171,26 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
             mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_unselected));
             mFab.setClickable(false);
         }
+    }
+
+    @Override
+    public void onBottomSheetCollapsed(boolean isAdded) {
+        if (isAdded) {
+            Iterator<WordEntity> iterator = mWordEntityList.iterator();
+            while (iterator.hasNext()) {
+                if (iterator.next().isSelected()) {
+                    iterator.remove();
+                }
+            }
+
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mAdapter.resetChosenWordsColor();
+        }
+    }
+
+    @Override
+    public void onNewWordAdded(WordEntity wordEntity) {
+        mAdapter.addWord(wordEntity);
     }
 }

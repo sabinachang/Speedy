@@ -8,8 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "stack_table")
 public class StackEntity {
 
-    public StackEntity(){
-
+    public StackEntity(String stackName){
+        mStackName = stackName;
     }
 
     @ColumnInfo(name = "word_count")

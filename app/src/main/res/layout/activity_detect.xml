@@ -8,21 +8,67 @@
     android:id="@+id/display_coordinator_layout"
     android:background="@color/primaryLightColor"   >
 
+
+    <!--<android.support.v7.widget.Toolbar-->
+
+        <!--android:elevation="5dp"-->
+       <!---->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--app:title="">-->
+        <!--<LinearLayout-->
+            <!--android:elevation="5dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--app:layout_collapseMode="pin"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:orientation="horizontal">-->
+            <!--<TextView-->
+                <!--android:id="@+id/word_tagline"-->
+                <!--android:text="ABCDTESTING"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+        <!--</LinearLayout>-->
+
+
+
+    <!--</android.support.v7.widget.Toolbar>-->
+
+
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/display_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
 
-        <android.support.design.widget.CollapsingToolbarLayout
 
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:expandedTitleMarginStart="4dp"
             app:expandedTitleMarginEnd="8dp"
             >
+
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--app:layout_collapseMode="pin"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:orientation="horizontal">-->
+                <!--<TextView-->
+                    <!--android:id="@+id/word_tagline"-->
+                    <!--android:text="ABCDTESTING"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+            <!--</LinearLayout>-->
+
+
+
             <!--<android.support.v7.widget.Toolbar-->
                 <!--android:id="@+id/toolbar"-->
                 <!--android:layout_width="match_parent"-->
@@ -33,15 +79,15 @@
                 <!--/>-->
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/linearlayout_word_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="180dp"
                 android:fitsSystemWindows="true"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
 
                 android:background="@drawable/flashcard_preview_background"
-                android:gravity="center"
-                >
+                android:gravity="center">
 
                 <!--<TextView-->
 
@@ -56,35 +102,20 @@
                 <TextView
 
                     android:id="@+id/definition_preview"
+
                     android:layout_width="300dp"
                     android:textAlignment="center"
-                    android:paddingTop="10dp"
+                    android:paddingTop="20dp"
                     android:maxLines="3"
                     android:ellipsize="marquee"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
                     android:textSize="16dp"
-                    android:textStyle="italic"
-                    android:text="a risky or daring journey or undertaking.a risky or daring journey or undertaking."/>
+
+                    android:text=""/>
             </LinearLayout>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/word_tagline"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
 
-
-
-                >
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/word_tagline"-->
-                    <!--android:text="ABX"-->
-
-                    <!--/>-->
-            </android.support.v7.widget.Toolbar>
                 <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="55dp"-->
@@ -117,7 +148,57 @@
 
 
         <!---->
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tabs"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabIndicatorHeight="2dp"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--app:tabTextColor="@color/colorPrimary"-->
+            <!--app:tabSelectedTextColor="@color/secondaryColorDark"-->
+            <!--app:tabIndicatorColor="@color/secondaryColorDark"-->
+
+
+            <!--android:fitsSystemWindows="true"/>-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+
+
+            app:layout_anchor="@id/display_appbar"
+            app:layout_anchorGravity="top"
+            android:layout_gravity="top"
+            android:background="@drawable/tag_text_preview_background"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="">
+            <LinearLayout
+                android:elevation="5dp"
+                android:layout_width="match_parent"
+                app:layout_collapseMode="pin"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/word_tagline"
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+
+        </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
+            app:layout_anchor="@id/linearlayout_word_card"
+
+
+            app:layout_anchorGravity="bottom"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,7 +213,15 @@
 
 
 
+
     </android.support.design.widget.AppBarLayout>
+
+
+
+
+
+
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -142,17 +231,31 @@
         />
 
 
-        <LinearLayout
+
+
+
+
+
+    <android.support.v4.widget.NestedScrollView
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/bottomsheet_background"
-            android:orientation="vertical"
+
+
+            android:elevation="5dp"
             app:behavior_hideable="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             app:behavior_peekHeight="0dp"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="25dp"
@@ -160,6 +263,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
+                    android:id="@+id/close_btn"
 
                     android:background="@drawable/ic_cancel"
                     android:layout_marginTop="4dp"
@@ -173,33 +277,54 @@
                     android:textSize="18dp"
                     android:text="Pick one stack"/>
             </LinearLayout>
-
-
-
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/stack_list_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
             <RelativeLayout
-                android:gravity="center_vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
                 <TextView
+                    android:id="@+id/stack_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="50dp"
+                    android:layout_marginStart="16dp"
 
 
-                    android:textSize="20dp"
-                    android:text="@string/add_stack"/>
+
+                    android:text="@string/add_stack"
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:background="@drawable/ic_add"
+                    android:id="@+id/add_stack_to_recyclerview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/stack_title"
                     android:layout_width="35dp"
-                    android:layout_height="35dp" />
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_add" />
+
+                <EditText
+                    android:layout_marginEnd="55dp"
+                    android:id="@+id/stack_name_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+
+                    android:layout_below="@id/stack_title"
+                    />
             </RelativeLayout>
 
         </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 
 
     <!--<android.support.v4.widget.NestedScrollView-->
@@ -277,6 +402,22 @@
     <!--android:id="@+id/text_detect"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
+
+
+
+
+    <ImageView
+        android:id="@+id/add_word"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="22dp"
+
+
+        android:elevation="5dp"
+        android:background="@drawable/ic_loupe"
+        app:layout_anchor="@id/word_tagline"
+        app:layout_anchorGravity="end|top" />
+
 
 
 </android.support.design.widget.CoordinatorLayout>
