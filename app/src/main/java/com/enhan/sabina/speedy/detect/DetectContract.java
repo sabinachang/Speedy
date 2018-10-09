@@ -2,14 +2,14 @@ package com.enhan.sabina.speedy.detect;
 
 import com.enhan.sabina.speedy.BasePresenter;
 import com.enhan.sabina.speedy.BaseView;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 
-public interface DisplayTextConstract {
+public interface DetectContract {
     interface View extends BaseView<Presenter> {
-        void displayDetectedText(String detectedText);
+
     }
-
     interface Presenter extends BasePresenter {
-
-
+        void addStackEntityToLocalDatabase(StackEntity stackEntity);
+        void unbindListener();
     }
 }

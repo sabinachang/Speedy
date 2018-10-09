@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
@@ -22,6 +23,7 @@ import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 import com.enhan.sabina.speedy.tasks.DeleteStackTask;
 import com.enhan.sabina.speedy.tasks.DeleteWordTask;
+import com.enhan.sabina.speedy.tasks.InsertStackTask;
 import com.enhan.sabina.speedy.tasks.InsertWordTask;
 import com.enhan.sabina.speedy.tasks.UpdateWordTask;
 
@@ -115,7 +117,14 @@ public class DataRepository implements DataSource.Repository{
     }
 
     @Override
+    public void insertStack(StackEntity stackEntity) {
+        new InsertStackTask(mStackDao).execute(stackEntity);
+
+    }
+
+    @Override
     public LiveData<List<StackEntity>> getAllStacks() {
+        Log.d("Datarepository","fetching stacks");
         return mStackDao.getAllStacks();
     }
 

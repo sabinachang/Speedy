@@ -284,22 +284,22 @@
 
             </android.support.v7.widget.RecyclerView>
             <RelativeLayout
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/stack_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                <!--<TextView-->
+                    <!--android:id="@+id/stack_title"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="16dp"-->
 
 
 
-                    android:text="@string/add_stack"
-                    android:textSize="20dp" />
+                    <!--android:text="@string/add_stack"-->
+                    <!--android:textSize="20dp" />-->
 
                 <ImageView
                     android:id="@+id/add_stack_to_recyclerview"
@@ -310,11 +310,16 @@
                     android:background="@drawable/ic_add" />
 
                 <EditText
+
+                    android:hint="@string/add_stack"
+                    android:textColorHint="@color/colorPrimaryLight"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="55dp"
                     android:id="@+id/stack_name_add"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-
+                    android:textSize="16dp"
+                    android:backgroundTint="@color/colorPrimary"
                     android:layout_below="@id/stack_title"
                     />
             </RelativeLayout>

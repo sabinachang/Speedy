@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="40dp"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:layout_marginTop="30dp"
+    tools:layout_marginTop="10dp"
     android:gravity="center_vertical"
     android:id="@+id/choose_stack_item">
     <TextView
@@ -14,9 +14,9 @@
         tools:text="Stack one"
         android:textColor="@drawable/stack_item_text_selector"
 
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:textSize="16dp"/>
 
     <!--<TextView-->

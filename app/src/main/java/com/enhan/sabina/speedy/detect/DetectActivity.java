@@ -17,7 +17,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,7 +40,7 @@ import com.google.firebase.FirebaseApp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetectActivity extends AppCompatActivity implements UpdateTaglineCallback, ControlBottomSheetCallback,AppBarLayout.OnOffsetChangedListener{
+public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, ControlBottomSheetCallback,AppBarLayout.OnOffsetChangedListener{
 
     private DataRepository mDataRepository;
     private String mFakeString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
@@ -60,7 +59,10 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
     private EditText mStackUserInput;
     private TextView mDefinitionCard;
     private ChosenWordCallback mChosenWordCallback;
+    private TabLayout mTabLayout;
     private int mSearchComplete;
+    private DetectContract.Presenter mPresenter;
+    private ViewPagerAdapter mViewPagerAdapter;
 
 
     @Override
@@ -85,7 +87,9 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
         DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
         new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
+        new ChosenWordPresenter(chosenWordFragment);
         mChosenWordCallback = chosenWordFragment;
+
 
         mAppBarLayout = findViewById(R.id.display_appbar);
         mAddButtonImageView = findViewById(R.id.add_word);
@@ -100,13 +104,16 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
 //        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         ViewPager viewPager = findViewById(R.id.viewpager);
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
 //        mWordTagline.setTitle("");
 //        setSupportActionBar(mWordTagline);
 
+//        mTabLayout.getTabAt(0).setText(SpeedyApplication.getAppContext().getString(R.string.scan_result));
+//        mTabLayout.getTabAt(1).setText(SpeedyApplication.getAppContext().getString(R.string.word_found));
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mViewPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -139,7 +146,7 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
                     mDefinitionCard.setText("");
                     Toast.makeText(SpeedyApplication.getAppContext(),"add to list",Toast.LENGTH_SHORT).show();
 
-                    mChosenWordCallback.onNewWordAdded(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
+                    mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
                     mSearchComplete = 0;
                 }
@@ -181,7 +188,8 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
                     mStackUserInput.setText("");
                     InputMethodManager imm = (InputMethodManager) getSystemService(SpeedyApplication.getAppContext().INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mStackUserInput.getWindowToken(), 0);
-                    mStackItemAdapter.addStackName(new StackEntity(stackName));
+                    mPresenter.addStackEntityToLocalDatabase(new StackEntity(stackName));
+//                    mStackItemAdapter.addStackName(new StackEntity(stackName));
                 }
             }
         });
@@ -189,12 +197,23 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
         mStackListRecyclerView = findViewById(R.id.stack_list_recyclerview);
         mStackListRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
+        mStackItemAdapter = new StackItemAdapter(this);
+        mStackListRecyclerView.setAdapter(mStackItemAdapter);
+
+
         mAppBarLayout.addOnOffsetChangedListener(this);
         initStackList();
 
-        tabLayout.setupWithViewPager(viewPager);
+        mTabLayout.setupWithViewPager(viewPager);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mPresenter = new DetectPresenter(this,mStackItemAdapter);
     }
 
     private void initStackList() {
@@ -211,16 +230,12 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 //        stackEntity = new StackEntity("Fourth Stack");
 //        mStackEntityList.add(stackEntity);
 
-        mStackItemAdapter = new StackItemAdapter(mStackEntityList,this);
-        mStackListRecyclerView.setAdapter(mStackItemAdapter);
+
 
     }
 
     @Override
     public void updateTagline(String word) {
-        Log.d("detect","update");
-//        mWordTagline.se("");
-
         mWordTagline.setText(word);
         mDefinitionCard.setText("");
         mSearchComplete = 0;
@@ -229,31 +244,34 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
     @Override
     public void onFabButtonClicked(List<WordEntity> wordEntityList) {
-
-
         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override
     public void onDialogCloseButtonClicked() {
-        mChosenWordCallback.onBottomSheetCollapsed(false);
+        mChosenWordCallback.onBottomSheetCollapsed(false,null);
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-
     }
 
     @Override
-    public void onStackSelected(String stackName) {
-        Toast.makeText(SpeedyApplication.getAppContext(),"word added to " + stackName,Toast.LENGTH_SHORT).show();
-        mChosenWordCallback.onBottomSheetCollapsed(true);
+    public void onStackSelected(StackEntity stackEntity) {
+        Toast.makeText(SpeedyApplication.getAppContext(),"word added to " + stackEntity.getStackName(),Toast.LENGTH_SHORT).show();
+
+
+        mChosenWordCallback.onBottomSheetCollapsed(true,stackEntity);
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public void updateTabCountHint(int num) {
+        mViewPagerAdapter.tabTitles[1] = "Words (" + num + ")";
+        mViewPagerAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         if (mMaxScrollView == 0) {
             mMaxScrollView = mAppBarLayout.getTotalScrollRange();
-
         }
 
         int currentState = (Math.abs(i)) * 100 / mMaxScrollView;
@@ -323,7 +341,19 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
     }
 
-//    private void transToDetectPhoto() {
+    @Override
+    public void setPresenter(DetectContract.Presenter presenter) {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unbindListener();
+    }
+
+
+    //    private void transToDetectPhoto() {
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        FragmentTransaction transaction = fragmentManager.beginTransaction();
 //        DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
@@ -334,7 +364,10 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        public ViewPagerAdapter(FragmentManager fm) {
+
+        private String tabTitles[] = new String[] {"Result","Words"};
+
+        private ViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -359,15 +392,10 @@ public class DetectActivity extends AppCompatActivity implements UpdateTaglineCa
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return getResources().getString(R.string.scan_result);
-                case 1:
-                    return getResources().getString(R.string.new_vocab);
-                default:
-                    return getResources().getString(R.string.scan_result);
-            }
+            return tabTitles[position];
         }
+
+
     }
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {

@@ -6,26 +6,33 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/secondaryColorDark"
+    android:padding="45dp"
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/background" />
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/background"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="300dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="@drawable/background" />-->
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginStart="44dp"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:orientation="vertical">-->
 
         <!--<com.mikhaellopez.circularimageview.CircularImageView-->
         <!--android:layout_width="125dp"-->
@@ -35,83 +42,83 @@
         <!--app:civ_border_width="5dp" />-->
 
 
-        <TextView
-            android:id="@+id/greetings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="28sp"
-            tools:text="Good morning!" />
+        <!--<TextView-->
+            <!--android:id="@+id/greetings"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/primaryTextColor"-->
+            <!--android:textSize="28sp"-->
+            <!--tools:text="Good morning!" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="44dp"
-            android:text="Keep up the good work!"
-            android:textAlignment="center"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="140dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/camera_page"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="25dp"
-            fancy:fb_borderColor="@color/primaryColor"
-
-            fancy:fb_defaultColor="@color/primaryLightColor"
-            fancy:fb_iconPaddingRight="14dp"
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingStart="44dp"-->
+            <!--android:text="Keep up the good work!"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@color/primaryTextColor"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textStyle="italic" />-->
 
 
-            fancy:fb_iconPaddingTop="12dp"
-            fancy:fb_iconResource="@drawable/ic_photo_camera_dark"
-            fancy:fb_radius="8dp"
-            fancy:fb_text="@string/create_new_word"
-            fancy:fb_textColor="@color/primaryTextColor"
-            fancy:fb_textGravity="right"
-            fancy:fb_textSize="19sp" />
+    <!--</LinearLayout>-->
 
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/review_page"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="20dp"
-            fancy:fb_borderColor="@color/primaryColor"
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginBottom="140dp"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
 
+        <!--<mehdi.sakout.fancybuttons.FancyButton-->
+            <!--android:id="@+id/camera_page"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_marginBottom="25dp"-->
+            <!--fancy:fb_borderColor="@color/primaryColor"-->
 
-            fancy:fb_defaultColor="@color/primaryLightColor"
-            fancy:fb_iconPaddingRight="18dp"
-            fancy:fb_iconPaddingTop="12dp"
-
-            fancy:fb_iconResource="@drawable/ic_book"
-            fancy:fb_radius="8dp"
-            fancy:fb_text="@string/review_word"
-            fancy:fb_textColor="@color/primaryTextColor"
-            fancy:fb_textSize="19sp" />
-
-    </LinearLayout>
+            <!--fancy:fb_defaultColor="@color/primaryLightColor"-->
+            <!--fancy:fb_iconPaddingRight="14dp"-->
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginTop="24dp"
+            <!--fancy:fb_iconPaddingTop="12dp"-->
+            <!--fancy:fb_iconResource="@drawable/ic_photo_camera_dark"-->
+            <!--fancy:fb_radius="8dp"-->
+            <!--fancy:fb_text="@string/create_new_word"-->
+            <!--fancy:fb_textColor="@color/primaryTextColor"-->
+            <!--fancy:fb_textGravity="right"-->
+            <!--fancy:fb_textSize="19sp" />-->
 
-        app:theme="@style/TransparentBar">
+        <!--<mehdi.sakout.fancybuttons.FancyButton-->
+            <!--android:id="@+id/review_page"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--fancy:fb_borderColor="@color/primaryColor"-->
+
+
+            <!--fancy:fb_defaultColor="@color/primaryLightColor"-->
+            <!--fancy:fb_iconPaddingRight="18dp"-->
+            <!--fancy:fb_iconPaddingTop="12dp"-->
+
+            <!--fancy:fb_iconResource="@drawable/ic_book"-->
+            <!--fancy:fb_radius="8dp"-->
+            <!--fancy:fb_text="@string/review_word"-->
+            <!--fancy:fb_textColor="@color/primaryTextColor"-->
+            <!--fancy:fb_textSize="19sp" />-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?android:attr/actionBarSize"-->
+        <!--android:layout_marginTop="24dp"-->
+
+        <!--app:theme="@style/TransparentBar">-->
 
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
@@ -120,7 +127,7 @@
             <!--android:gravity="center_vertical"-->
             <!--android:text="About"-->
             <!--android:textSize="24sp" />-->
-    </android.support.v7.widget.Toolbar>
+    <!--</android.support.v7.widget.Toolbar>-->
 
 
 

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,20 +20,22 @@ import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
 import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
+public class ChosenWordFragment extends Fragment implements ChosenWordCallback, ChosenWordContract.View{
 
     private RecyclerView mRecyclerView;
-    private ChosenWorAdapter mAdapter;
+    private ChosenWordAdapter mAdapter;
     private FloatingActionButton mFab;
     private List<WordEntity> mWordEntityList = new ArrayList<>();
     private List<WordEntity> mChosenWords = new ArrayList<>();
     private ControlBottomSheetCallback mControlBottomSheetCallback;
+    private ChosenWordContract.Presenter mPresenter;
 
 
     public ChosenWordFragment() {
@@ -71,7 +72,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
         mRecyclerView = view.findViewById(R.id.chosenword_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
         ViewCompat.setNestedScrollingEnabled(mRecyclerView,false);
-        mAdapter = new ChosenWorAdapter(mWordEntityList,this);
+        mAdapter = new ChosenWordAdapter(mWordEntityList,this);
         mRecyclerView.setAdapter(mAdapter);
 
         mFab = view.findViewById(R.id.fab);
@@ -174,23 +175,50 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback{
     }
 
     @Override
-    public void onBottomSheetCollapsed(boolean isAdded) {
+    public void onBottomSheetCollapsed(boolean isAdded, StackEntity stackEntity) {
         if (isAdded) {
+
+
             Iterator<WordEntity> iterator = mWordEntityList.iterator();
+
             while (iterator.hasNext()) {
-                if (iterator.next().isSelected()) {
+                WordEntity current = iterator.next();
+                if (current.isSelected()) {
+
+                    current.setStackId(stackEntity.getId());
+                    current.setStackName(stackEntity.getStackName());
+                    mPresenter.addWord(current);
                     iterator.remove();
                 }
             }
 
+            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
+            mFab.setImageDrawable(SpeedyApplication.getAppContext().getDrawable(R.drawable.ic_file_unselected));
+            mFab.setClickable(false);
+            mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+            mChosenWords.clear();
             mAdapter.notifyDataSetChanged();
         } else {
-            mAdapter.resetChosenWordsColor();
+//            mAdapter.resetChosenWordsColor();
+
         }
     }
 
     @Override
-    public void onNewWordAdded(WordEntity wordEntity) {
+    public void onAddedToChosenFragment(WordEntity wordEntity) {
+
         mAdapter.addWord(wordEntity);
+        mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+    }
+
+    @Override
+    public void onAddedToLocalDatabase(List<WordEntity> wordEntityList) {
+
+    }
+
+    @Override
+    public void setPresenter(ChosenWordContract.Presenter presenter) {
+        mPresenter = presenter;
+
     }
 }

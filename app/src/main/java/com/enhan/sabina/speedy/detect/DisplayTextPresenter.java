@@ -1,13 +1,12 @@
 package com.enhan.sabina.speedy.detect;
 
-import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.tasks.DetectTextTask;
 import com.enhan.sabina.speedy.utils.ProcessTextUtil;
 
-public class DisplayTextPresenter implements DisplayTextConstract.Presenter,ProcessTextCallback{
-    private DisplayTextConstract.View mDetectPhotoView;
+public class DisplayTextPresenter implements DisplayTextContract.Presenter,ProcessTextCallback{
+    private DisplayTextContract.View mDetectPhotoView;
     private DataRepository mDataRepository;
 //
     private String mString = "The US financial regulator says Mr Musk's claims that he had secured funding to take the electric carmaker private were \"false and misleading\".\n" +
@@ -24,7 +23,7 @@ public class DisplayTextPresenter implements DisplayTextConstract.Presenter,Proc
             "Mr " +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
             "\n";
 
-    public DisplayTextPresenter(DisplayTextConstract.View detectPhotoView,DetectActivity activity,DataRepository dataRepository) {
+    public DisplayTextPresenter(DisplayTextContract.View detectPhotoView, DetectActivity activity, DataRepository dataRepository) {
         mDetectPhotoView = detectPhotoView;
         mDetectPhotoView.setPresenter(this);
         mDataRepository = dataRepository;

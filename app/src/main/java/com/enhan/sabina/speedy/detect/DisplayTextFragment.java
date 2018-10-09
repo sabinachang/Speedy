@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
@@ -14,18 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.SelectTextCallback;
-import com.enhan.sabina.speedy.camera.TakePhotoFragment;
 import com.enhan.sabina.speedy.utils.textselect.TextSelectView;
 
-public class DisplayTextFragment extends Fragment implements DisplayTextConstract.View, SelectTextCallback {
+public class DisplayTextFragment extends Fragment implements DisplayTextContract.View, SelectTextCallback {
 
-    private DisplayTextConstract.Presenter mPresenter;
+    private DisplayTextContract.Presenter mPresenter;
     private TextView mDisplayTextView;
     private LinearLayout mLinearLayout;
     private NestedScrollView mScrollView;
@@ -44,7 +40,7 @@ public class DisplayTextFragment extends Fragment implements DisplayTextConstrac
     }
 
     @Override
-    public void setPresenter(DisplayTextConstract.Presenter presenter) {
+    public void setPresenter(DisplayTextContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

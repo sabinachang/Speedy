@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
+import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHolder>{
@@ -23,9 +25,11 @@ class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHo
     private List<WordEntity> mWordEntities;
     private ControlBottomSheetCallback mBottomSheetCallback;
 
-    public StackItemAdapter(List<StackEntity> stackEntities, ControlBottomSheetCallback callback) {
-        mStackEntities = stackEntities;
+    public StackItemAdapter( ControlBottomSheetCallback callback) {
+//        mStackEntities = stackEntities;
         mBottomSheetCallback = callback;
+        mStackEntities = new ArrayList<>();
+
 
     }
 
@@ -63,15 +67,19 @@ class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHo
                 @Override
                 public void onClick(View view) {
 //                    mStackName.setTextColor(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark));
-                    mBottomSheetCallback.onStackSelected(mStackEntities.get(getAdapterPosition()).getStackName());
+                    mBottomSheetCallback.onStackSelected(mStackEntities.get(getAdapterPosition()));
+
 
                 }
             });
         }
     }
 
-    public void addStackName(StackEntity stackEntity) {
-        mStackEntities.add(stackEntity);
+    public void addStackNames(List<StackEntity> stackEntities) {
+
+        for (StackEntity entity : stackEntities) {
+            mStackEntities.add(entity);
+        }
         notifyDataSetChanged();
     }
 

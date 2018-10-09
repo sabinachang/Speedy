@@ -37,6 +37,7 @@ public interface DataSource {
         List<WordEntity> getWordsinStack(String stackName);
         void deleteStack(StackEntity stackEntity);
         StackEntity getStackInfo(String stackName);
+        void insertStack(StackEntity stackEntity);
         LiveData<List<StackEntity>> getAllStacks();
     }
 

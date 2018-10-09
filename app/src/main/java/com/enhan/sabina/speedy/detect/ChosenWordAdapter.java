@@ -15,12 +15,12 @@ import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.util.List;
 
-class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<ChosenWorAdapter.WordViewHolder> {
+class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<ChosenWordAdapter.WordViewHolder> {
 
     private List<WordEntity> mWordEntityList;
     private ChosenWordCallback mChosenWordCallback;
 
-    public ChosenWorAdapter(List<WordEntity> wordEntiyList, ChosenWordCallback chosenWordCallback) {
+    public ChosenWordAdapter(List<WordEntity> wordEntiyList, ChosenWordCallback chosenWordCallback) {
         mWordEntityList = wordEntiyList;
         mChosenWordCallback = chosenWordCallback;
 
@@ -97,4 +97,5 @@ class ChosenWorAdapter extends android.support.v7.widget.RecyclerView.Adapter<Ch
         mWordEntityList.add(wordEntity);
         notifyDataSetChanged();
     }
+
 }
