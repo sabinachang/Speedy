@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mGreetingTextView = findViewById(R.id.greetings);
+//        mGreetingTextView = findViewById(R.id.greetings);
 
-        mCameraButton = findViewById(R.id.camera_page);
-        mReviewButton = findViewById(R.id.review_page);
+//        mCameraButton = findViewById(R.id.camera_page);
+//        mReviewButton = findViewById(R.id.review_page);
 
         checkPermissionStatus();
     }
@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
 
         } else {
-            mCameraButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    transToTakePhoto();
-                }
-            });
+//            mCameraButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    transToTakePhoto();
+//                }
+//            });
 //            transToTakePhoto();
 
             determineTime();
@@ -73,16 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void determineTime() {
 
-        Calendar c = Calendar.getInstance();
-        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
-        if(timeOfDay >= 0 && timeOfDay < 12){
-            mGreetingTextView.setText(R.string.morning_greeting);
-        }else if(timeOfDay >= 12 && timeOfDay < 16){
-           mGreetingTextView.setText(R.string.afternoon_greeting);
-        }else if(timeOfDay >= 16 && timeOfDay < 24) {
-            mGreetingTextView.setText(R.string.evening_greeting);
-        }
+//        Calendar c = Calendar.getInstance();
+//        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+//
+//        if(timeOfDay >= 0 && timeOfDay < 12){
+//            mGreetingTextView.setText(R.string.morning_greeting);
+//        }else if(timeOfDay >= 12 && timeOfDay < 16){
+//           mGreetingTextView.setText(R.string.afternoon_greeting);
+//        }else if(timeOfDay >= 16 && timeOfDay < 24) {
+//            mGreetingTextView.setText(R.string.evening_greeting);
+//        }
 //        else if(timeOfDay >= 21 && timeOfDay < 24){
 //            Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
 //        }
@@ -101,13 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 ) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
 //                        transToTakePhoto();
-                        mCameraButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                transToTakePhoto();
-                            }
-                        });
-                        determineTime();
+//                        mCameraButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                transToTakePhoto();
+//                            }
+//                        }
+//
+//                        determineTime();
                     }
 
                 }

@@ -3,9 +3,9 @@
     <string name="morning_greeting">Good Morning!</string>
     <string name="afternoon_greeting">Good Afternoon!</string>
     <string name="evening_greeting">Good Evening!</string>
-    <string name="create_new_word">Create New Vocabs</string>
+    <string name="create_new_word">Create flashcards</string>
     <string name="pep_talk">Keep up the good work</string>
-    <string name="review_word">Review Old Vocabs</string>
+    <string name="review_word">Review flashcards</string>
     <string name="scan_result">Result</string>
     <string name="new_vocab">Words</string>
     <string name="word_found">Choose A Word</string>
