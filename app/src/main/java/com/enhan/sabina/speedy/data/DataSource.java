@@ -31,14 +31,18 @@ public interface DataSource {
         void storeImage(Bitmap bitmap);
         Bitmap retrieveImageForGoogle();
         void startTextDetection(DetectTextCallback callback, Bitmap bitmap);
+
+        // DB operations
         void insertWord(WordEntity wordEntity);
         void updateWord(WordEntity wordEntity);
         void deleteWord(WordEntity wordEntity);
-        List<WordEntity> getWordsinStack(String stackName);
+        List<WordEntity> getWordsInStack(String stackName);
         void deleteStack(StackEntity stackEntity);
-        StackEntity getStackInfo(String stackName);
+        void getStackInfo(String stackName);
         void insertStack(StackEntity stackEntity);
         LiveData<List<StackEntity>> getAllStacks();
+        void updateStack(StackEntity stackEntity);
+
     }
 
     interface Local {

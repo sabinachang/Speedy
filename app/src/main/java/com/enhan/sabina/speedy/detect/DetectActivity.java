@@ -1,6 +1,7 @@
 package com.enhan.sabina.speedy.detect;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,10 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +66,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     private int mSearchComplete;
     private DetectContract.Presenter mPresenter;
     private ViewPagerAdapter mViewPagerAdapter;
+    private FloatingActionButton mFab;
 
 
     @Override
@@ -97,6 +101,16 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mAddStackBtn = findViewById(R.id.add_stack_to_recyclerview);
         mStackUserInput = findViewById(R.id.stack_name_add);
         mDefinitionCard = findViewById(R.id.definition_preview);
+        mFab = findViewById(R.id.fab);
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onFabButtonClicked();
+            }
+        });
+//        mFab.setClickable(false);
+        mFab.hide();
 
         mFragmentList.add(displayTextFragment);
         mFragmentList.add(chosenWordFragment);
@@ -123,9 +137,11 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             @Override
             public void onPageSelected(int i) {
                 if (i == 1) {
-                    mAppBarLayout.setExpanded(false);
+//                    mAppBarLayout.setExpanded(false);
+                    mFab.show();
                 } else {
-                    mAppBarLayout.setExpanded(true);
+//                    mAppBarLayout.setExpanded(true);
+                    mFab.hide();
                 }
             }
 
@@ -243,7 +259,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     }
 
     @Override
-    public void onFabButtonClicked(List<WordEntity> wordEntityList) {
+    public void onFabButtonClicked() {
         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
@@ -266,6 +282,24 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     public void updateTabCountHint(int num) {
         mViewPagerAdapter.tabTitles[1] = "Words (" + num + ")";
         mViewPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void activateFab() {
+        mFab.show();
+        mFab.setImageDrawable(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_file_selected));
+        mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark)));
+
+        mFab.setClickable(true);
+    }
+
+    @Override
+    public void deactivateFab() {
+        mFab.show();
+        mFab.setImageDrawable(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_file_unselected));
+
+        mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorAccent)));
+        mFab.setClickable(false);
     }
 
     @Override

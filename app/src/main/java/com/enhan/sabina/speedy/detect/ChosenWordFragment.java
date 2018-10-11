@@ -71,19 +71,19 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.chosenword_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
-        ViewCompat.setNestedScrollingEnabled(mRecyclerView,false);
+//        ViewCompat.setNestedScrollingEnabled(mRecyclerView,false);
         mAdapter = new ChosenWordAdapter(mWordEntityList,this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mFab = view.findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mControlBottomSheetCallback.onFabButtonClicked(mChosenWords);
-            }
-        });
+//        mFab = view.findViewById(R.id.fab);
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mControlBottomSheetCallback.onFabButtonClicked(mChosenWords);
+//            }
+//        });
 
-        mFab.setClickable(false);
+//        mFab.setClickable(false);
         initWordList();
 
     }
@@ -134,9 +134,12 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     @Override
     public void onSelected(WordEntity wordEntity) {
         if (mChosenWords.isEmpty()) {
-            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.secondaryColorDark)));
-            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_selected));
-            mFab.setClickable(true);
+
+            mControlBottomSheetCallback.activateFab();
+
+//            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.secondaryColorDark)));
+//            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_selected));
+//            mFab.setClickable(true);
         }
         mChosenWords.add(wordEntity);
         Log.d("Chosen word","add:" + wordEntity.getWord());
@@ -168,9 +171,11 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
         }
 
         if (mChosenWords.isEmpty()) {
-            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
-            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_unselected));
-            mFab.setClickable(false);
+
+            mControlBottomSheetCallback.deactivateFab();
+//            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
+//            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_unselected));
+//            mFab.setClickable(false);
         }
     }
 
@@ -192,9 +197,11 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
                 }
             }
 
-            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
-            mFab.setImageDrawable(SpeedyApplication.getAppContext().getDrawable(R.drawable.ic_file_unselected));
-            mFab.setClickable(false);
+            mControlBottomSheetCallback.deactivateFab();
+
+//            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
+//            mFab.setImageDrawable(SpeedyApplication.getAppContext().getDrawable(R.drawable.ic_file_unselected));
+//            mFab.setClickable(false);
             mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
             mChosenWords.clear();
             mAdapter.notifyDataSetChanged();

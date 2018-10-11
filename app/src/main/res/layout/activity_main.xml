@@ -71,7 +71,7 @@
             android:id="@+id/camera_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="192dp"
+            android:layout_marginBottom="184dp"
             android:layout_marginEnd="60dp"
             android:text="@string/create_new_word"
             android:textColor="@color/colorAccentMainLogo"

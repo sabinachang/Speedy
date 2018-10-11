@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.camera.CameraActivity;
+import com.enhan.sabina.speedy.detect.DetectActivity;
+import com.enhan.sabina.speedy.study.StudyActivity;
 import com.enhan.sabina.speedy.utils.ConstantVariable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,8 +40,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class MainActivity extends AppCompatActivity {
 
     private TextView mGreetingTextView;
-    private FancyButton mCameraButton;
-    private FancyButton mReviewButton;
+    private TextView mCameraButton;
+    private TextView mReviewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        mGreetingTextView = findViewById(R.id.greetings);
 
-//        mCameraButton = findViewById(R.id.camera_page);
-//        mReviewButton = findViewById(R.id.review_page);
+        mCameraButton = findViewById(R.id.camera_page);
+        mReviewButton = findViewById(R.id.preview_page);
 
         checkPermissionStatus();
     }
@@ -59,16 +61,30 @@ public class MainActivity extends AppCompatActivity {
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
 
         } else {
-//            mCameraButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    transToTakePhoto();
-//                }
-//            });
+            mCameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    transToTakePhoto();
+                }
+            });
+
+            mReviewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    transToReview();
+                }
+            });
 //            transToTakePhoto();
 
-            determineTime();
+//            determineTime();
         }
+    }
+
+    private void transToReview() {
+        Intent reviewIntent = new Intent(MainActivity.this,StudyActivity.class);
+
+        Log.d("Main","starting review");
+        startActivity(reviewIntent);
     }
 
     private void determineTime() {
@@ -91,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
     private void transToTakePhoto() {
 
         Intent takePhotoIntent = new Intent(this,CameraActivity.class);
-        startActivity(takePhotoIntent);
+        Intent detectIntent = new Intent(MainActivity.this,DetectActivity.class);
+        startActivity(detectIntent);
     }
 
     @Override
@@ -101,12 +118,12 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 ) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
 //                        transToTakePhoto();
-//                        mCameraButton.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                transToTakePhoto();
-//                            }
-//                        }
+                        mCameraButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                transToTakePhoto();
+                            }
+                        });
 //
 //                        determineTime();
                     }

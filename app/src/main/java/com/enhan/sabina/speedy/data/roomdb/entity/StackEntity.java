@@ -3,6 +3,7 @@ package com.enhan.sabina.speedy.data.roomdb.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "stack_table")
@@ -17,6 +18,9 @@ public class StackEntity {
 
     @ColumnInfo(name = "name")
     private String mStackName;
+
+    @Ignore
+    private boolean isSelected = false;
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -44,5 +48,13 @@ public class StackEntity {
 
     public void setStackName(String stackName) {
         mStackName = stackName;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

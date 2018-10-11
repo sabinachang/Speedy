@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.enhan.sabina.speedy.SpeedyApplication;
+import com.enhan.sabina.speedy.callbacks.DataRepositoryCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
@@ -21,16 +22,19 @@ import com.enhan.sabina.speedy.data.roomdb.dao.StackDao;
 import com.enhan.sabina.speedy.data.roomdb.dao.WordDao;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
+import com.enhan.sabina.speedy.study.StudyPresenter;
 import com.enhan.sabina.speedy.tasks.DeleteStackTask;
 import com.enhan.sabina.speedy.tasks.DeleteWordTask;
+import com.enhan.sabina.speedy.tasks.GetStackInfoTask;
 import com.enhan.sabina.speedy.tasks.InsertStackTask;
 import com.enhan.sabina.speedy.tasks.InsertWordTask;
+import com.enhan.sabina.speedy.tasks.UpdateStackTask;
 import com.enhan.sabina.speedy.tasks.UpdateWordTask;
 
 import java.io.File;
 import java.util.List;
 
-public class DataRepository implements DataSource.Repository{
+public class DataRepository implements DataSource.Repository,DataRepositoryCallback{
 
     private static DataRepository INSTANCE = null;
     private AndroidData mAndroidDataSource;
@@ -38,6 +42,7 @@ public class DataRepository implements DataSource.Repository{
     private WordDao mWordDao;
     private StackDao mStackDao;
     private LiveData<List<StackEntity>> mAllStacks;
+    private StudyPresenter mStudyPresenter;
 
     private DataRepository() {
         AppDatabase db = AppDatabase.getsInstance(SpeedyApplication.getAppContext());
@@ -52,6 +57,10 @@ public class DataRepository implements DataSource.Repository{
                 INSTANCE = new DataRepository();
             }
             return INSTANCE;
+    }
+
+    public void setPresenter(StudyPresenter studyPresenter){
+        mStudyPresenter = studyPresenter;
     }
 
     @Override
@@ -102,7 +111,7 @@ public class DataRepository implements DataSource.Repository{
     }
 
     @Override
-    public List<WordEntity> getWordsinStack(String stackName) {
+    public List<WordEntity> getWordsInStack(String stackName) {
         return mWordDao.getWordsInStack(stackName);
     }
 
@@ -112,8 +121,8 @@ public class DataRepository implements DataSource.Repository{
     }
 
     @Override
-    public StackEntity getStackInfo(String stackName) {
-        return null ;
+    public void getStackInfo(String stackName) {
+        new GetStackInfoTask(mStackDao).execute(stackName);
     }
 
     @Override
@@ -129,8 +138,17 @@ public class DataRepository implements DataSource.Repository{
     }
 
     @Override
+    public void updateStack(StackEntity stackEntity) {
+        new UpdateStackTask(mStackDao).execute(stackEntity);
+    }
+
+    @Override
     public Bitmap retrieveImageForGoogle() {
         return mLocalDataRepository.retrieveImageForGoogle();
     }
 
+    @Override
+    public void onReceiveStackInfo(StackEntity stackEntity) {
+        mStudyPresenter.returnStackName(stackEntity);
+    }
 }

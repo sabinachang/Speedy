@@ -185,7 +185,7 @@
                     android:text=""
                     android:layout_width="match_parent"
                     android:textSize="20dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="start"
                     android:layout_marginStart="20dp"
                     android:textColor="@color/colorAccent"
                     android:layout_height="wrap_content" />
@@ -423,6 +423,21 @@
         app:layout_anchor="@id/word_tagline"
         app:layout_anchorGravity="end|top" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+
+
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/ic_file_unselected"
+        app:fabCustomSize="60dp"
+        app:fabSize="normal"
+        />
 
 
 </android.support.design.widget.CoordinatorLayout>

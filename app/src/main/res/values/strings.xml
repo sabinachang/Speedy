@@ -10,4 +10,7 @@
     <string name="new_vocab">Words</string>
     <string name="word_found">Choose A Word</string>
     <string name="add_stack">Add New Stack</string>
+    <string name="choose_stack">Current Stacks</string>
+    <string name="choose_stack_prompt">Pick one to study!</string>
+    <string name="word_count">Words</string>
 </resources>
