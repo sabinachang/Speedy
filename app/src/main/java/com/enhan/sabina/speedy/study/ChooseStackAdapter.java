@@ -17,13 +17,13 @@ import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-class StudyStackAdapter extends RecyclerView.Adapter<StudyStackAdapter.StudyStackViewHolder>{
+class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudyStackViewHolder>{
 
     private List<StackEntity> mStackEntities = new ArrayList<>();
     private ChooseStackCallback mChooseStackCallback;
     private int mPreviousPosition = -1;
 
-    public StudyStackAdapter(ChooseStackCallback chooseStackCallback) {
+    public ChooseStackAdapter(ChooseStackCallback chooseStackCallback) {
         mChooseStackCallback = chooseStackCallback;
     }
 

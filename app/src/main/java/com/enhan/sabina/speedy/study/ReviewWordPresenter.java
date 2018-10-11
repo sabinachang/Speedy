@@ -1,5 +1,6 @@
 package com.enhan.sabina.speedy.study;
 
+import com.enhan.sabina.speedy.callbacks.ReviewWordCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
@@ -16,8 +17,8 @@ public class ReviewWordPresenter implements ReviewWordContract.Presenter {
     }
 
     @Override
-    public List<WordEntity> getWordsInStack(String stackName) {
-        return mDataRepository.getWordsInStack(stackName);
+    public void getWordsInStack(String stackName) {
+        mDataRepository.getWordsInStack(stackName,(ReviewWordCallback)mView);
     }
 
     @Override

@@ -1,23 +1,14 @@
 package com.enhan.sabina.speedy.study;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-
 import com.enhan.sabina.speedy.data.DataRepository;
-import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
-import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
-
-import java.util.List;
-import java.util.Stack;
 
 public class StudyPresenter implements StudyContract.Presenter {
 
     private DataRepository mDataRepository;
     private StudyContract.View mView;
-    private StudyStackAdapter mAdapter;
+    private ChooseStackAdapter mAdapter;
 
-    public StudyPresenter(StudyContract.View view,StudyStackAdapter adapter) {
+    public StudyPresenter(StudyContract.View view,ChooseStackAdapter adapter) {
 //        mView = view;
 //        mAdapter = adapter;
 //        mDataRepository = DataRepository.getInstance();

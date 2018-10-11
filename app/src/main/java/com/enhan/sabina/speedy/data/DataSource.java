@@ -10,6 +10,7 @@ import android.support.v4.content.FileProvider;
 import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
+import com.enhan.sabina.speedy.callbacks.ReviewWordCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
@@ -37,7 +38,7 @@ public interface DataSource {
         void insertWord(WordEntity wordEntity);
         void updateWord(WordEntity wordEntity);
         void deleteWord(WordEntity wordEntity);
-        List<WordEntity> getWordsInStack(String stackName);
+        void getWordsInStack(String stackName, ReviewWordCallback reviewWordCallback);
         void deleteStack(StackEntity stackEntity);
         void getStackInfo(String stackName, ChooseStackCallback chooseStackCallback);
         void insertStack(StackEntity stackEntity);

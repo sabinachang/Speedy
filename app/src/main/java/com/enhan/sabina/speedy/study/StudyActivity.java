@@ -48,7 +48,7 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
 
         if (mChooseStackFragment == null){
             mChooseStackFragment = ChooseStackFragment.newInstance();
-            mChooseStackPresenter = new ChooseStackPresenter(mChooseStackFragment);
+//            mChooseStackPresenter = new ChooseStackPresenter(mChooseStackFragment);
         }
 
         if (mReviewWordFragment != null) transaction.hide(mReviewWordFragment);
@@ -70,11 +70,11 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
 
         if (mReviewWordFragment == null) {
             mReviewWordFragment = ReviewWordFragment.newInstance();
-            mReviewWordPresenter = new ReviewWordPresenter(mReviewWordFragment);
+
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(stackName,"");
+        bundle.putString("stackName",stackName);
         mReviewWordFragment.setArguments(bundle);
 
         if (mChooseStackFragment != null) transaction.hide(mChooseStackFragment);

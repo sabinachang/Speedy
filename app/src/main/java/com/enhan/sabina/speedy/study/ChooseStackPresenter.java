@@ -15,7 +15,7 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
 
     private DataRepository mDataRepository;
     private ChooseStackContract.View mView;
-    private StudyStackAdapter mAdapter;
+    private ChooseStackAdapter mAdapter;
 
     public ChooseStackPresenter(ChooseStackContract.View view) {
         mView = view;
@@ -23,7 +23,13 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
         mDataRepository = DataRepository.getInstance();
 
 
+//        mView.setPresenter(this);
+
+
+
     }
+
+
     @Override
     public void start() {
         Observer<List<StackEntity>> observer = new Observer<List<StackEntity>>() {
@@ -33,8 +39,8 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
             }
         };
 
-        mDataRepository.getAllStacks().observe((StudyActivity)mView,observer);
-//        populateFakeDB();
+        mDataRepository.getAllStacks().observe((ChooseStackFragment)mView,observer);
+        populateFakeDB();
     }
 
     private void populateFakeDB() {
@@ -108,7 +114,7 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
     }
 
     @Override
-    public void addAdapter(StudyStackAdapter adapter) {
+    public void addAdapter(ChooseStackAdapter adapter) {
         mAdapter = adapter;
     }
 }

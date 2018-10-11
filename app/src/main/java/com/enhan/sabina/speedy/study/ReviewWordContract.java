@@ -13,6 +13,6 @@ public interface ReviewWordContract {
     }
 
     interface Presenter extends BasePresenter{
-        List<WordEntity> getWordsInStack(String stackName);
+        void getWordsInStack(String stackName);
     }
 }

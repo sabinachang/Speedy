@@ -15,6 +15,7 @@ import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DataRepositoryCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
+import com.enhan.sabina.speedy.callbacks.ReviewWordCallback;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
 import com.enhan.sabina.speedy.data.local.LocalDataRepository;
 import com.enhan.sabina.speedy.data.remote.GoogleTextDetectionApi;
@@ -27,6 +28,7 @@ import com.enhan.sabina.speedy.study.StudyPresenter;
 import com.enhan.sabina.speedy.tasks.DeleteStackTask;
 import com.enhan.sabina.speedy.tasks.DeleteWordTask;
 import com.enhan.sabina.speedy.tasks.GetStackInfoTask;
+import com.enhan.sabina.speedy.tasks.GetWordsTask;
 import com.enhan.sabina.speedy.tasks.InsertStackTask;
 import com.enhan.sabina.speedy.tasks.InsertWordTask;
 import com.enhan.sabina.speedy.tasks.UpdateStackTask;
@@ -112,8 +114,8 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     }
 
     @Override
-    public List<WordEntity> getWordsInStack(String stackName) {
-        return mWordDao.getWordsInStack(stackName);
+    public void getWordsInStack(String stackName, ReviewWordCallback reviewWordCallback) {
+        new GetWordsTask(mWordDao,reviewWordCallback).execute(stackName);
     }
 
     @Override
@@ -150,6 +152,6 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
 
     @Override
     public void onReceiveStackInfo(StackEntity stackEntity) {
-        mStudyPresenter.returnStackName(stackEntity);
+//        mStudyPresenter.returnStackName(stackEntity);
     }
 }
