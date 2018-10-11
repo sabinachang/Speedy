@@ -3,6 +3,7 @@ package com.enhan.sabina.speedy.study;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
+import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
@@ -49,17 +50,13 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
         stackEntity = new StackEntity("Venture deals");
         mDataRepository.insertStack(stackEntity);
 
-        mDataRepository.getStackInfo("First Stack ABC");
-        mDataRepository.getStackInfo("Janet Paris 1789");
-        mDataRepository.getStackInfo("Venture deals");
-
-
-
-
+        mDataRepository.getStackInfo("First Stack ABC",(ChooseStackCallback) mView);
+        mDataRepository.getStackInfo("Janet Paris 1789",(ChooseStackCallback) mView);
+        mDataRepository.getStackInfo("Venture deals",(ChooseStackCallback) mView);
 //
     }
 
-
+    @Override
     public void returnStackName(StackEntity stackEntity) {
 
         if ("First Stack ABC".equals(stackEntity.getStackName())) {

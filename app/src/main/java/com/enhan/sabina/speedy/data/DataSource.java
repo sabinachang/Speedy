@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
+import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
@@ -38,7 +39,7 @@ public interface DataSource {
         void deleteWord(WordEntity wordEntity);
         List<WordEntity> getWordsInStack(String stackName);
         void deleteStack(StackEntity stackEntity);
-        void getStackInfo(String stackName);
+        void getStackInfo(String stackName, ChooseStackCallback chooseStackCallback);
         void insertStack(StackEntity stackEntity);
         LiveData<List<StackEntity>> getAllStacks();
         void updateStack(StackEntity stackEntity);

@@ -2,6 +2,7 @@ package com.enhan.sabina.speedy.study;
 
 import com.enhan.sabina.speedy.BasePresenter;
 import com.enhan.sabina.speedy.BaseView;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 
 public interface ChooseStackContract {
 
@@ -11,5 +12,6 @@ public interface ChooseStackContract {
 
     interface Presenter extends BasePresenter {
         void addAdapter(StudyStackAdapter adapter);
+        void returnStackName(StackEntity stackEntity);
     }
 }
