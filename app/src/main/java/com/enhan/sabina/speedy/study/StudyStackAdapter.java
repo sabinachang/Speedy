@@ -1,9 +1,6 @@
 package com.enhan.sabina.speedy.study;
 
-import android.arch.lifecycle.LiveData;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,22 +11,20 @@ import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
-import com.enhan.sabina.speedy.callbacks.StudyCallback;
+import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.SAXParser;
-
 class StudyStackAdapter extends RecyclerView.Adapter<StudyStackAdapter.StudyStackViewHolder>{
 
     private List<StackEntity> mStackEntities = new ArrayList<>();
-    private StudyCallback mStudyCallback;
+    private ChooseStackCallback mChooseStackCallback;
     private int mPreviousPosition = -1;
 
-    public StudyStackAdapter(StudyCallback studyCallback) {
-        mStudyCallback = studyCallback;
+    public StudyStackAdapter(ChooseStackCallback chooseStackCallback) {
+        mChooseStackCallback = chooseStackCallback;
     }
 
     @NonNull
@@ -84,7 +79,7 @@ class StudyStackAdapter extends RecyclerView.Adapter<StudyStackAdapter.StudyStac
                     StackEntity stackEntity = mStackEntities.get(getAdapterPosition());
                     if (!stackEntity.isSelected()) {
                         stackEntity.setSelected(true);
-                        mStudyCallback.onStackSelected(stackEntity);
+                        mChooseStackCallback.onStackSelected(stackEntity);
                     } else {
                         stackEntity.setSelected(false);
                     }
