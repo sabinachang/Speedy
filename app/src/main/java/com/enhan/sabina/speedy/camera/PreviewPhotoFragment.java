@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.enhan.sabina.speedy.R;
@@ -26,8 +27,8 @@ import com.enhan.sabina.speedy.utils.ImageUtils;
 public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContract.View{
 
     private ImageView mPreviewImageView;
-    private Button mAcceptBtn;
-    private Button mDenyBtn;
+    private FrameLayout mAcceptBtn;
+    private FrameLayout mDenyBtn;
     private PreviewPhotoContract.Presenter mPresenter;
     private DataRepository mDataRepository;
     private Bitmap mBitmap;

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="14dp"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
@@ -12,8 +12,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:paddingTop="8dp"
-        android:layout_height="60dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/secondaryColorDark"
         app:titleTextColor="@color/colorAccent"
         app:title="Review Vocab"
@@ -23,7 +22,8 @@
         android:id="@+id/study_fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:padding="10dp"/>
 
     <!--<android.support.constraint.ConstraintLayout-->
 

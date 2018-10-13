@@ -36,7 +36,7 @@ public class ImageUtils {
             wm.getDefaultDisplay().getMetrics(metrics);
 
 
-            float height = metrics.heightPixels / 0.8f;
+            float height = metrics.heightPixels ;
             float width =  metrics.widthPixels;
             int noCompress = 1;
             if (originalWidth > originalHeight && originalWidth > width) {

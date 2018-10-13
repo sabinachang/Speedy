@@ -6,103 +6,119 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-    <android.support.constraint.ConstraintLayout
 
-        android:id="@+id/stack_preview"
-        android:layout_width="match_parent"
-        android:layout_height="216dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/stack_preview_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="5dp">
-
-        <TextView
-            android:id="@+id/study_stack_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="80dp"
-            android:text="@string/choose_stack_prompt"
-            android:textColor="@color/colorAccent"
-            android:textSize="22dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <View
-            android:id="@+id/view"
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:layout_marginBottom="52dp"
-            android:layout_marginEnd="20dp"
-
-            android:layout_marginStart="20dp"
-            android:background="@drawable/stack_preview_line"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-        <TextView
-            android:id="@+id/view_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="14dp"
-            android:textColor="@color/colorAccent"
-
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:text="12 words" />
 
-        <ImageView
-            android:id="@+id/start_study"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintVertical_bias="0.272">
 
+            <android.support.constraint.ConstraintLayout
 
-    </android.support.constraint.ConstraintLayout>
+                android:id="@+id/stack_preview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.8"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="8dp"
 
-    <RelativeLayout
-        android:background="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="321dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stack_preview"
-        app:layout_constraintVertical_bias="0.272">
+                android:background="@drawable/stack_preview_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:elevation="5dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/study_stack_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/study_stack_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="68dp"
+                    android:text="@string/choose_stack_prompt"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="21dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_marginBottom="8dp"
 
-        </android.support.v7.widget.RecyclerView>
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/stack_preview_line"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-    </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/view_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/study_stack_name"
+                    tools:text="12 words" />
+
+                <ImageView
+                    android:id="@+id/start_study"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="28dp"
+                    android:src="@drawable/ic_next"
+                    app:layout_constraintBottom_toTopOf="@+id/view"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/study_stack_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="13dp"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:scrollbars="vertical"
+
+
+
+
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

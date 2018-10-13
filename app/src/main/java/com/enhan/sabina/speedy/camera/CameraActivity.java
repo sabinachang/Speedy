@@ -16,6 +16,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,6 +33,8 @@ import com.enhan.sabina.speedy.detect.DetectActivity;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+
+import javax.xml.parsers.SAXParser;
 
 public class CameraActivity extends AppCompatActivity implements TakePhotoCallback,PreviewPhotoCallback {
 
@@ -63,6 +67,12 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         setContentView(R.layout.activity_camera);
 
         mDataRepository = DataRepository.getInstance();
+
+        Window window = getWindow();
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.secondaryColorDark));
 
         transToTakePhoto();
     }
@@ -141,13 +151,17 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         // 图片格式
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
         options.setToolbarTitle("");
-//        options.setDimmedLayerColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorPrimaryLight));
-//        options.setRootViewBackgroundColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
+//        options.setDimmedLayerColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.primaryColor));
+        options.setRootViewBackgroundColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.primaryColor));
         // 设置图片压缩质量
+        options.setCropFrameColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
+        options.setToolbarWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
         options.setCompressionQuality(100);
         // 是否让用户调整范围(默认false)，如果开启，可能会造成剪切的图片的长宽比不是设定的
         // 如果不开启，用户不能拖动选框，只能缩放图片
         options.setFreeStyleCropEnabled(true);
+        options.setToolbarCancelDrawable(R.drawable.ic_retake);
+        options.setToolbarCropDrawable(R.drawable.ic_next);
         // 设置图片压缩质量
         options.setCompressionQuality(100);
         options.setActiveWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));

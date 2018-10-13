@@ -8,10 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        mGreetingTextView = findViewById(R.id.greetings);
@@ -52,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         mCameraButton = findViewById(R.id.camera_page);
         mReviewButton = findViewById(R.id.preview_page);
 
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.secondaryColorDark));
         checkPermissionStatus();
     }
 
@@ -74,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     transToReview();
                 }
             });
-            transToTakePhoto();
+//            transToTakePhoto();
 
 //            determineTime();
         }
