@@ -13,4 +13,5 @@
     <string name="choose_stack">Current Stacks</string>
     <string name="choose_stack_prompt">Pick one to study!</string>
     <string name="word_count">Words</string>
+    <string name="crop_image"></string>
 </resources>

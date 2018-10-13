@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     transToReview();
                 }
             });
-//            transToTakePhoto();
+            transToTakePhoto();
 
 //            determineTime();
         }
@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
     private void transToTakePhoto() {
 
         Intent takePhotoIntent = new Intent(this,CameraActivity.class);
-        Intent detectIntent = new Intent(MainActivity.this,DetectActivity.class);
-        startActivity(detectIntent);
+//        Intent detectIntent = new Intent(MainActivity.this,DetectActivity.class);
+        startActivity(takePhotoIntent);
     }
 
     @Override

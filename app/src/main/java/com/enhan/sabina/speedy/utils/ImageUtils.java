@@ -4,7 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+
+import com.enhan.sabina.speedy.SpeedyApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,8 +29,15 @@ public class ImageUtils {
             int originalWidth = options.outWidth;
             int originalHeight = options.outHeight;
             if (originalHeight == -1 || originalWidth == -1) return null;
-            float height = 1280f;
-            float width =  980f;
+
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(metrics);
+
+
+            float height = metrics.heightPixels / 0.8f;
+            float width =  metrics.widthPixels;
             int noCompress = 1;
             if (originalWidth > originalHeight && originalWidth > width) {
                 noCompress = (int) (originalWidth / width);

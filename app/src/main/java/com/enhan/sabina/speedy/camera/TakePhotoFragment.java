@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.enhan.sabina.speedy.R;
+import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.TakePhotoCallback;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,9 +56,19 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     private Uri mPhotoUri;
     private Uri mLocalUri;
     private TakePhotoContract.Presenter mPresenter;
+    private CameraActivity mActivity;
 
     public TakePhotoFragment() {
 
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof CameraActivity) {
+            mTakePhotoCallback = (TakePhotoCallback) context;
+        }
     }
 
     public static TakePhotoFragment newInstance() {
@@ -75,18 +88,27 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG,"in onactivityResult");
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_TAKE_PHOTO :
                     if (null != mPhotoUri) {
                         mLocalUri = mPhotoUri;
-                        mPresenter.onPhotoReceived(mLocalUri);
+                        Log.d(TAG,"" + mLocalUri);
+                        mTakePhotoCallback.startCroppingActivity(mLocalUri);
+
+//                        mPresenter.onPhotoReceived(mLocalUri);
 
                     }
+                    break;
+
             }
         }
     }
+
+
 
     @Override
     public void onResume() {
@@ -113,6 +135,8 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     @Override
     public void startCameraIntent(Intent intent,Uri photoUri) {
         mPhotoUri = photoUri;
+        Log.d(TAG,"starting take photo ");
+
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 }
