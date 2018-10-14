@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/secondaryColorDark"/>
+    <item android:drawable="@color/colorAccent"/>
     <item
         android:right="-50dp"
         android:left="-150dp"
-        android:top="390dp"
+        android:top="450dp"
         android:bottom="-200dp">
         <rotate
-            android:fromDegrees="-18"
+            android:fromDegrees="13"
             android:pivotX="20%"
             android:pivotY="0%">
             <shape
                 android:shape="rectangle">
-                <solid android:color="@color/secondaryColorDarkAlpha">
+                <solid android:color="@color/colorAccentDarkAlpha">
+                </solid>
+            </shape>
+        </rotate>
+    </item>
+    <item
+        android:right="-50dp"
+        android:left="-150dp"
+        android:top="620dp"
+        android:bottom="-200dp">
+        <rotate
+            android:fromDegrees="-23"
+            android:pivotX="20%"
+            android:pivotY="0%">
+            <shape
+                android:shape="rectangle">
+                <solid android:color="@color/colorAccentDarkAlpha">
                 </solid>
             </shape>
         </rotate>
@@ -21,15 +37,15 @@
     <item
         android:right="-50dp"
         android:left="-150dp"
-        android:top="500dp"
+        android:top="670dp"
         android:bottom="-200dp">
         <rotate
-            android:fromDegrees="-18"
-            android:pivotX="20%"
+            android:fromDegrees="-16"
+            android:pivotX="2%"
             android:pivotY="0%">
             <shape
                 android:shape="rectangle">
-                <solid android:color="@color/colorAccentDarkAlpha">
+                <solid android:color="@color/colorAccentAlpha">
                 </solid>
             </shape>
         </rotate>

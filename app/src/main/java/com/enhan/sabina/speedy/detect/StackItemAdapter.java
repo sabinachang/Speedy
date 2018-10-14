@@ -77,9 +77,11 @@ class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHo
 
     public void addStackNames(List<StackEntity> stackEntities) {
 
-        for (StackEntity entity : stackEntities) {
-            mStackEntities.add(entity);
-        }
+//        for (StackEntity entity : stackEntities) {
+//            mStackEntities.add(entity);
+//        }
+
+        mStackEntities = stackEntities;
         notifyDataSetChanged();
     }
 

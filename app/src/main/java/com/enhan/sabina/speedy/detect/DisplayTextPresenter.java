@@ -31,14 +31,14 @@ public class DisplayTextPresenter implements DisplayTextContract.Presenter,Proce
     }
     @Override
     public void start() {
-//        mDataRepository.startTextDetection(new ProcessTextUtil(this),mDataRepository.retrieveImageForGoogle());
-//        new DetectTextTask(new ProcessTextUtil(this)).execute(mDataRepository.retrieveImageForGoogle());
-        mDetectPhotoView.displayDetectedText(mString);
+        mDataRepository.startTextDetection(new ProcessTextUtil(this),mDataRepository.retrieveImageForGoogle());
+        new DetectTextTask(new ProcessTextUtil(this)).execute(mDataRepository.retrieveImageForGoogle());
+//        mDetectPhotoView.displayDetectedText(mString);
     }
 
     @Override
     public void processedText(String text) {
-//        mDetectPhotoView.displayDetectedText(text);
+        mDetectPhotoView.displayDetectedText(text);
     }
 
 //    @Override

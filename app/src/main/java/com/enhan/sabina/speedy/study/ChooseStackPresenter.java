@@ -7,6 +7,7 @@ import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
+import com.enhan.sabina.speedy.detect.DetectActivity;
 
 import java.util.List;
 
@@ -36,11 +37,13 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
             @Override
             public void onChanged(@Nullable List<StackEntity> stackEntities) {
                 mAdapter.addStacks(stackEntities);
+                mDataRepository.getAllStacks().removeObservers((ChooseStackFragment)mView);
+
             }
         };
 
         mDataRepository.getAllStacks().observe((ChooseStackFragment)mView,observer);
-        populateFakeDB();
+//        populateFakeDB();
     }
 
     private void populateFakeDB() {

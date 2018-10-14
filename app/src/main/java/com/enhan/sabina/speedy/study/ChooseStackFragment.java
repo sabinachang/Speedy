@@ -92,6 +92,8 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
         mPresenter.returnStackName(stackEntity);
     }
 
+
+
     @Override
     public void onStackSelected(StackEntity stackEntity) {
         mStudyStackName.setText(stackEntity.getStackName());

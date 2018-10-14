@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
@@ -53,7 +54,7 @@ public class ReviewWordAdapter extends RecyclerView.Adapter<ReviewWordAdapter.Wo
 
         private TextView mWord;
         private TextView mDefinition;
-        private Button mFlip;
+        private ImageView mFlip;
 
         public WordViewHolder(@NonNull View itemView) {
             super(itemView);

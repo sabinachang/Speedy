@@ -71,4 +71,6 @@ public class ReviewWordFragment extends Fragment implements ReviewWordContract.V
                 .build());
         mDiscreteScrollView.setAdapter(new ReviewWordAdapter(wordEntityList));
     }
+
+
 }

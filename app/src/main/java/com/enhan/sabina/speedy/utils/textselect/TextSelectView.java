@@ -120,10 +120,12 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 //        Log.d(TAG,"canvas"+ canvas.getWidth());
 //        Log.d(TAG,"line #" + mLinseData.size());
 
-            for (ShowLine line : mLinseData) {
-                DrawLineText(line, canvas);
+        for (ShowLine line : mLinseData) {
+            DrawLineText(line, canvas);
 
-            }
+        }
+
+            LineYPosition = 0;
 
 
 
@@ -641,6 +643,9 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
 
     private void DrawLineText(ShowLine line, Canvas canvas) {
+
+        Log.d(TAG,"draw line text, liny = " + LineYPosition);
+
         canvas.drawText(line.getLineData(), offset, LineYPosition, mPaint);
         //canvas.drawLine(0f, LineYPosition, 680f, LineYPosition, mTextSelectPaint);
 //        Log.d(TAG,"draw line text ");

@@ -129,9 +129,9 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     public void onPhotoAccepted() {
         // call appropriate activity
         Log.d(TAG,"photo accepted");
-//        Intent detectionActivity = new Intent(this, DetectActivity.class);
-//
-//        startActivity(detectionActivity);
+        Intent detectionActivity = new Intent(this, DetectActivity.class);
+
+        startActivity(detectionActivity);
 
     }
 
