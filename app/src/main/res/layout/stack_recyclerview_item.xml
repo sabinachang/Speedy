@@ -6,6 +6,11 @@
     tools:layout_marginTop="10dp"
     android:gravity="center_vertical"
     android:id="@+id/choose_stack_item">
+    <ImageView
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_rec"/>
     <TextView
         android:gravity="center_horizontal"
         android:id="@+id/stack_name"
@@ -15,9 +20,9 @@
         android:textColor="@drawable/stack_item_text_selector"
 
         android:layout_marginBottom="2dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="2dp"
-        android:textSize="16dp"/>
+        android:textSize="17dp"/>
 
     <!--<TextView-->
         <!--android:id="@+id/chosen_word"-->

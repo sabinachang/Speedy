@@ -4,16 +4,10 @@
     <item
         >
         <shape
-            android:shape="rectangle"
+            android:shape="rectangle" >
+            <solid android:color="@color/secondaryColorDark"/>
 
-            >
-            <gradient android:startColor="@color/colorAccent"
-                android:endColor="@color/secondaryColorDark"
-                android:centerColor="@color/colorAccentDarkAlpha"
-                android:centerX="0.2"
-
-                android:angle="135"/>
-            <corners android:radius="5dp"/>
+            <corners android:radius="8dp"/>
         </shape>
     </item>
 

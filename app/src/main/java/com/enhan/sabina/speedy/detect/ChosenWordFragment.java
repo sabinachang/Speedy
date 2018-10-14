@@ -192,6 +192,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 
                     current.setStackId(stackEntity.getId());
                     current.setStackName(stackEntity.getStackName());
+
                     mPresenter.addWord(current);
                     iterator.remove();
                 }
@@ -227,5 +228,10 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public void setPresenter(ChosenWordContract.Presenter presenter) {
         mPresenter = presenter;
 
+    }
+
+    @Override
+    public void setFab(FloatingActionButton fab) {
+//        mFab = fab;
     }
 }

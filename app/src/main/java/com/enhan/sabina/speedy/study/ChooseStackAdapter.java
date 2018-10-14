@@ -57,7 +57,7 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
 //            mStackEntities.add(stackEntity);
 //        }
 
-        mStackEntities.addAll(stackEntities);
+        mStackEntities = stackEntities;
 
         notifyDataSetChanged();
     }

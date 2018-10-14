@@ -83,11 +83,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:fitsSystemWindows="true"
+
                 xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
 
                 android:background="@drawable/flashcard_preview_background"
-                android:gravity="center">
+                android:gravity="center_vertical|center_horizontal">
 
                 <!--<TextView-->
 
@@ -104,7 +105,6 @@
                     android:id="@+id/definition_preview"
 
                     android:layout_width="300dp"
-                    android:textAlignment="center"
                     android:paddingTop="20dp"
                     android:maxLines="3"
                     android:ellipsize="marquee"
@@ -248,8 +248,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             app:behavior_peekHeight="0dp"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
         <LinearLayout
             android:orientation="vertical"
@@ -267,18 +267,19 @@
 
                     android:background="@drawable/ic_cancel"
                     android:layout_marginTop="4dp"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp" />
+                    android:layout_width="16dp"
+                    android:layout_height="16dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="25dp"
-                    android:textStyle="bold"
+                    android:layout_marginStart="13dp"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="18dp"
-                    android:text="Pick one stack"/>
+                    android:text="@string/pick_stack_prompt"/>
             </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/stack_list_recyclerview"
+                android:layout_marginStart="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -286,6 +287,7 @@
             <RelativeLayout
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
@@ -304,7 +306,7 @@
                 <ImageView
                     android:id="@+id/add_stack_to_recyclerview"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/stack_title"
+
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/ic_add" />
@@ -320,7 +322,7 @@
                     android:layout_height="40dp"
                     android:textSize="16dp"
                     android:backgroundTint="@color/colorPrimary"
-                    android:layout_below="@id/stack_title"
+
                     />
             </RelativeLayout>
 
@@ -434,7 +436,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="40dp"
-        android:src="@drawable/ic_file_unselected"
+
+        android:src="@drawable/ic_file_selected"
         app:fabCustomSize="60dp"
         app:fabSize="normal"
         />

@@ -14,14 +14,8 @@ public class DisplayTextPresenter implements DisplayTextContract.Presenter,Proce
             "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
             "\n" +
             "Mr Musk startled the business world last month when he took to Twitter to announce that he was considering a plan that would de-list the company from the stock exchange.\n" +
-            "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
-            "\n" +
-            "Mr " +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
-            "\n" +
-            "Mr" +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
-            "\n" +
-            "Mr " +"It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n" +
-            "\n";
+            "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n"
+            ;
 
     public DisplayTextPresenter(DisplayTextContract.View detectPhotoView, DetectActivity activity, DataRepository dataRepository) {
         mDetectPhotoView = detectPhotoView;

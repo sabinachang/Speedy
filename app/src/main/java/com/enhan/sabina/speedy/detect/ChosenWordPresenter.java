@@ -1,5 +1,7 @@
 package com.enhan.sabina.speedy.detect;
 
+import android.support.design.widget.FloatingActionButton;
+
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
@@ -7,6 +9,7 @@ public class ChosenWordPresenter implements ChosenWordContract.Presenter {
 
     private ChosenWordContract.View mView;
     private DataRepository mDataRepository;
+
 
     public ChosenWordPresenter(ChosenWordContract.View view) {
         mView = view;

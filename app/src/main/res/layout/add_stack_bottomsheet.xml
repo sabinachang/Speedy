@@ -8,75 +8,151 @@
     tools:layout_marginTop="50dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingEnd="25dp"
-        android:paddingStart="25dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="35dp"
             android:orientation="horizontal">
-
             <ImageView
+                android:id="@+id/close_btn"
 
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:background="@drawable/ic_cancel"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/ic_cancel" />
-
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="25dp"
-                android:text="Pick one stack"
+
+                android:textColor="@color/colorPrimary"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:text="@string/pick_stack_prompt"/>
         </LinearLayout>
-
-
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/stack_list_recyclerview"
+            android:layout_marginStart="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
-
         <RelativeLayout
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/stack_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="0dp"
+            <!--<TextView-->
+            <!--android:id="@+id/stack_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
 
 
-                android:text="@string/add_stack"
-                android:textSize="20dp" />
+
+            <!--android:text="@string/add_stack"-->
+            <!--android:textSize="20dp" />-->
 
             <ImageView
+                android:id="@+id/add_stack_to_recyclerview"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/stack_title"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/ic_add" />
 
             <EditText
+
+                android:hint="@string/add_stack"
+                android:textColorHint="@color/colorPrimaryLight"
+                android:layout_marginStart="15dp"
                 android:layout_marginEnd="55dp"
                 android:id="@+id/stack_name_add"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-
-                android:layout_below="@id/stack_title"
-                 />
+                android:textSize="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                />
         </RelativeLayout>
 
     </LinearLayout>
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingEnd="25dp"-->
+        <!--android:paddingStart="25dp">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="25dp"-->
+            <!--android:layout_marginTop="35dp"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<ImageView-->
+
+                <!--android:layout_width="18dp"-->
+                <!--android:layout_height="18dp"-->
+                <!--android:layout_marginTop="4dp"-->
+                <!--android:background="@drawable/ic_cancel" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingStart="25dp"-->
+                <!--android:text="Pick one stack"-->
+                <!--android:textSize="18dp"-->
+                <!--android:textStyle="bold" />-->
+        <!--</LinearLayout>-->
+
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_marginTop="25dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/stack_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingStart="0dp"-->
+
+
+                <!--android:text="@string/add_stack"-->
+                <!--android:textSize="20dp" />-->
+
+            <!--<ImageView-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_below="@id/stack_title"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:background="@drawable/ic_add" />-->
+
+            <!--<EditText-->
+                <!--android:layout_marginEnd="55dp"-->
+                <!--android:id="@+id/stack_name_add"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp"-->
+
+                <!--android:layout_below="@id/stack_title"-->
+                 <!--/>-->
+        <!--</RelativeLayout>-->
+
+    <!--</LinearLayout>-->
 
 </LinearLayout>

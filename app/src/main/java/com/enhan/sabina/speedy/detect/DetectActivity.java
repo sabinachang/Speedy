@@ -20,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -115,6 +116,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             }
         });
 //        mFab.setClickable(false);
+        mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
         mFab.hide();
 
         mFragmentList.add(displayTextFragment);
@@ -125,6 +127,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         ViewPager viewPager = findViewById(R.id.viewpager);
         mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
+        mDefinitionCard.setText(R.string.detect_page_hine);
 //        mWordTagline.setTitle("");
 //        setSupportActionBar(mWordTagline);
 
@@ -164,10 +167,12 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                     mDefinitionCard.setText(mFakeString);
                     mSearchComplete = 1;
                 } else {
-                    mDefinitionCard.setText("");
+
                     Toast.makeText(SpeedyApplication.getAppContext(),"add to list",Toast.LENGTH_SHORT).show();
 
                     mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
+                    mDefinitionCard.setText("");
+                    mWordTagline.setText("");
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
                     mSearchComplete = 0;
                 }
@@ -266,12 +271,14 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     @Override
     public void onFabButtonClicked() {
         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        mFab.hide();
     }
 
     @Override
     public void onDialogCloseButtonClicked() {
         mChosenWordCallback.onBottomSheetCollapsed(false,null);
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mFab.show();
     }
 
     @Override
@@ -281,6 +288,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
         mChosenWordCallback.onBottomSheetCollapsed(true,stackEntity);
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mFab.show();
     }
 
     @Override
@@ -291,20 +299,23 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
     @Override
     public void activateFab() {
-        mFab.show();
-        mFab.setImageDrawable(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_file_selected));
+
+        Log.d("detect","in activate");
+
+//        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_selected));
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark)));
 
-        mFab.setClickable(true);
+
+//        mFab.setClickable(true);
     }
 
     @Override
     public void deactivateFab() {
-        mFab.show();
-        mFab.setImageDrawable(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_file_unselected));
+        Log.d("detect","de activate");
+//        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_unselected));
 
-        mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorAccent)));
-        mFab.setClickable(false);
+        mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
+//        mFab.setClickable(false);
     }
 
     @Override

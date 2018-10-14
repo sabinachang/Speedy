@@ -161,7 +161,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         // 如果不开启，用户不能拖动选框，只能缩放图片
         options.setFreeStyleCropEnabled(true);
         options.setToolbarCancelDrawable(R.drawable.ic_retake);
-        options.setToolbarCropDrawable(R.drawable.ic_next);
+//        options.setToolbarCropDrawable(R.drawable.ic_next);
         // 设置图片压缩质量
         options.setCompressionQuality(100);
         options.setActiveWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));

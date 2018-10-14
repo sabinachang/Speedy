@@ -14,4 +14,6 @@
     <string name="choose_stack_prompt">Pick one to study!</string>
     <string name="word_count">Words</string>
     <string name="current_stack">Current Stacks</string>
+    <string name="pick_stack_prompt">Save To Stack</string>
+    <string name="detect_page_hine">Hint: Long press on word to view definition</string>
 </resources>

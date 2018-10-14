@@ -37,13 +37,13 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
             @Override
             public void onChanged(@Nullable List<StackEntity> stackEntities) {
                 mAdapter.addStacks(stackEntities);
-                mDataRepository.getAllStacks().removeObservers((ChooseStackFragment)mView);
+//                mDataRepository.getAllStacks().removeObservers((ChooseStackFragment)mView);
 
             }
         };
 
         mDataRepository.getAllStacks().observe((ChooseStackFragment)mView,observer);
-//        populateFakeDB();
+        populateFakeDB();
     }
 
     private void populateFakeDB() {
