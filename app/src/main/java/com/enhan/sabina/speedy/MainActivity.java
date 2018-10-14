@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void transToReview() {
-        Intent reviewIntent = new Intent(MainActivity.this,StudyActivity.class);
+        Intent reviewIntent = new Intent(this,StudyActivity.class);
 
         Log.d("Main","starting review");
         startActivity(reviewIntent);
@@ -131,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 transToTakePhoto();
+
+
+                            }
+                        });
+
+                        mReviewButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                transToReview();
                             }
                         });
 //

@@ -35,9 +35,9 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="727272" />
-                            <entry key="outputName" value="ic_close" />
+                            <entry key="outputName" value="ic_definition_on" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/cancel-button.svg" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/light-bulb (1).svg" />
                           </map>
                         </option>
                       </PersistentState>

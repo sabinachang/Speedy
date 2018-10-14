@@ -1,6 +1,7 @@
 package com.enhan.sabina.speedy.study;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,8 +34,14 @@ public class ReviewWordAdapter extends RecyclerView.Adapter<ReviewWordAdapter.Wo
 
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder wordViewHolder, int i) {
+
         wordViewHolder.mWord.setText(mWordEntityList.get(i).getWord());
         wordViewHolder.mDefinition.setText(mWordEntityList.get(i).getDefinition());
+        if (mWordEntityList.get(i).isDefinitionShown()) {
+            wordViewHolder.mFlip.setBackground(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_definition_on));
+        } else {
+            wordViewHolder.mFlip.setBackground(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_definition_off));
+        }
     }
 
     @Override
@@ -59,7 +66,17 @@ public class ReviewWordAdapter extends RecyclerView.Adapter<ReviewWordAdapter.Wo
             mFlip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mDefinition.setVisibility(View.VISIBLE);
+
+                    if (!mWordEntityList.get(getAdapterPosition()).isDefinitionShown()) {
+                        mFlip.setBackground(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_definition_on));
+                        mDefinition.setVisibility(View.VISIBLE);
+                        mWordEntityList.get(getAdapterPosition()).setDefinitionShown(true);
+                    } else {
+                        mFlip.setBackground(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_definition_off));
+                        mDefinition.setVisibility(View.INVISIBLE);
+                        mWordEntityList.get(getAdapterPosition()).setDefinitionShown(false);
+                    }
+//                    mDefinition.setVisibility(View.VISIBLE);
 
                 }
             });

@@ -45,6 +45,9 @@ public class WordEntity {
     @Ignore
     private boolean isSelected = false;
 
+    @Ignore
+    private boolean isDefinitionShown = false;
+
     @NonNull
     public String getWord() {
         return mWord;
@@ -92,5 +95,13 @@ public class WordEntity {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public boolean isDefinitionShown() {
+        return isDefinitionShown;
+    }
+
+    public void setDefinitionShown(boolean definitionShown) {
+        isDefinitionShown = definitionShown;
     }
 }

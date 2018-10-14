@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="285dp"
     android:layout_height="240dp"
-    android:background="@color/secondaryColor"
+    android:background="@drawable/review_word_item_background"
 
     android:layout_gravity="center"
 
@@ -11,38 +11,58 @@
 
     <TextView
         android:id="@+id/flashcard_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:layout_marginStart="44dp"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:textColor="@color/primaryColor"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.215"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="abc" />
 
 
     <TextView
         android:id="@+id/flashcard_definition"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/primaryColor"
+        android:maxLines="3"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.216"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="you are beautiful" />
+        tools:text="you are beautiful beautifulbeautifulbeautiful" />
 
 
-    <Button
+    <ImageView
         android:id="@+id/flip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="flip"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_definition_off"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/stack_divider_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 
