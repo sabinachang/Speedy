@@ -94,7 +94,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 
     private void initWordList() {
 
-        Log.d("chosen word","in Init");
+//        Log.d("chosen word","in Init");
 
 //        WordEntity wordEntity = new WordEntity("Venture","a risky undertaking or adventure");
 //        mWordEntityList.add(wordEntity);
@@ -142,7 +142,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 //            mFab.setClickable(true);
         }
         mChosenWords.add(wordEntity);
-        Log.d("Chosen word","add:" + wordEntity.getWord());
+//        Log.d("Chosen word","add:" + wordEntity.getWord());
 
 //        for (WordEntity w : mChosenWords) {
 //            Log.d("Chosen word","add  = " + w.getWord());
@@ -159,7 +159,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
             WordEntity word = iterator.next();
             if (word.getWord().equals(wordEntity.getWord())) {
 
-                    Log.d("chosen word"," size " + word.getWord());
+//                    Log.d("chosen word"," size " + word.getWord());
 
                 iterator.remove();
                 break;
@@ -167,7 +167,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
         }
 
         for (WordEntity w : mChosenWords) {
-            Log.d("Chosen word"," = " + w.getWord());
+//            Log.d("Chosen word"," = " + w.getWord());
         }
 
         if (mChosenWords.isEmpty()) {

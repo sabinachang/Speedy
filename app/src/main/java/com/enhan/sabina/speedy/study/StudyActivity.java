@@ -12,8 +12,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.crashlytics.android.Crashlytics;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.StudyCallback;
+
+import io.fabric.sdk.android.Fabric;
 
 public class StudyActivity extends AppCompatActivity implements StudyContract.View,StudyCallback{
 
@@ -32,6 +35,7 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_study);
 
         mToolbar = findViewById(R.id.toolbar);

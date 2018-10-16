@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.crashlytics.android.Crashlytics;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
@@ -40,6 +40,8 @@ import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 import com.google.firebase.FirebaseApp;
+
+import io.fabric.sdk.android.Fabric;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_detect);
         FirebaseApp.initializeApp(this);
 
@@ -300,7 +303,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     @Override
     public void activateFab() {
 
-        Log.d("detect","in activate");
+//        Log.d("detect","in activate");
 
 //        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_selected));
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark)));
@@ -311,7 +314,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
     @Override
     public void deactivateFab() {
-        Log.d("detect","de activate");
+//        Log.d("detect","de activate");
 //        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_unselected));
 
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));

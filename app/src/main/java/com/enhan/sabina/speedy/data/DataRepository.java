@@ -136,7 +136,7 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
 
     @Override
     public LiveData<List<StackEntity>> getAllStacks() {
-        Log.d("Datarepository","fetching stacks");
+//        Log.d("Datarepository","fetching stacks");
         return mStackDao.getAllStacks();
     }
 

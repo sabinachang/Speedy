@@ -22,14 +22,14 @@ public class LocalDataRepository implements DataSource.Local{
 
     @Override
     public void storeImageForGoogle(Bitmap bitmap) {
-        Log.d("LocalDataStorage","bitmap size = " + bitmap.getDensity());
+//        Log.d("LocalDataStorage","bitmap size = " + bitmap.getDensity());
         mGoogleBitmap = bitmap;
     }
 
     @Override
     public Bitmap retrieveImageForGoogle() {
 
-        Log.d("LocalDataStorage","returning bitmap");
+//        Log.d("LocalDataStorage","returning bitmap");
         return mGoogleBitmap;
     }
 }

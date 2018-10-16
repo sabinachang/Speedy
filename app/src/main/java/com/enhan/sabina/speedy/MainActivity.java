@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.enhan.sabina.speedy.camera.CameraActivity;
 import com.enhan.sabina.speedy.detect.DetectActivity;
 import com.enhan.sabina.speedy.study.StudyActivity;
@@ -32,6 +33,9 @@ import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecogniz
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.ml.vision.text.RecognizedLanguage;
+
+
+import io.fabric.sdk.android.Fabric;
 
 import org.w3c.dom.Text;
 
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 //        mGreetingTextView = findViewById(R.id.greetings);
 

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
@@ -31,6 +32,8 @@ import com.enhan.sabina.speedy.data.constants.AndroidData;
 import com.enhan.sabina.speedy.data.local.LocalDataRepository;
 import com.enhan.sabina.speedy.detect.DetectActivity;
 import com.yalantis.ucrop.UCrop;
+
+import io.fabric.sdk.android.Fabric;
 
 import java.io.File;
 
@@ -64,6 +67,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_camera);
 
         mDataRepository = DataRepository.getInstance();
@@ -80,11 +84,11 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"onresumed");
+//        Log.d(TAG,"onresumed");
     }
 
     private void transToTakePhoto() {
-        Log.d(TAG,"transToTakePhoto");
+//        Log.d(TAG,"transToTakePhoto");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
@@ -107,7 +111,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     protected void onPause() {
         super.onPause();
 
-        Log.d(TAG,"onpause activity");
+//        Log.d(TAG,"onpause activity");
     }
 
     @Override
@@ -117,7 +121,8 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     @Override
     public void onFailed() {
-        Log.d(TAG,"take photo failed");
+//
+//        Log.d(TAG,"take photo failed");
     }
 
     @Override
@@ -128,7 +133,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     public void onPhotoAccepted() {
         // call appropriate activity
-        Log.d(TAG,"photo accepted");
+//        Log.d(TAG,"photo accepted");
         Intent detectionActivity = new Intent(this, DetectActivity.class);
 
         startActivity(detectionActivity);
@@ -138,7 +143,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     private void cropRawPhoto(Uri localUri) {
 
-        Log.d(TAG,"starting cropping activity");
+//        Log.d(TAG,"starting cropping activity");
         UCrop.Options options = new UCrop.Options();
 
 
@@ -191,7 +196,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     public void onPhotoDenied() {
         mBitmap = null;
 
-        Log.d(TAG,"photo denied");
+//        Log.d(TAG,"photo denied");
         transToTakePhoto();
     }
 
