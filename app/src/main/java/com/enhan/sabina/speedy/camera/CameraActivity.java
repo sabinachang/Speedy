@@ -13,9 +13,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
+import com.enhan.sabina.speedy.MainActivity;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
@@ -94,6 +97,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
         new TakePhotoPresenter(takePhotoFragment,mDataRepository,this);
         transaction.replace(R.id.fragment_holder,takePhotoFragment);
+//        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -103,13 +107,18 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         PreviewPhotoFragment fragment = PreviewPhotoFragment.newInstance();
         new PreviewPhotoPresenter(fragment,mDataRepository,this,path.toString());
 
-        transaction.replace(R.id.fragment_holder,fragment);
+        transaction.replace(R.id.fragment_holder,fragment,"preview_photo");
+//        transaction.addToBackStack(null);
         transaction.commit();
     }
 
     @Override
     protected void onPause() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+//            getSupportFragmentManager().popBackStack();
+//        }
         super.onPause();
+
 
 //        Log.d(TAG,"onpause activity");
     }
@@ -133,8 +142,14 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     public void onPhotoAccepted() {
         // call appropriate activity
-//        Log.d(TAG,"photo accepted");
+        Log.d(TAG,"photo accepted");
         Intent detectionActivity = new Intent(this, DetectActivity.class);
+
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(SpeedyApplication.getAppContext());
+//        stackBuilder.addParentStack(MainActivity.class);
+//        stackBuilder.addNextIntent(detectionActivity);
+
+
 
         startActivity(detectionActivity);
 
@@ -146,36 +161,18 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 //        Log.d(TAG,"starting cropping activity");
         UCrop.Options options = new UCrop.Options();
 
-
-        // 修改标题栏颜色
         options.setToolbarColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));
-        // 修改状态栏颜色
         options.setStatusBarColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));
-        // 隐藏底部工具
-
-        // 图片格式
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
         options.setToolbarTitle("");
-//        options.setDimmedLayerColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.primaryColor));
         options.setRootViewBackgroundColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.primaryColor));
-        // 设置图片压缩质量
         options.setCropFrameColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
         options.setToolbarWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
         options.setCompressionQuality(100);
-        // 是否让用户调整范围(默认false)，如果开启，可能会造成剪切的图片的长宽比不是设定的
-        // 如果不开启，用户不能拖动选框，只能缩放图片
         options.setFreeStyleCropEnabled(true);
-        options.setToolbarCancelDrawable(R.drawable.ic_retake);
-//        options.setToolbarCropDrawable(R.drawable.ic_next);
-        // 设置图片压缩质量
-        options.setCompressionQuality(100);
+//        options.setToolbarCancelDrawable(R.drawable.ic_retake);
         options.setActiveWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));
-
-//        options.setLogoColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
-        // 圆
-//        options.setCircleDimmedLayer(true);
-        //        // 不显示网格线
-        options.setShowCropGrid(false);
+        options.setShowCropGrid(true);
 
         UCrop.of(localUri,Uri.fromFile(new File(getCacheDir(), System.currentTimeMillis() + ".png")))
                 .withMaxResultSize(1000,1000)
@@ -187,6 +184,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
            onPhotoTaken(UCrop.getOutput(data));
         }
@@ -200,4 +198,13 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         transToTakePhoto();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            Log.d(TAG,"back pressed");
+            startActivity(new Intent(this,MainActivity.class));
+        }
+        super.onBackPressed();
+    }
 }

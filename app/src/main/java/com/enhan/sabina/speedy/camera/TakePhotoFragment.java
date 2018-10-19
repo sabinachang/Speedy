@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
@@ -57,6 +58,7 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     private Uri mLocalUri;
     private TakePhotoContract.Presenter mPresenter;
     private CameraActivity mActivity;
+    private ImageView mOk;
 
     public TakePhotoFragment() {
 
@@ -83,7 +85,14 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mPresenter.launchCamera();
+        mOk = view.findViewById(R.id.btn_capture);
+        mOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.launchCamera();
+            }
+        });
+//        mPresenter.launchCamera();
     }
 
     @Override

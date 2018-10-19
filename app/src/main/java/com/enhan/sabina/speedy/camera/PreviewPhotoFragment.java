@@ -91,4 +91,9 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
         mPresenter = presenter;
     }
 
+    @Override
+    public void onPause() {
+
+        super.onPause();
+    }
 }

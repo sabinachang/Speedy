@@ -16,4 +16,8 @@
     <string name="current_stack">Current Stacks</string>
     <string name="pick_stack_prompt">Save To Stack</string>
     <string name="detect_page_hine">Hint: Long press on word to view definition</string>
+    <string name="retake_photo">Retake Photo</string>
+    <string name="take_photo_hint">For best result</string>
+    <string name="photo_language"> Use English novels</string>
+    <string name="photo_orientation">Take upright photo</string>
 </resources>

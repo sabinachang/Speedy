@@ -3,6 +3,7 @@ package com.enhan.sabina.speedy.tasks;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.BuildConfig;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -12,9 +13,12 @@ import com.enhan.sabina.speedy.data.DataSource;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.document.FirebaseVisionCloudDocumentRecognizerOptions;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
+import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions;
 
 public class DetectTextTask extends AsyncTask<Bitmap,Void,Void> {
 
@@ -27,9 +31,26 @@ public class DetectTextTask extends AsyncTask<Bitmap,Void,Void> {
     @Override
     protected Void doInBackground(Bitmap... bitmaps) {
         final String[] detectedText = new String[1];
+
+
+        FirebaseVisionCloudDocumentRecognizerOptions.Builder optionsBuilder =
+                new FirebaseVisionCloudDocumentRecognizerOptions.Builder();
+        if (!BuildConfig.DEBUG) {
+            // Requires physical, non-rooted device:
+            optionsBuilder.enforceCertFingerprintMatch();
+        }
+
+// Set other options. For example:
+
+// ...FirebaseVision.getInstance().getVisionCloudLabelDetector(options).detectInImage(....)
+
+// And lastly:
+        FirebaseVisionCloudDocumentRecognizerOptions options = optionsBuilder.build();
+
+
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmaps[0]);
         FirebaseVisionDocumentTextRecognizer textRecognizer = FirebaseVision.getInstance()
-                .getCloudDocumentTextRecognizer();
+                .getCloudDocumentTextRecognizer(options);
 
         textRecognizer.processImage(image)
                 .addOnSuccessListener(new OnSuccessListener<FirebaseVisionDocumentText>() {

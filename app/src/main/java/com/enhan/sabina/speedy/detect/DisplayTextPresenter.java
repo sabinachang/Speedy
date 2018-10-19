@@ -17,10 +17,10 @@ public class DisplayTextPresenter implements DisplayTextContract.Presenter,Proce
             "It is seeking to bar Mr Musk from acting as an officer or director of a publicly traded company.\n"
             ;
 
-    public DisplayTextPresenter(DisplayTextContract.View detectPhotoView, DetectActivity activity, DataRepository dataRepository) {
+    public DisplayTextPresenter(DisplayTextContract.View detectPhotoView, DetectActivity activity) {
         mDetectPhotoView = detectPhotoView;
         mDetectPhotoView.setPresenter(this);
-        mDataRepository = dataRepository;
+        mDataRepository = DataRepository.getInstance();
 
     }
     @Override

@@ -1,5 +1,6 @@
 package com.enhan.sabina.speedy.study;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.crashlytics.android.Crashlytics;
+import com.enhan.sabina.speedy.MainActivity;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.StudyCallback;
 
@@ -111,5 +114,19 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     @Override
     public void transToReviewWords(String stackName) {
         startReviewWords(stackName);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+//            super.onBackPressed();
+
+            Log.d("study","on back pressed");
+            startActivity(new Intent(this,MainActivity.class));
+
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
 }

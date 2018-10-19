@@ -1,6 +1,7 @@
 package com.enhan.sabina.speedy.detect;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.enhan.sabina.speedy.MainActivity;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
@@ -98,9 +100,9 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 //        transToDetectPhoto();
         mFragmentList = new ArrayList<>();
         DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
-        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
+//        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
-        new ChosenWordPresenter(chosenWordFragment);
+//        new ChosenWordPresenter(chosenWordFragment);
         mChosenWordCallback = chosenWordFragment;
 
 
@@ -462,4 +464,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         win.setAttributes(winParams);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

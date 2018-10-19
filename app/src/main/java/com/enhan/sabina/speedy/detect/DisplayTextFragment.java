@@ -63,6 +63,7 @@ public class DisplayTextFragment extends Fragment implements DisplayTextContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        mDisplayTextView = view.findViewById(R.id.detected_text);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+        mPresenter = new DisplayTextPresenter(this,mTagCallbackListener);
         ((DetectActivity)getActivity()).setSupportActionBar(toolbar);
         mLinearLayout = view.findViewById(R.id.layout_text);
         mScrollView = view.findViewById(R.id.scroll_view);

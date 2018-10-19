@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.enhan.sabina.speedy">
+
+    <application>
+        <meta-data
+            android:name="com.firebase.ml.cloud.ApiKeyForDebug"
+            android:value="AIzaSyCEiCCOHHk4AJz4iFNps_t5L2-8RtAsPZY" />
+
+    </application>
+
+</manifest>

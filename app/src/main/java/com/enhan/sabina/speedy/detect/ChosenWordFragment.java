@@ -70,6 +70,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mRecyclerView = view.findViewById(R.id.chosenword_recyclerview);
+        mPresenter = new ChosenWordPresenter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
 //        ViewCompat.setNestedScrollingEnabled(mRecyclerView,false);
         mAdapter = new ChosenWordAdapter(mWordEntityList,this);

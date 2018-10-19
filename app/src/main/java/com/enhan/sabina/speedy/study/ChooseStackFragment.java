@@ -100,4 +100,7 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
         mViewCount.setText(stackEntity.getWordCount() + " words");
 
     }
+
+
+
 }
