@@ -12,5 +12,6 @@ public interface ControlBottomSheetCallback {
     void updateTabCountHint(int num);
     void activateFab();
     void deactivateFab();
+    void isWordDuplicate(boolean duplicate);
 
 }

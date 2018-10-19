@@ -24,8 +24,10 @@ import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class ChosenWordFragment extends Fragment implements ChosenWordCallback, ChosenWordContract.View{
 
@@ -36,6 +38,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     private List<WordEntity> mChosenWords = new ArrayList<>();
     private ControlBottomSheetCallback mControlBottomSheetCallback;
     private ChosenWordContract.Presenter mPresenter;
+    private Set<String> mDuplicateCheck = new HashSet<>();
 
 
     public ChosenWordFragment() {
@@ -216,8 +219,15 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     @Override
     public void onAddedToChosenFragment(WordEntity wordEntity) {
 
-        mAdapter.addWord(wordEntity);
-        mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+        if (mDuplicateCheck.contains(wordEntity.getWord())) {
+            mControlBottomSheetCallback.isWordDuplicate(true);
+        } else {
+            mDuplicateCheck.add(wordEntity.getWord());
+            mControlBottomSheetCallback.isWordDuplicate(false);
+            mAdapter.addWord(wordEntity);
+            mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+        }
+
     }
 
     @Override

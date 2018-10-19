@@ -182,10 +182,9 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                     mDefinitionCard.setText(R.string.getting_definition);
 
                 } else {
-
-                    Toast.makeText(SpeedyApplication.getAppContext(),"add to list",Toast.LENGTH_SHORT).show();
-//                    mAppBarLayout.setExpanded(true);
                     mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
+
+//                    mAppBarLayout.setExpanded(true);
                     mDefinitionCard.setText("");
                     mWordTagline.setText("");
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
@@ -305,6 +304,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mChosenWordCallback.onBottomSheetCollapsed(true,stackEntity);
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mFab.show();
+
     }
 
     @Override
@@ -332,6 +332,15 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
 //        mFab.setClickable(false);
+    }
+
+    @Override
+    public void isWordDuplicate(boolean duplicate) {
+        if (duplicate) {
+            Toast.makeText(SpeedyApplication.getAppContext(),mWordTagline.getText().toString() + " has been selected",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(SpeedyApplication.getAppContext(),mWordTagline.getText().toString() + " added",Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
