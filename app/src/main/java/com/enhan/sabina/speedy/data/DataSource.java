@@ -9,6 +9,7 @@ import android.support.v4.content.FileProvider;
 
 import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.callbacks.ReviewWordCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
@@ -23,6 +24,7 @@ public interface DataSource {
         Uri getUriFromFileProvider(Activity activity, String authority, File file);
         String getMediaOutputString();
         String providePictureDirectory();
+
     }
 
     interface Repository {
@@ -44,11 +46,13 @@ public interface DataSource {
         void insertStack(StackEntity stackEntity);
         LiveData<List<StackEntity>> getAllStacks();
         void updateStack(StackEntity stackEntity);
+        void getWordDefinition (String word, GetDefinitionCallback getDefinitionCallback);
 
     }
 
     interface Local {
         void storeImageForGoogle(Bitmap bitmap);
         Bitmap retrieveImageForGoogle();
+        String getDictionaryKey();
     }
 }

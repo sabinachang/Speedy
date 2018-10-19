@@ -14,6 +14,7 @@ import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DataRepositoryCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
+import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
 import com.enhan.sabina.speedy.callbacks.ReviewWordCallback;
 import com.enhan.sabina.speedy.data.constants.AndroidData;
@@ -27,6 +28,7 @@ import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 import com.enhan.sabina.speedy.study.StudyPresenter;
 import com.enhan.sabina.speedy.tasks.DeleteStackTask;
 import com.enhan.sabina.speedy.tasks.DeleteWordTask;
+import com.enhan.sabina.speedy.tasks.GetDefinitionTask;
 import com.enhan.sabina.speedy.tasks.GetStackInfoTask;
 import com.enhan.sabina.speedy.tasks.GetWordsTask;
 import com.enhan.sabina.speedy.tasks.InsertStackTask;
@@ -143,6 +145,12 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     @Override
     public void updateStack(StackEntity stackEntity) {
         new UpdateStackTask(mStackDao).execute(stackEntity);
+    }
+
+    @Override
+    public void getWordDefinition(String word, GetDefinitionCallback callback) {
+        Log.d("datarepository","getting definition");
+        new GetDefinitionTask(word,mLocalDataRepository.getDictionaryKey(),callback).getDefinition();
     }
 
     @Override

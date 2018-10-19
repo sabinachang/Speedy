@@ -32,4 +32,9 @@ public class LocalDataRepository implements DataSource.Local{
 //        Log.d("LocalDataStorage","returning bitmap");
         return mGoogleBitmap;
     }
+
+    @Override
+    public String getDictionaryKey() {
+        return "3b1b386680352a2e6383808c8fd013401e7348b136425ec5c";
+    }
 }

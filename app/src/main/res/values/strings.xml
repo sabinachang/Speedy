@@ -20,4 +20,6 @@
     <string name="take_photo_hint">For best result</string>
     <string name="photo_language"> Use English novels</string>
     <string name="photo_orientation">Take upright photo</string>
+    <string name="getting_definition">Getting definition...</string>
+    <string name="empty_definition">Opps, no definition for this word</string>
 </resources>

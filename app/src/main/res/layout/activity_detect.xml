@@ -106,13 +106,14 @@
 
                     android:layout_width="300dp"
                     android:paddingTop="20dp"
-                    android:maxLines="3"
-                    android:ellipsize="marquee"
-                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:scrollbars="vertical"
+                    android:layout_height="match_parent"
                     android:textColor="@color/colorAccent"
                     android:textSize="16dp"
 
                     android:text=""/>
+
             </LinearLayout>
 
 

@@ -37,18 +37,23 @@ import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
 import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
+import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.UpdateTaglineCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 import com.google.firebase.FirebaseApp;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.fabric.sdk.android.Fabric;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, ControlBottomSheetCallback,AppBarLayout.OnOffsetChangedListener{
+public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, ControlBottomSheetCallback,AppBarLayout.OnOffsetChangedListener,GetDefinitionCallback{
 
     private DataRepository mDataRepository;
     private String mFakeString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
@@ -72,7 +77,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     private DetectContract.Presenter mPresenter;
     private ViewPagerAdapter mViewPagerAdapter;
     private FloatingActionButton mFab;
-
+    private TextView mPos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,6 +138,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
         mDefinitionCard.setText(R.string.detect_page_hine);
+//        mPos = findViewById(R.id.pos);
+
 //        mWordTagline.setTitle("");
 //        setSupportActionBar(mWordTagline);
 
@@ -169,12 +176,15 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             public void onClick(View view) {
                 if (mSearchComplete == 0) {
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_add_flashcard_preview);
-                    mDefinitionCard.setText(mFakeString);
-                    mSearchComplete = 1;
+                    mDataRepository.getWordDefinition(mWordTagline.getText().toString(),DetectActivity.this);
+                    mAddButtonImageView.setClickable(false);
+//                    mAppBarLayout.setExpanded(true);
+                    mDefinitionCard.setText(R.string.getting_definition);
+
                 } else {
 
                     Toast.makeText(SpeedyApplication.getAppContext(),"add to list",Toast.LENGTH_SHORT).show();
-
+//                    mAppBarLayout.setExpanded(true);
                     mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
                     mDefinitionCard.setText("");
                     mWordTagline.setText("");
@@ -267,6 +277,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
     @Override
     public void updateTagline(String word) {
+        mAppBarLayout.setExpanded(true,true);
         mWordTagline.setText(word);
         mDefinitionCard.setText("");
         mSearchComplete = 0;
@@ -405,6 +416,39 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     protected void onPause() {
         super.onPause();
         mPresenter.unbindListener();
+    }
+
+    @Override
+    public void onDefinitionGotten(final String response) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    if (jsonArray.length() == 0) {
+                        mDefinitionCard.setText("");
+
+                    } else {
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        String pos = jsonObject.getString("partOfSpeech");
+                        String definition = jsonObject.getString("text");
+
+                        mDefinitionCard.setText(pos + "\n" +definition);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mSearchComplete = 1;
+                mAddButtonImageView.setClickable(true);
+            }
+        });
+
+    }
+
+    @Override
+    public void onFail() {
+
     }
 
 
