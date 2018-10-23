@@ -90,24 +90,12 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.secondaryColorDark));
-//        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-//            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-//        }
-//        if (Build.VERSION.SDK_INT >= 19) {
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        }
-//
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
+
         mDataRepository = DataRepository.getInstance();
 //        transToDetectPhoto();
         mFragmentList = new ArrayList<>();
         DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
-//        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
-//        new ChosenWordPresenter(chosenWordFragment);
         mChosenWordCallback = chosenWordFragment;
 
 
@@ -125,7 +113,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                 onFabButtonClicked();
             }
         });
-//        mFab.setClickable(false);
+        mFab.setClickable(false);
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
         mFab.hide();
 
@@ -157,10 +145,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             @Override
             public void onPageSelected(int i) {
                 if (i == 1) {
-//                    mAppBarLayout.setExpanded(false);
                     mFab.show();
                 } else {
-//                    mAppBarLayout.setExpanded(true);
                     mFab.hide();
                 }
             }
@@ -178,13 +164,10 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_add_flashcard_preview);
                     mDataRepository.getWordDefinition(mWordTagline.getText().toString(),DetectActivity.this);
                     mAddButtonImageView.setClickable(false);
-//                    mAppBarLayout.setExpanded(true);
                     mDefinitionCard.setText(R.string.getting_definition);
 
                 } else {
-                    mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mPos.getText().toString() + "\n" + mDefinitionCard.getText().toString()));
-
-//                    mAppBarLayout.setExpanded(true);
+                    mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mPos.getText().toString() + "\n\n" + mDefinitionCard.getText().toString()));
                     mPos.setText("");
                     mDefinitionCard.setText("");
                     mWordTagline.setText("");

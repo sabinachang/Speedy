@@ -92,23 +92,18 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
                 mPresenter.launchCamera();
             }
         });
-//        mPresenter.launchCamera();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
 
-//        Log.d(TAG,"in onactivityResult");
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_TAKE_PHOTO :
                     if (null != mPhotoUri) {
                         mLocalUri = mPhotoUri;
-//                        Log.d(TAG,"" + mLocalUri);
+//
                         mTakePhotoCallback.startCroppingActivity(mLocalUri);
-
-//                        mPresenter.onPhotoReceived(mLocalUri);
 
                     }
                     break;

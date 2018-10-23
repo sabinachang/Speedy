@@ -60,13 +60,6 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     private PreviewPhotoFragment mPreviewPhotoFragment;
     private DataRepository mDataRepository;
 
-//    public static final int PERMISSION_ALL = 1;
-//    String[] PERMISSIONS = {
-//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            android.Manifest.permission.CAMERA
-//    };
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,20 +77,12 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         transToTakePhoto();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        Log.d(TAG,"onresumed");
-    }
-
     private void transToTakePhoto() {
-//        Log.d(TAG,"transToTakePhoto");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         TakePhotoFragment takePhotoFragment = TakePhotoFragment.newInstance();
         new TakePhotoPresenter(takePhotoFragment,mDataRepository,this);
         transaction.replace(R.id.fragment_holder,takePhotoFragment);
-//        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -108,19 +93,7 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         new PreviewPhotoPresenter(fragment,mDataRepository,this,path.toString());
 
         transaction.replace(R.id.fragment_holder,fragment,"preview_photo");
-//        transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    @Override
-    protected void onPause() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-//            getSupportFragmentManager().popBackStack();
-//        }
-        super.onPause();
-
-
-//        Log.d(TAG,"onpause activity");
     }
 
     @Override
@@ -130,8 +103,6 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     @Override
     public void onFailed() {
-//
-//        Log.d(TAG,"take photo failed");
     }
 
     @Override
@@ -141,24 +112,13 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
 
     @Override
     public void onPhotoAccepted() {
-        // call appropriate activity
-        Log.d(TAG,"photo accepted");
         Intent detectionActivity = new Intent(this, DetectActivity.class);
-
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(SpeedyApplication.getAppContext());
-//        stackBuilder.addParentStack(MainActivity.class);
-//        stackBuilder.addNextIntent(detectionActivity);
-
-
-
         startActivity(detectionActivity);
 
     }
 
 
     private void cropRawPhoto(Uri localUri) {
-
-//        Log.d(TAG,"starting cropping activity");
         UCrop.Options options = new UCrop.Options();
 
         options.setToolbarColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));
@@ -170,11 +130,10 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
         options.setToolbarWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorAccent));
         options.setCompressionQuality(100);
         options.setFreeStyleCropEnabled(true);
-//        options.setToolbarCancelDrawable(R.drawable.ic_retake);
         options.setActiveWidgetColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.secondaryColorDark));
         options.setShowCropGrid(true);
 
-        UCrop.of(localUri,Uri.fromFile(new File(getCacheDir(), System.currentTimeMillis() + ".png")))
+        UCrop.of(localUri,Uri.fromFile(new File(getCacheDir(),"temp_image.png")))
                 .withMaxResultSize(1000,1000)
                 .withAspectRatio(4,3)
                 .withOptions(options)
@@ -193,8 +152,6 @@ public class CameraActivity extends AppCompatActivity implements TakePhotoCallba
     @Override
     public void onPhotoDenied() {
         mBitmap = null;
-
-//        Log.d(TAG,"photo denied");
         transToTakePhoto();
     }
 

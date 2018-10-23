@@ -43,7 +43,7 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
         };
 
         mDataRepository.getAllStacks().observe((ChooseStackFragment)mView,observer);
-//        populateFakeDB();
+        populateFakeDB();
     }
 
     private void populateFakeDB() {

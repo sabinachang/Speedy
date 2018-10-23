@@ -19,15 +19,14 @@ public class DisplayTextPresenter implements DisplayTextContract.Presenter,Proce
 
     public DisplayTextPresenter(DisplayTextContract.View detectPhotoView, DetectActivity activity) {
         mDetectPhotoView = detectPhotoView;
-        mDetectPhotoView.setPresenter(this);
         mDataRepository = DataRepository.getInstance();
 
     }
     @Override
     public void start() {
-        mDataRepository.startTextDetection(new ProcessTextUtil(this),mDataRepository.retrieveImageForGoogle());
-        new DetectTextTask(new ProcessTextUtil(this)).execute(mDataRepository.retrieveImageForGoogle());
-//        mDetectPhotoView.displayDetectedText(mString);
+//        mDataRepository.startTextDetection(new ProcessTextUtil(this),mDataRepository.retrieveImageForGoogle());
+//        new DetectTextTask(new ProcessTextUtil(this)).execute(mDataRepository.retrieveImageForGoogle());
+        mDetectPhotoView.displayDetectedText(mString);
     }
 
     @Override

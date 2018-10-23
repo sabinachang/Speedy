@@ -64,7 +64,7 @@ public class ReviewWordFragment extends Fragment implements ReviewWordContract.V
         Log.d("Review","return words" );
         mDiscreteScrollView.setOffscreenItems(2);
         mDiscreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
+                .setMaxScale(1.0f)
                 .setMinScale(0.8f)
                 .setPivotX(Pivot.X.CENTER)
                 .setPivotY(Pivot.Y.BOTTOM)
