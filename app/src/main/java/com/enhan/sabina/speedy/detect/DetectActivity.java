@@ -138,7 +138,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
         mDefinitionCard.setText(R.string.detect_page_hine);
-//        mPos = findViewById(R.id.pos);
+        mPos = findViewById(R.id.pos);
 
 //        mWordTagline.setTitle("");
 //        setSupportActionBar(mWordTagline);
@@ -182,9 +182,10 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                     mDefinitionCard.setText(R.string.getting_definition);
 
                 } else {
-                    mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mDefinitionCard.getText().toString()));
+                    mChosenWordCallback.onAddedToChosenFragment(new WordEntity(mWordTagline.getText().toString(),mPos.getText().toString() + "\n" + mDefinitionCard.getText().toString()));
 
 //                    mAppBarLayout.setExpanded(true);
+                    mPos.setText("");
                     mDefinitionCard.setText("");
                     mWordTagline.setText("");
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
@@ -278,6 +279,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     public void updateTagline(String word) {
         mAppBarLayout.setExpanded(true,true);
         mWordTagline.setText(word);
+        mPos.setText("");
         mDefinitionCard.setText("");
         mSearchComplete = 0;
         mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
@@ -341,6 +343,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         } else {
             Toast.makeText(SpeedyApplication.getAppContext(),mWordTagline.getText().toString() + " added",Toast.LENGTH_SHORT).show();
         }
+
+//        mSearchComplete = 1;
     }
 
     @Override
@@ -435,14 +439,15 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     if (jsonArray.length() == 0) {
-                        mDefinitionCard.setText("");
+                        mPos.setText("");
+                        mDefinitionCard.setText(R.string.empty_definition);
 
                     } else {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         String pos = jsonObject.getString("partOfSpeech");
                         String definition = jsonObject.getString("text");
-
-                        mDefinitionCard.setText(pos + "\n" +definition);
+                        mPos.setText(pos);
+                        mDefinitionCard.setText(definition);
                     }
 
                 } catch (JSONException e) {

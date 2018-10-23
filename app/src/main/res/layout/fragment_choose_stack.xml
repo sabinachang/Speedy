@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:background="@color/colorAccent"
+            android:background="@drawable/choose_stack_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="15dp"
@@ -42,11 +42,22 @@
                 android:elevation="5dp">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/stack_name"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/study_stack_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="68dp"
+                    android:layout_marginTop="82dp"
                     android:text="@string/choose_stack_prompt"
                     android:textColor="@color/colorAccent"
                     android:textSize="21dp"
@@ -69,17 +80,17 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/view_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
+                <!--<TextView-->
+                    <!--android:id="@+id/view_count"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="20dp"-->
+                    <!--android:layout_marginTop="8dp"-->
 
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/study_stack_name"
-                    tools:text="12 words" />
+                    <!--android:textColor="@color/colorAccent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/study_stack_name"-->
+                    <!--tools:text="12 words" />-->
 
                 <ImageView
                     android:id="@+id/start_study"

@@ -3,15 +3,15 @@
     <string name="morning_greeting">Good Morning!</string>
     <string name="afternoon_greeting">Good Afternoon!</string>
     <string name="evening_greeting">Good Evening!</string>
-    <string name="create_new_word">Create flashcards</string>
+    <string name="create_new_word">Create Flashcards</string>
     <string name="pep_talk">Keep up the good work</string>
-    <string name="review_word">Review flashcards</string>
+    <string name="review_word">Review Flashcards</string>
     <string name="scan_result">Result</string>
     <string name="new_vocab">Words</string>
     <string name="word_found">Choose A Word</string>
     <string name="add_stack">Add New Stack</string>
     <string name="choose_stack">Current Stacks</string>
-    <string name="choose_stack_prompt">Pick one to study!</string>
+    <string name="choose_stack_prompt">No stack chosen yet</string>
     <string name="word_count">Words</string>
     <string name="current_stack">Current Stacks</string>
     <string name="pick_stack_prompt">Save To Stack</string>
@@ -22,4 +22,5 @@
     <string name="photo_orientation">Take upright photo</string>
     <string name="getting_definition">Getting definition...</string>
     <string name="empty_definition">Opps, no definition for this word</string>
+    <string name="stack_name">Stack Name</string>
 </resources>

@@ -60,7 +60,7 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mStudyStackName = view.findViewById(R.id.study_stack_name);
-        mViewCount = view.findViewById(R.id.view_count);
+//        mViewCount = view.findViewById(R.id.view_count);
 
 
         mStart = view.findViewById(R.id.start_study);
@@ -97,7 +97,7 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
     @Override
     public void onStackSelected(StackEntity stackEntity) {
         mStudyStackName.setText(stackEntity.getStackName());
-        mViewCount.setText(stackEntity.getWordCount() + " words");
+//        mViewCount.setText(stackEntity.getWordCount() + " words");
 
     }
 

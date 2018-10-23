@@ -14,11 +14,11 @@
         android:layout_width="200dp"
         android:layout_height="34dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="28dp"
         android:textColor="@color/colorAccent"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="abc" />
@@ -27,16 +27,17 @@
     <TextView
         android:id="@+id/flashcard_definition"
         android:layout_width="230dp"
-        android:layout_height="wrap_content"
+        android:layout_height="145dp"
         android:layout_marginStart="20dp"
+        android:scrollbars="vertical"
         android:textColor="@color/colorAccent"
-        android:maxLines="3"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.652"
         tools:text="you are beautiful beautifulbeautifulbeautiful" />
 
 
