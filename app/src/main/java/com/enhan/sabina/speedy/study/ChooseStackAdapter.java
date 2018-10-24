@@ -53,10 +53,6 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
     }
 
     public void addStacks(List<StackEntity> stackEntities) {
-//        for (StackEntity stackEntity : stackEntities) {
-//            mStackEntities.add(stackEntity);
-//        }
-
         mStackEntities = stackEntities;
 
         notifyDataSetChanged();
@@ -84,8 +80,9 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
                         stackEntity.setSelected(false);
                     }
                     if (mPreviousPosition != -1) {
-                        mStackEntities.get(mPreviousPosition).setSelected(false);
-
+                        if (mPreviousPosition != getAdapterPosition()) {
+                            mStackEntities.get(mPreviousPosition).setSelected(false);
+                        }
                     }
                     mPreviousPosition = getAdapterPosition();
 
