@@ -139,7 +139,6 @@
                 android:scrollbarSize="2dp"
                 android:fadeScrollbars="false"
                 android:scrollbarThumbVertical="@color/secondaryColor"
-
                 android:scrollbarTrackVertical="@color/primaryLightColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

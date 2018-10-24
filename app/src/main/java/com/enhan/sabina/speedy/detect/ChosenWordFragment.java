@@ -2,16 +2,13 @@ package com.enhan.sabina.speedy.detect;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,7 @@ import android.view.ViewGroup;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
-import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
+import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
@@ -36,7 +33,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     private FloatingActionButton mFab;
     private List<WordEntity> mWordEntityList = new ArrayList<>();
     private List<WordEntity> mChosenWords = new ArrayList<>();
-    private ControlBottomSheetCallback mControlBottomSheetCallback;
+    private DetectActivityCallback mDetectActivityCallback;
     private ChosenWordContract.Presenter mPresenter;
     private Set<String> mDuplicateCheck = new HashSet<>();
 
@@ -60,7 +57,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Activity){
-            mControlBottomSheetCallback = (DetectActivity) context;
+            mDetectActivityCallback = (DetectActivity) context;
         }
     }
 
@@ -83,7 +80,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 //        mFab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                mControlBottomSheetCallback.onFabButtonClicked(mChosenWords);
+//                mDetectActivityCallback.onFabButtonClicked(mChosenWords);
 //            }
 //        });
 
@@ -139,7 +136,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public void onSelected(WordEntity wordEntity) {
         if (mChosenWords.isEmpty()) {
 
-            mControlBottomSheetCallback.activateFab();
+            mDetectActivityCallback.activateFab();
 
 //            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.secondaryColorDark)));
 //            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_selected));
@@ -176,7 +173,7 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 
         if (mChosenWords.isEmpty()) {
 
-            mControlBottomSheetCallback.deactivateFab();
+            mDetectActivityCallback.deactivateFab();
 //            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
 //            mFab.setImageDrawable(SpeedyApplication.getAppContext().getResources().getDrawable(R.drawable.ic_file_unselected));
 //            mFab.setClickable(false);
@@ -202,12 +199,12 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
                 }
             }
 
-            mControlBottomSheetCallback.deactivateFab();
+            mDetectActivityCallback.deactivateFab();
 
 //            mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorAccent)));
 //            mFab.setImageDrawable(SpeedyApplication.getAppContext().getDrawable(R.drawable.ic_file_unselected));
 //            mFab.setClickable(false);
-            mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+            mDetectActivityCallback.updateTabCountHint(mAdapter.getItemCount());
             mChosenWords.clear();
             mAdapter.notifyDataSetChanged();
         } else {
@@ -220,12 +217,12 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public void onAddedToChosenFragment(WordEntity wordEntity) {
 
         if (mDuplicateCheck.contains(wordEntity.getWord())) {
-            mControlBottomSheetCallback.isWordDuplicate(true);
+            mDetectActivityCallback.isWordDuplicate(true);
         } else {
             mDuplicateCheck.add(wordEntity.getWord());
-            mControlBottomSheetCallback.isWordDuplicate(false);
+            mDetectActivityCallback.isWordDuplicate(false);
             mAdapter.addWord(wordEntity);
-            mControlBottomSheetCallback.updateTabCountHint(mAdapter.getItemCount());
+            mDetectActivityCallback.updateTabCountHint(mAdapter.getItemCount());
         }
 
     }

@@ -11,5 +11,6 @@ public interface DetectContract {
     interface Presenter extends BasePresenter {
         void addStackEntityToLocalDatabase(StackEntity stackEntity);
         void unbindListener();
+        void bindListener(StackItemAdapter adapter);
     }
 }

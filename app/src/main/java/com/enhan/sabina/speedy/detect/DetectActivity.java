@@ -3,13 +3,9 @@ package com.enhan.sabina.speedy.detect;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,15 +15,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,12 +30,13 @@ import com.enhan.sabina.speedy.MainActivity;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
-import com.enhan.sabina.speedy.callbacks.ControlBottomSheetCallback;
+import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.UpdateTaglineCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
+import com.enhan.sabina.speedy.utils.AddStackBottomDialogFragment;
 import com.google.firebase.FirebaseApp;
 
 import org.json.JSONArray;
@@ -53,14 +48,15 @@ import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, ControlBottomSheetCallback,AppBarLayout.OnOffsetChangedListener,GetDefinitionCallback{
+public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, DetectActivityCallback,AppBarLayout.OnOffsetChangedListener,GetDefinitionCallback{
 
     private DataRepository mDataRepository;
     private String mFakeString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
     private List<Fragment> mFragmentList;
     private TextView mWordTagline;
     private AppBarLayout mAppBarLayout;
-    private BottomSheetBehavior mBehavior;
+//    private NestedScrollView mBehavior;
+    private LinearLayout mBehavior;
     private RecyclerView mStackListRecyclerView;
     private List<StackEntity> mStackEntityList = new ArrayList<>();
     private StackItemAdapter mStackItemAdapter;
@@ -78,6 +74,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     private ViewPagerAdapter mViewPagerAdapter;
     private FloatingActionButton mFab;
     private TextView mPos;
+    private ViewPager mViewPager;
+    private AddStackBottomDialogFragment mAddStackBottomDialogFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,9 +99,9 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
         mAppBarLayout = findViewById(R.id.display_appbar);
         mAddButtonImageView = findViewById(R.id.add_word);
-        mCloseBtn = findViewById(R.id.close_btn);
-        mAddStackBtn = findViewById(R.id.add_stack_to_recyclerview);
-        mStackUserInput = findViewById(R.id.stack_name_add);
+//        mCloseBtn = findViewById(R.id.close_btn);
+//        mAddStackBtn = findViewById(R.id.add_stack_to_recyclerview);
+//        mStackUserInput = findViewById(R.id.stack_name_add);
         mDefinitionCard = findViewById(R.id.definition_preview);
         mFab = findViewById(R.id.fab);
 
@@ -119,14 +117,16 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
         mFragmentList.add(displayTextFragment);
         mFragmentList.add(chosenWordFragment);
-
+        mAddStackBottomDialogFragment = AddStackBottomDialogFragment.newInstance();
 
 //        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
-        ViewPager viewPager = findViewById(R.id.viewpager);
+        mViewPager = findViewById(R.id.viewpager);
         mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
         mDefinitionCard.setText(R.string.detect_page_hine);
         mPos = findViewById(R.id.pos);
+
+        mBehavior = findViewById(R.id.bottom_sheet);
 
 //        mWordTagline.setTitle("");
 //        setSupportActionBar(mWordTagline);
@@ -135,11 +135,10 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 //        mTabLayout.getTabAt(1).setText(SpeedyApplication.getAppContext().getString(R.string.word_found));
 
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mViewPagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -174,88 +173,17 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
                     mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
                     mSearchComplete = 0;
                 }
-
-
             }
         });
-
-        View bottomSheet = findViewById(R.id.bottom_sheet);
-        mBehavior = BottomSheetBehavior.from(bottomSheet);
-
-        mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
-        });
-
-        mCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                onDialogCloseButtonClicked();
-            }
-        });
-
-        mAddStackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String stackName = mStackUserInput.getText().toString();
-                if (stackName.isEmpty()) {
-                    Toast.makeText(SpeedyApplication.getAppContext(),"Enter a name",Toast.LENGTH_SHORT).show();
-                } else {
-                    mStackUserInput.setText("");
-                    InputMethodManager imm = (InputMethodManager) getSystemService(SpeedyApplication.getAppContext().INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mStackUserInput.getWindowToken(), 0);
-                    mPresenter.addStackEntityToLocalDatabase(new StackEntity(stackName));
-//                    mStackItemAdapter.addStackName(new StackEntity(stackName));
-                }
-            }
-        });
-
-
-        mStackListRecyclerView = findViewById(R.id.stack_list_recyclerview);
-        mStackListRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
-        mStackItemAdapter = new StackItemAdapter(this);
-        mStackListRecyclerView.setAdapter(mStackItemAdapter);
-
 
         mAppBarLayout.addOnOffsetChangedListener(this);
-        initStackList();
-
-        mTabLayout.setupWithViewPager(viewPager);
-
-
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        mPresenter = new DetectPresenter(this,mStackItemAdapter);
-    }
-
-    private void initStackList() {
-//
-//        StackEntity stackEntity = new StackEntity("first Stack");
-//        mStackEntityList.add(stackEntity);
-//
-//        stackEntity = new StackEntity("Second Stack");
-//        mStackEntityList.add(stackEntity);
-//
-//        stackEntity = new StackEntity("Third Stack");
-//        mStackEntityList.add(stackEntity);
-//
-//        stackEntity = new StackEntity("Fourth Stack");
-//        mStackEntityList.add(stackEntity);
-
-
-
+        mPresenter = new DetectPresenter(this);
     }
 
     @Override
@@ -265,31 +193,27 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mPos.setText("");
         mDefinitionCard.setText("");
         mSearchComplete = 0;
+        mAddButtonImageView.setClickable(true);
         mAddButtonImageView.setBackgroundResource(R.drawable.ic_loupe);
     }
 
     @Override
     public void onFabButtonClicked() {
-        mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        mAddStackBottomDialogFragment.show(getSupportFragmentManager(),"custom bottom sheet");
         mFab.hide();
     }
 
     @Override
     public void onDialogCloseButtonClicked() {
         mChosenWordCallback.onBottomSheetCollapsed(false,null);
-        mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mFab.show();
     }
 
     @Override
     public void onStackSelected(StackEntity stackEntity) {
         Toast.makeText(SpeedyApplication.getAppContext(),"word added to " + stackEntity.getStackName(),Toast.LENGTH_SHORT).show();
-
-
         mChosenWordCallback.onBottomSheetCollapsed(true,stackEntity);
-        mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mFab.show();
-
     }
 
     @Override
@@ -300,23 +224,15 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
 
     @Override
     public void activateFab() {
-
-//        Log.d("detect","in activate");
-
-//        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_selected));
+        mFab.setClickable(true);
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.secondaryColorDark)));
-
-
-//        mFab.setClickable(true);
     }
 
     @Override
     public void deactivateFab() {
-//        Log.d("detect","de activate");
-//        mFab.setImageDrawable(this.getDrawable(R.drawable.ic_file_unselected));
-
+        mFab.setClickable(false);
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
-//        mFab.setClickable(false);
+
     }
 
     @Override
@@ -326,8 +242,16 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         } else {
             Toast.makeText(SpeedyApplication.getAppContext(),mWordTagline.getText().toString() + " added",Toast.LENGTH_SHORT).show();
         }
+    }
 
-//        mSearchComplete = 1;
+    @Override
+    public void onAddStackButtonClicked(StackEntity stackEntity) {
+        mPresenter.addStackEntityToLocalDatabase(stackEntity);
+    }
+
+    @Override
+    public void addDatabaseListener(StackItemAdapter adapter) {
+        mPresenter.bindListener(adapter);
     }
 
     @Override
@@ -339,10 +263,8 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         int currentState = (Math.abs(i)) * 100 / mMaxScrollView;
 
         if (currentState >= 10) {
-
             if (!mButtonHidden) {
                 mButtonHidden = true;
-
                 ViewCompat.animate(mAddButtonImageView).scaleY(0).scaleX(0).start();
 //                mWordTagline.setTextSize(10);
 //                LinearLayout.LayoutParams params =  (LinearLayout.LayoutParams) mWordTagline.getLayoutParams();

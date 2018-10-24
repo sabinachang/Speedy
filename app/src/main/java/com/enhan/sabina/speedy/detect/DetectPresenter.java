@@ -16,10 +16,33 @@ public class DetectPresenter implements DetectContract.Presenter {
     private StackItemAdapter mAdapter;
     private Observer<List<StackEntity>> mObserver;
 
-    public DetectPresenter(DetectContract.View view,StackItemAdapter adpater) {
+    public DetectPresenter(DetectContract.View view) {
         mView = view;
         mDataRepository = DataRepository.getInstance();
-        mAdapter = adpater;
+//        mAdapter = adpater;
+//        mObserver = new Observer<List<StackEntity>>() {
+//            @Override
+//            public void onChanged(@Nullable List<StackEntity> stackEntities) {
+//                mAdapter.addStackNames(stackEntities);
+//            }
+//        };
+//
+//        mDataRepository.getAllStacks().observe((DetectActivity)mView,mObserver);
+    }
+
+    @Override
+    public void addStackEntityToLocalDatabase(StackEntity stackEntity) {
+        mDataRepository.insertStack(stackEntity);
+    }
+
+    @Override
+    public void unbindListener() {
+        mDataRepository.getAllStacks().removeObservers((DetectActivity)mView);
+    }
+
+    @Override
+    public void bindListener(StackItemAdapter adapter) {
+        mAdapter = adapter;
         mObserver = new Observer<List<StackEntity>>() {
             @Override
             public void onChanged(@Nullable List<StackEntity> stackEntities) {
@@ -28,18 +51,6 @@ public class DetectPresenter implements DetectContract.Presenter {
         };
 
         mDataRepository.getAllStacks().observe((DetectActivity)mView,mObserver);
-    }
-
-    @Override
-    public void addStackEntityToLocalDatabase(StackEntity stackEntity) {
-        mDataRepository.insertStack(stackEntity);
-
-
-    }
-
-    @Override
-    public void unbindListener() {
-        mDataRepository.getAllStacks().removeObservers((DetectActivity)mView);
     }
 
     @Override

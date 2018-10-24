@@ -19,7 +19,8 @@ public class AndroidData implements DataSource.Constants{
     }
     public static AndroidData getInstance() {
         if (INSTANCE == null) {
-            return new AndroidData();
+            INSTANCE = new AndroidData();
+            return INSTANCE;
         }
         return INSTANCE;
     }
