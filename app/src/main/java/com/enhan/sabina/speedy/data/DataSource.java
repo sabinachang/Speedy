@@ -21,20 +21,33 @@ import java.util.List;
 public interface DataSource {
     interface Constants {
         Intent getTakePhotoIntent();
+
         Uri getUriFromFileProvider(Activity activity, String authority, File file);
+
         String getMediaOutputString();
+
         String providePictureDirectory();
 
     }
 
     interface Repository {
         Intent getPhotoIntent();
+
         Uri getUriFromFileProvider(Activity activity, String authority, File file);
+
         String getMediaOutputString();
+
         String providePictureDirectory();
+
         void storeImage(Bitmap bitmap);
+
         Bitmap retrieveImageForGoogle();
+
         void startTextDetection(DetectTextCallback callback, Bitmap bitmap);
+
+        void storeCompressedImage(Bitmap compressedImage);
+
+        Bitmap retrieveCompressedImage();
 
         // DB operations
         void insertWord(WordEntity wordEntity);
@@ -52,7 +65,13 @@ public interface DataSource {
 
     interface Local {
         void storeImageForGoogle(Bitmap bitmap);
+
         Bitmap retrieveImageForGoogle();
+
+        void storeCompressedImageToLocal(Bitmap compressedImage);
+
+        Bitmap retrieveCompressedImageFromLocal();
+
         String getDictionaryKey();
     }
 }

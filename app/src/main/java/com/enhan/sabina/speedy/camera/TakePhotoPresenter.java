@@ -19,15 +19,12 @@ public class TakePhotoPresenter implements TakePhotoContract.Presenter{
     private final TakePhotoContract.View mTakePhotoView;
     private final DataRepository mDataRepository;
     private final CameraActivity mCameraActivity;
-    private final TakePhotoCallback mTakePhotoCallback;
-    private String FILEPROVIDER_PATH = "com.enhan.sabina.speedy.fileprovider";
+    private static final String FILEPROVIDER_PATH = "com.enhan.sabina.speedy.fileprovider";
 
-    public TakePhotoPresenter(TakePhotoContract.View takePhotoView, DataRepository dataRepository,CameraActivity activity) {
+    public TakePhotoPresenter(TakePhotoContract.View takePhotoView,CameraActivity activity) {
         mTakePhotoView = takePhotoView;
-        mTakePhotoView.setPresenter(this);
-        mDataRepository = dataRepository;
+        mDataRepository = DataRepository.getInstance();
         mCameraActivity = activity;
-        mTakePhotoCallback = (TakePhotoCallback) activity;
     }
 
     @Override
@@ -36,7 +33,6 @@ public class TakePhotoPresenter implements TakePhotoContract.Presenter{
     }
 
     private File createImageFile() throws IOException {
-
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = mCameraActivity.getExternalFilesDir(mDataRepository.providePictureDirectory());
@@ -64,13 +60,6 @@ public class TakePhotoPresenter implements TakePhotoContract.Presenter{
 
             }
         }
-    }
-
-
-    @Override
-    public void onPhotoReceived(Uri uri) {
-
-        mTakePhotoCallback.onPhotoTaken(uri);
     }
 
     @Override

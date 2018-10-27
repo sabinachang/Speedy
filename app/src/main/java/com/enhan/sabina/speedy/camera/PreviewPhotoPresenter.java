@@ -1,45 +1,43 @@
 package com.enhan.sabina.speedy.camera;
 
-import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
+import android.graphics.Bitmap;
+
 import com.enhan.sabina.speedy.data.DataRepository;
+import com.enhan.sabina.speedy.utils.ImageUtils;
 
 public class PreviewPhotoPresenter implements PreviewPhotoContract.Presenter{
 
     private PreviewPhotoContract.View mPreviewPhotoView;
-    private PreviewPhotoCallback mPreviewPhotoCallback;
     private DataRepository mDataRepository;
-    private String mImagePath;
+    private CameraNavigator mCameraNavigator;
 
-    public PreviewPhotoPresenter(PreviewPhotoContract.View prieviewPhotoView,DataRepository dataRepository, CameraActivity activity, String path) {
-        mPreviewPhotoView = prieviewPhotoView;
-        mPreviewPhotoView.setPresenter(this);
-        mPreviewPhotoCallback = (PreviewPhotoCallback) activity;
-        mDataRepository = dataRepository;
-        mImagePath = path;
-//        mDataRepository = dataRepository;
-//        mCameraActivity = activity;
-//        mTakePhotoCallback = (TakePhotoCallback) activity;
+    public PreviewPhotoPresenter(PreviewPhotoContract.View previewPhotoView) {
+        mPreviewPhotoView = previewPhotoView;
+        mDataRepository = DataRepository.getInstance();
+        mCameraNavigator = CameraNavigator.getInstance();
     }
 
     @Override
     public void onPhotoAccepted() {
-        mPreviewPhotoCallback.onPhotoAccepted();
+        mCameraNavigator.onPhotoAcceptedNavigator();
     }
 
     @Override
     public void onPhotoDenied() {
-        mPreviewPhotoCallback.onPhotoDenied();
+        mCameraNavigator.onPhotoDeniedNavigator();
     }
 
     @Override
-    public String providePath() {
-        return mImagePath;
+    public void storeImageForScan(Bitmap bitmap) {
+        mDataRepository.storeImage(bitmap);
     }
 
     @Override
-    public DataRepository provideDataRepository() {
-        return mDataRepository;
+    public void compressImageForDisplay(String imagePath) {
+        mDataRepository.storeCompressedImage(ImageUtils.getCompressBitmap(imagePath));
+        mPreviewPhotoView.displayCompressedImage(mDataRepository.retrieveCompressedImage());
     }
+
 
     @Override
     public void start() {

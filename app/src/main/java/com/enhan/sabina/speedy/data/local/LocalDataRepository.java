@@ -10,6 +10,7 @@ public class LocalDataRepository implements DataSource.Local{
 
     private static LocalDataRepository INSTANCE = null;
     private Bitmap mGoogleBitmap;
+    private Bitmap mCompressedBitmap;
     private LocalDataRepository() {
 
     }
@@ -22,15 +23,22 @@ public class LocalDataRepository implements DataSource.Local{
 
     @Override
     public void storeImageForGoogle(Bitmap bitmap) {
-//        Log.d("LocalDataStorage","bitmap size = " + bitmap.getDensity());
         mGoogleBitmap = bitmap;
     }
 
     @Override
     public Bitmap retrieveImageForGoogle() {
-
-//        Log.d("LocalDataStorage","returning bitmap");
         return mGoogleBitmap;
+    }
+
+    @Override
+    public void storeCompressedImageToLocal(Bitmap compressedImage) {
+        mCompressedBitmap = compressedImage;
+    }
+
+    @Override
+    public Bitmap retrieveCompressedImageFromLocal() {
+        return mCompressedBitmap;
     }
 
     @Override

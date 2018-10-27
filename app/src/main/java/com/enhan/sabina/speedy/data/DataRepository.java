@@ -91,9 +91,7 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     @Override
     public void storeImage(Bitmap bitmap) {
         mLocalDataRepository.storeImageForGoogle(bitmap);
-
     }
-
 
     @Override
     public void startTextDetection(DetectTextCallback callback, Bitmap bitmap) {
@@ -160,6 +158,15 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
 
     @Override
     public void onReceiveStackInfo(StackEntity stackEntity) {
-//        mStudyPresenter.returnStackName(stackEntity);
+    }
+
+    @Override
+    public void storeCompressedImage(Bitmap compressBitmap) {
+        mLocalDataRepository.storeCompressedImageToLocal(compressBitmap);
+    }
+
+    @Override
+    public Bitmap retrieveCompressedImage() {
+        return mLocalDataRepository.retrieveCompressedImageFromLocal();
     }
 }

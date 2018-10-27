@@ -26,11 +26,11 @@ import com.enhan.sabina.speedy.utils.ImageUtils;
 
 public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContract.View{
 
+    private static final String PATH_KEY = "path_key";
     private ImageView mPreviewImageView;
     private FrameLayout mAcceptBtn;
     private FrameLayout mDenyBtn;
     private PreviewPhotoContract.Presenter mPresenter;
-    private DataRepository mDataRepository;
     private Bitmap mBitmap;
 
     public PreviewPhotoFragment() {
@@ -49,6 +49,8 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+
+        mPresenter = new PreviewPhotoPresenter(this);
         mPreviewImageView = view.findViewById(R.id.image_preview);
         mAcceptBtn = view.findViewById(R.id.btn_accept);
         mDenyBtn = view.findViewById(R.id.btn_deny);
@@ -62,38 +64,24 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
         mAcceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.provideDataRepository().storeImage(mBitmap);
+                mPresenter.storeImageForScan(mBitmap);
                 mPresenter.onPhotoAccepted();
             }
         });
 
-        String imagePath = mPresenter.providePath();
-//        final Bitmap[] bitmap = new Bitmap[1];
-//        previewImageView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                bitmap[0] = ImageUtils.getCompressBitmap(getActivity(),uriData,view.getWidth());
-//                Log.d("Preview",""+bitmap[0].getWidth());
-//                Log.d("Preview","" + bitmap[0].getHeight());
-//                mPreviewImageView.getWidth();
-//                mPreviewImageView.setImageBitmap(bitmap[0]);
-//            }
-//        });
+        String imagePath = getArguments().getString(PATH_KEY,null);
+        mPresenter.compressImageForDisplay(imagePath);
 
-        mBitmap = ImageUtils.getCompressBitmap(getActivity(),imagePath);
-
-        mPreviewImageView.setImageBitmap(mBitmap);
     }
 
     @Override
     public void setPresenter(PreviewPhotoContract.Presenter presenter) {
-        mPresenter = presenter;
+
     }
 
     @Override
-    public void onPause() {
-
-        super.onPause();
+    public void displayCompressedImage(Bitmap compressedImage) {
+        mBitmap = compressedImage;
+        mPreviewImageView.setImageBitmap(mBitmap);
     }
 }

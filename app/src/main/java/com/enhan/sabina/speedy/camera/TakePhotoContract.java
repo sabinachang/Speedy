@@ -13,7 +13,6 @@ public interface TakePhotoContract {
         void startCameraIntent(Intent intent,Uri photoUri);
     }
     interface Presenter extends BasePresenter {
-        void onPhotoReceived(Uri uri);
         void launchCamera();
     }
 }

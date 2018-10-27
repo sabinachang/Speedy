@@ -55,7 +55,6 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     private int mLayoutOrientation;
     private SurfaceHolder mHolder;
     private Uri mPhotoUri;
-    private Uri mLocalUri;
     private TakePhotoContract.Presenter mPresenter;
     private CameraActivity mActivity;
     private ImageView mOk;
@@ -64,12 +63,12 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof CameraActivity) {
             mTakePhotoCallback = (TakePhotoCallback) context;
+            mActivity = (CameraActivity) context;
         }
     }
 
@@ -85,6 +84,7 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mPresenter = new TakePhotoPresenter(this,mActivity);
         mOk = view.findViewById(R.id.btn_capture);
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,51 +96,20 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_TAKE_PHOTO :
-                    if (null != mPhotoUri) {
-                        mLocalUri = mPhotoUri;
-//
-                        mTakePhotoCallback.startCroppingActivity(mLocalUri);
-
-                    }
-                    break;
-
+        if (resultCode == RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
+            if (mPhotoUri != null) {
+                mTakePhotoCallback.startCroppingActivity(mPhotoUri);
             }
         }
     }
 
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-//        Log.d(TAG,"on stop");
-    }
-
     @Override
     public void setPresenter(TakePhotoContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
     }
 
     @Override
     public void startCameraIntent(Intent intent,Uri photoUri) {
         mPhotoUri = photoUri;
-//        Log.d(TAG,"starting take photo ");
-
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
 }
