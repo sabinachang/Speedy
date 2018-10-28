@@ -71,7 +71,6 @@ public class PreviewPhotoFragment extends Fragment implements PreviewPhotoContra
 
         String imagePath = getArguments().getString(PATH_KEY,null);
         mPresenter.compressImageForDisplay(imagePath);
-
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.enhan.sabina.speedy.data.DataRepository;
 import com.enhan.sabina.speedy.utils.ImageUtils;
 
 public class PreviewPhotoPresenter implements PreviewPhotoContract.Presenter{
-
     private PreviewPhotoContract.View mPreviewPhotoView;
     private DataRepository mDataRepository;
     private CameraNavigator mCameraNavigator;
@@ -43,6 +42,4 @@ public class PreviewPhotoPresenter implements PreviewPhotoContract.Presenter{
     public void start() {
 
     }
-
-
 }

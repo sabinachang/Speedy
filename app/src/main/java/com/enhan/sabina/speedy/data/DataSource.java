@@ -33,6 +33,12 @@ public interface DataSource {
     interface Repository {
         Intent getPhotoIntent();
 
+        void storePhotoIntent(Intent intent);
+
+        void storePhotoUri(Uri uri);
+
+        Uri getPhotoUri();
+
         Uri getUriFromFileProvider(Activity activity, String authority, File file);
 
         String getMediaOutputString();
@@ -51,14 +57,23 @@ public interface DataSource {
 
         // DB operations
         void insertWord(WordEntity wordEntity);
+
         void updateWord(WordEntity wordEntity);
+
         void deleteWord(WordEntity wordEntity);
+
         void getWordsInStack(String stackName, ReviewWordCallback reviewWordCallback);
+
         void deleteStack(StackEntity stackEntity);
+
         void getStackInfo(String stackName, ChooseStackCallback chooseStackCallback);
+
         void insertStack(StackEntity stackEntity);
+
         LiveData<List<StackEntity>> getAllStacks();
+
         void updateStack(StackEntity stackEntity);
+
         void getWordDefinition (String word, GetDefinitionCallback getDefinitionCallback);
 
     }
@@ -73,5 +88,13 @@ public interface DataSource {
         Bitmap retrieveCompressedImageFromLocal();
 
         String getDictionaryKey();
+
+        void storePhotoUri(Uri uri);
+
+        Uri retrievePhotoUri();
+
+        void storePhotoIntent(Intent intent);
+
+        Intent retrievePhotoIntent();
     }
 }

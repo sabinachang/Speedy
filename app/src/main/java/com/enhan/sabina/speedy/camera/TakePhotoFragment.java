@@ -42,34 +42,12 @@ import static com.google.android.gms.common.internal.Preconditions.checkNotNull;
 
 public class TakePhotoFragment extends Fragment implements TakePhotoContract.View{
 
-    private static final String TAG = "Take photo fragment" ;
     private static final int REQUEST_TAKE_PHOTO = 102;
-    private CameraPreview mCameraPreview;
-    private FrameLayout mCameraPreviewLayout;
-    private TakePhotoCallback mTakePhotoCallback;
-    private Camera mCamera;
-    private Button mButton;
-    private final int PICTURE_SIZE_MAX_WIDTH = 1280;
-    private final int PREVIEW_SIZE_MAX_WIDTH = 640;
-    private int mDisplayOrientation;
-    private int mLayoutOrientation;
-    private SurfaceHolder mHolder;
-    private Uri mPhotoUri;
     private TakePhotoContract.Presenter mPresenter;
-    private CameraActivity mActivity;
     private ImageView mOk;
 
     public TakePhotoFragment() {
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof CameraActivity) {
-            mTakePhotoCallback = (TakePhotoCallback) context;
-            mActivity = (CameraActivity) context;
-        }
     }
 
     public static TakePhotoFragment newInstance() {
@@ -84,7 +62,7 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mPresenter = new TakePhotoPresenter(this,mActivity);
+        mPresenter = new TakePhotoPresenter(this);
         mOk = view.findViewById(R.id.btn_capture);
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +75,7 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_TAKE_PHOTO) {
-            if (mPhotoUri != null) {
-                mTakePhotoCallback.startCroppingActivity(mPhotoUri);
-            }
+                mPresenter.prepareCroppingActivity();
         }
     }
 
@@ -108,8 +84,9 @@ public class TakePhotoFragment extends Fragment implements TakePhotoContract.Vie
     }
 
     @Override
-    public void startCameraIntent(Intent intent,Uri photoUri) {
-        mPhotoUri = photoUri;
-        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+    public void startCameraIntent(Intent intent) {
+        if (intent != null) {
+            startActivityForResult(intent,REQUEST_TAKE_PHOTO);
+        }
     }
 }

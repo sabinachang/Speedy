@@ -10,9 +10,12 @@ import com.enhan.sabina.speedy.BaseView;
 
 public interface TakePhotoContract {
     interface View extends BaseView<Presenter> {
-        void startCameraIntent(Intent intent,Uri photoUri);
+        void startCameraIntent(Intent intent);
+
     }
     interface Presenter extends BasePresenter {
+        void prepareCroppingActivity();
+
         void launchCamera();
     }
 }

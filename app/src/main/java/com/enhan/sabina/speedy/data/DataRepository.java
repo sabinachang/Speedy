@@ -70,7 +70,22 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
 
     @Override
     public Intent getPhotoIntent() {
-        return mAndroidDataSource.getTakePhotoIntent();
+        return mLocalDataRepository.retrievePhotoIntent();
+    }
+
+    @Override
+    public void storePhotoIntent(Intent intent) {
+        mLocalDataRepository.storePhotoIntent(intent);
+    }
+
+    @Override
+    public void storePhotoUri(Uri uri) {
+        mLocalDataRepository.storePhotoUri(uri);
+    }
+
+    @Override
+    public Uri getPhotoUri() {
+        return mLocalDataRepository.retrievePhotoUri();
     }
 
     @Override

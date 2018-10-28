@@ -1,10 +1,12 @@
 package com.enhan.sabina.speedy.camera;
 
-import com.enhan.sabina.speedy.callbacks.PreviewPhotoCallback;
+import android.net.Uri;
+
+import com.enhan.sabina.speedy.callbacks.CameraActivityCallback;
 
 public class CameraNavigator implements CameraContract.Navigator {
 
-    private PreviewPhotoCallback mPreviewPhotoCallback;
+    private CameraActivityCallback mCameraActivityCallback;
     private static CameraNavigator INSTANCE;
 
     private CameraNavigator() {
@@ -20,21 +22,34 @@ public class CameraNavigator implements CameraContract.Navigator {
 
     @Override
     public void onPhotoAcceptedNavigator() {
-        if (mPreviewPhotoCallback != null) {
-            mPreviewPhotoCallback.onPhotoAccepted();
+        if (mCameraActivityCallback != null) {
+            mCameraActivityCallback.onPhotoAccepted();
         }
     }
 
     @Override
     public void onPhotoDeniedNavigator() {
-        if (mPreviewPhotoCallback != null) {
-            mPreviewPhotoCallback.onPhotoDenied();
+        if (mCameraActivityCallback != null) {
+            mCameraActivityCallback.onPhotoDenied();
         }
     }
 
+    @Override
+    public void startCroppingActivityNavigator(Uri uri) {
+        if (mCameraActivityCallback != null) {
+            mCameraActivityCallback.startCroppingActivity(uri);
+        }
+    }
 
-    public void setCameraActivity(PreviewPhotoCallback callback) {
-        mPreviewPhotoCallback = callback;
+    @Override
+    public void createCameraIntent() {
+        if (mCameraActivityCallback != null) {
+            mCameraActivityCallback.prepareCameraIntent();
+        }
+    }
+
+    public void setCameraActivity(CameraActivityCallback callback) {
+        mCameraActivityCallback = callback;
     }
 
 }

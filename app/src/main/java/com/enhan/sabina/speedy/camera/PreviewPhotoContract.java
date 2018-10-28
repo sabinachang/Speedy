@@ -7,7 +7,6 @@ import com.enhan.sabina.speedy.BaseView;
 import com.enhan.sabina.speedy.data.DataRepository;
 
 public interface PreviewPhotoContract {
-
     interface View extends BaseView<Presenter>{
         void displayCompressedImage(Bitmap compressedImage);
     }
