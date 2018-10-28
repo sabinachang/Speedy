@@ -119,7 +119,7 @@ public class CameraActivity extends AppCompatActivity implements CameraActivityC
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-
+                ex.printStackTrace();
             }
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(this,fileproviderPath,photoFile);
@@ -130,7 +130,7 @@ public class CameraActivity extends AppCompatActivity implements CameraActivityC
         }
     }
 
-    private File createImageFile() throws IOException{
+    private File createImageFile() throws IOException {
         String imageFileName = "fileprovider_temp.jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return new File(storageDir,imageFileName);

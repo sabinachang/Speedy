@@ -39,7 +39,7 @@ import com.enhan.sabina.speedy.tasks.UpdateWordTask;
 import java.io.File;
 import java.util.List;
 
-public class DataRepository implements DataSource.Repository,DataRepositoryCallback{
+public class DataRepository implements DataSource.Repository,DataRepositoryCallback {
 
     private static DataRepository INSTANCE = null;
     private AndroidData mAndroidDataSource;
@@ -58,13 +58,13 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     }
 
     public static DataRepository getInstance() {
-            if (INSTANCE == null) {
-                INSTANCE = new DataRepository();
-            }
-            return INSTANCE;
+        if (INSTANCE == null) {
+            INSTANCE = new DataRepository();
+        }
+        return INSTANCE;
     }
 
-    public void setPresenter(StudyPresenter studyPresenter){
+    public void setPresenter(StudyPresenter studyPresenter) {
         mStudyPresenter = studyPresenter;
     }
 

@@ -3,12 +3,10 @@ package com.enhan.sabina.speedy.data.local;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.util.Log;
 
 import com.enhan.sabina.speedy.data.DataSource;
-import com.enhan.sabina.speedy.data.constants.AndroidData;
 
-public class LocalDataRepository implements DataSource.Local{
+public class LocalDataRepository implements DataSource.Local {
 
     private static LocalDataRepository INSTANCE = null;
     private Bitmap mGoogleBitmap;
@@ -19,6 +17,7 @@ public class LocalDataRepository implements DataSource.Local{
     private LocalDataRepository() {
 
     }
+
     public static LocalDataRepository getInstance() {
         if (INSTANCE == null) {
             return new LocalDataRepository();

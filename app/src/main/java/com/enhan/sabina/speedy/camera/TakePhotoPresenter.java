@@ -2,7 +2,7 @@ package com.enhan.sabina.speedy.camera;
 
 import com.enhan.sabina.speedy.data.DataRepository;
 
-public class TakePhotoPresenter implements TakePhotoContract.Presenter{
+public class TakePhotoPresenter implements TakePhotoContract.Presenter {
     private final TakePhotoContract.View mTakePhotoView;
     private final DataRepository mDataRepository;
     private final CameraNavigator mCameraNavigator;

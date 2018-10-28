@@ -74,7 +74,7 @@ public interface DataSource {
 
         void updateStack(StackEntity stackEntity);
 
-        void getWordDefinition (String word, GetDefinitionCallback getDefinitionCallback);
+        void getWordDefinition(String word, GetDefinitionCallback getDefinitionCallback);
 
     }
 

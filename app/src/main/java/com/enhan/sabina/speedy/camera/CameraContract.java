@@ -1,6 +1,5 @@
 package com.enhan.sabina.speedy.camera;
 
-import android.content.Intent;
 import android.net.Uri;
 
 public interface CameraContract {
