@@ -9,7 +9,6 @@ public interface DisplayTextContract {
     }
 
     interface Presenter extends BasePresenter {
-
-
+        void updateTagline(String word);
     }
 }

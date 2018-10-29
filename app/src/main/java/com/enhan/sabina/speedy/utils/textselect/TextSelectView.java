@@ -80,11 +80,6 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         initData(mParentWidth);
-//        Log.d(TAG,"view width = " + mParentWidth);
-//        Log.d(TAG,"view height = " + mViewHeight);
-
-
-
         setMeasuredDimension(mParentWidth,mViewHeight);
 
 
@@ -315,6 +310,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
             Down_X = motionEvent.getX();
             Down_Y = motionEvent.getY();
             mCurrentMode = Mode.PressSelectText;
+            Log.d("Text selct","long pressed");
         }
 
         @Override

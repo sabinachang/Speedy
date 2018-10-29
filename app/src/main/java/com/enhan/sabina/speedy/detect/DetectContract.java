@@ -2,7 +2,9 @@ package com.enhan.sabina.speedy.detect;
 
 import com.enhan.sabina.speedy.BasePresenter;
 import com.enhan.sabina.speedy.BaseView;
+import com.enhan.sabina.speedy.callbacks.ChosenWordCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
+import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 public interface DetectContract {
     interface View extends BaseView<Presenter> {
@@ -16,26 +18,33 @@ public interface DetectContract {
 
         void bindListener(StackItemAdapter adapter);
 
-        void getWordDefinition();
+        void getWordDefinition(String word);
+
+        void setChosenWordCallback(ChosenWordCallback callback);
+
+        void onAddedToChosenFragment(WordEntity wordEntity);
+
+        void onBottomSheetCollapsed(boolean added,StackEntity stackEntity);
+
     }
 
     interface Navigator {
-        void onFabButtonClickedNavigator(); // detect activity
+        void onDialogCloseButtonClickedNavigator();
 
-        void onDialogCloseButtonClickedNavigator(); // dialog fragment
+        void onStackSelectedNavigator(StackEntity stackEntity);
 
-        void onStackSelectedNavigator(StackEntity stackEntity); // dialog fragment
+        void updateTabCountHintNavigator(int num);
 
-        void updateTabCountHintNavigator(int num); // chosen word fragment
+        void activateFabNavigator();
 
-        void activateFabNavigator(); // chosen word fragment
+        void deactivateFabNavigator();
 
-        void deactivateFabNavigator(); //  chosen word fragment
+        void isWordDuplicateNavigator(boolean duplicate);
 
-        void isWordDuplicateNavigator(boolean duplicate); // chosen word fragment
+        void onAddStackButtonClickedNavigator(StackEntity stackEntity);
 
-        void onAddStackButtonClickedNavigator(StackEntity stackEntity); // dialog fragment
+        void addDatabaseListenerNavigator(StackItemAdapter adapter);
 
-        void addDatabaseListenerNavigator(StackItemAdapter adapter); // dialog fragment
+        void updateTagline(String word);
     }
 }

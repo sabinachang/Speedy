@@ -4,7 +4,6 @@ import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 
 public class DetectNavigator implements DetectContract.Navigator {
-
     private static DetectNavigator INSTANCE;
     private DetectActivityCallback mDetectActivityCallback;
 
@@ -19,24 +18,22 @@ public class DetectNavigator implements DetectContract.Navigator {
         return INSTANCE;
     }
 
-
     public void setDetectActivityCallback(DetectActivityCallback callback) {
         mDetectActivityCallback = callback;
     }
 
     @Override
-    public void onFabButtonClickedNavigator() {
-
-    }
-
-    @Override
     public void onDialogCloseButtonClickedNavigator() {
-
+        if (mDetectActivityCallback != null) {
+            mDetectActivityCallback.onDialogCloseButtonClicked();
+        }
     }
 
     @Override
     public void onStackSelectedNavigator(StackEntity stackEntity) {
-
+        if (mDetectActivityCallback != null) {
+            mDetectActivityCallback.onStackSelected(stackEntity);
+        }
     }
 
     @Override
@@ -69,11 +66,22 @@ public class DetectNavigator implements DetectContract.Navigator {
 
     @Override
     public void onAddStackButtonClickedNavigator(StackEntity stackEntity) {
-
+        if (mDetectActivityCallback != null) {
+            mDetectActivityCallback.onAddStackButtonClicked(stackEntity);
+        }
     }
 
     @Override
     public void addDatabaseListenerNavigator(StackItemAdapter adapter) {
+        if (mDetectActivityCallback != null) {
+            mDetectActivityCallback.addDatabaseListener(adapter);
+        }
+    }
 
+    @Override
+    public void updateTagline(String word) {
+        if (mDetectActivityCallback != null) {
+            mDetectActivityCallback.updateTagline(word);
+        }
     }
 }

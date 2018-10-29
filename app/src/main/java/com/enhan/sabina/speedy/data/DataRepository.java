@@ -13,6 +13,7 @@ import android.util.Log;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
 import com.enhan.sabina.speedy.callbacks.DataRepositoryCallback;
+import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
@@ -161,7 +162,7 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     }
 
     @Override
-    public void getWordDefinition(String word, GetDefinitionCallback callback) {
+    public void getWordDefinition(String word, DetectActivityCallback callback) {
         new GetDefinitionTask(word,mLocalDataRepository.getDictionaryKey(),callback).getDefinition();
     }
 

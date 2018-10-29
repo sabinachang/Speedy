@@ -27,15 +27,9 @@ import java.util.List;
 import java.util.Set;
 
 public class ChosenWordFragment extends Fragment implements ChosenWordCallback, ChosenWordContract.View{
-
     private RecyclerView mRecyclerView;
     private ChosenWordAdapter mAdapter;
-    private FloatingActionButton mFab;
-    private List<WordEntity> mWordEntityList = new ArrayList<>();
-    private DetectActivityCallback mDetectActivityCallback;
     private ChosenWordContract.Presenter mPresenter;
-    private Set<String> mDuplicateCheck = new HashSet<>();
-
 
     public ChosenWordFragment() {
     }
@@ -57,10 +51,11 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRecyclerView = view.findViewById(R.id.chosenword_recyclerview);
         mPresenter = new ChosenWordPresenter(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
         mAdapter = new ChosenWordAdapter(this);
+
+        mRecyclerView = view.findViewById(R.id.chosenword_recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -105,6 +100,4 @@ public class ChosenWordFragment extends Fragment implements ChosenWordCallback, 
     public int getAdapterDatasetCount() {
         return mAdapter.getItemCount();
     }
-
-
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.enhan.sabina.speedy.SpeedyApplication;
+import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.data.DataRepository;
 
@@ -23,11 +24,9 @@ public class GetDefinitionTask {
     private static GetDefinitionTask INSTANCE;
     private String mWord;
     private String mWordnikApi;
-    private GetDefinitionCallback mCallback;
+    private DetectActivityCallback mCallback;
 
-
-
-    public GetDefinitionTask(String word, String wordnikApi, GetDefinitionCallback callback) {
+    public GetDefinitionTask(String word, String wordnikApi, DetectActivityCallback callback) {
         mWord = word;
         mWordnikApi = wordnikApi;
         mCallback = callback;

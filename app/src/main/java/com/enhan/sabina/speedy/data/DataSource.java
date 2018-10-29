@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
 import com.enhan.sabina.speedy.callbacks.ChooseStackCallback;
+import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.callbacks.DetectTextCallback;
 import com.enhan.sabina.speedy.callbacks.GetDefinitionCallback;
 import com.enhan.sabina.speedy.callbacks.ProcessTextCallback;
@@ -74,7 +75,7 @@ public interface DataSource {
 
         void updateStack(StackEntity stackEntity);
 
-        void getWordDefinition(String word, GetDefinitionCallback getDefinitionCallback);
+        void getWordDefinition(String word, DetectActivityCallback detectActivityCallback);
 
     }
 

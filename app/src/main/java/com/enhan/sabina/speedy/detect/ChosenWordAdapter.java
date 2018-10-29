@@ -24,7 +24,6 @@ class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<C
     public ChosenWordAdapter(ChosenWordCallback chosenWordCallback) {
         mWordEntityList = new ArrayList<>();
         mChosenWordCallback = chosenWordCallback;
-
     }
 
     @NonNull
@@ -44,7 +43,6 @@ class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<C
         } else {
             wordViewHolder.mButton.setBackgroundResource(R.drawable.ic_add_light);
             wordViewHolder.mWordTextView.setTextColor(SpeedyApplication.getAppContext().getColor(R.color.colorPrimary));
-
         }
     }
 
@@ -54,7 +52,6 @@ class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<C
     }
 
     public class WordViewHolder extends RecyclerView.ViewHolder {
-
         private TextView mWordTextView;
         private ImageView mButton;
 
@@ -76,22 +73,10 @@ class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<C
                         chosenWord.setSelected(false);
                         mChosenWordCallback.onRemoved(chosenWord);
                         mWordTextView.setTextColor(SpeedyApplication.getAppContext().getResources().getColor(R.color.colorPrimary));
-
                     }
                 }
             });
-
         }
-    }
-
-    public void resetChosenWordsColor() {
-        for (WordEntity w : mWordEntityList) {
-            if (w.isSelected()) {
-                w.setSelected(false);
-            }
-        }
-
-        notifyDataSetChanged();
     }
 
     public void addWord(WordEntity wordEntity) {
@@ -102,5 +87,4 @@ class ChosenWordAdapter extends android.support.v7.widget.RecyclerView.Adapter<C
     public List<WordEntity> getWordEntityList() {
         return mWordEntityList;
     }
-
 }

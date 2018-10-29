@@ -1,30 +1,24 @@
 package com.enhan.sabina.speedy.detect;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.callbacks.SelectTextCallback;
 import com.enhan.sabina.speedy.utils.textselect.TextSelectView;
 
 public class DisplayTextFragment extends Fragment implements DisplayTextContract.View, SelectTextCallback {
-
     private DisplayTextContract.Presenter mPresenter;
     private LinearLayout mLinearLayout;
     private NestedScrollView mScrollView;
-    private DetectActivity mTagCallbackListener;
     private SelectTextCallback mTextSelectCallback;
 
     public DisplayTextFragment() {
@@ -37,7 +31,6 @@ public class DisplayTextFragment extends Fragment implements DisplayTextContract
 
     @Override
     public void setPresenter(DisplayTextContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Nullable
@@ -47,17 +40,9 @@ public class DisplayTextFragment extends Fragment implements DisplayTextContract
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity){
-            mTagCallbackListener = (DetectActivity) context;
-        }
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        mPresenter = new DisplayTextPresenter(this,mTagCallbackListener);
+        mPresenter = new DisplayTextPresenter(this);
         ((DetectActivity)getActivity()).setSupportActionBar(toolbar);
         mLinearLayout = view.findViewById(R.id.layout_text);
         mScrollView = view.findViewById(R.id.scroll_view);
@@ -83,6 +68,6 @@ public class DisplayTextFragment extends Fragment implements DisplayTextContract
 
     @Override
     public void onWordSelected(String word) {
-        mTagCallbackListener.updateTagline(word);
+        mPresenter.updateTagline(word);
     }
 }

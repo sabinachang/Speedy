@@ -1,6 +1,5 @@
 package com.enhan.sabina.speedy.utils;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,37 +17,29 @@ import android.widget.Toast;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.BottomSheetDialogFragmentCallback;
-import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
+import com.enhan.sabina.speedy.detect.AddStackBottomDialogContract;
+import com.enhan.sabina.speedy.detect.AddStackBottomDialogPresenter;
 import com.enhan.sabina.speedy.detect.StackItemAdapter;
 
-public class AddStackBottomDialogFragment extends BottomSheetDialogFragment implements BottomSheetDialogFragmentCallback {
-
+public class AddStackBottomDialogFragment extends BottomSheetDialogFragment implements BottomSheetDialogFragmentCallback, AddStackBottomDialogContract.View {
     private static AddStackBottomDialogFragment INSTANCE;
     private RecyclerView mStackListRecyclerView;
     private StackItemAdapter mStackItemAdapter;
     private ImageView mCloseBtn;
     private ImageView mAddStackBtn;
+    private AddStackBottomDialogContract.Presenter mPresenter;
     private EditText mStackUserInput;
-    private DetectActivityCallback mDetectActivityCallback;
 
     public AddStackBottomDialogFragment() {
     }
 
-    public static AddStackBottomDialogFragment newInstance() {
+    public static AddStackBottomDialogFragment getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AddStackBottomDialogFragment();
             return INSTANCE;
         }
         return INSTANCE;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof DetectActivityCallback) {
-            mDetectActivityCallback = (DetectActivityCallback) context;
-        }
     }
 
     @Nullable
@@ -61,11 +52,12 @@ public class AddStackBottomDialogFragment extends BottomSheetDialogFragment impl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mCloseBtn = view.findViewById(R.id.close_btn);
         mAddStackBtn = view.findViewById(R.id.add_stack_to_recyclerview);
+        mPresenter = new AddStackBottomDialogPresenter(this);
         mStackUserInput = view.findViewById(R.id.stack_name_add);
         mCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDetectActivityCallback.onDialogCloseButtonClicked();
+                mPresenter.onClosedButtonClicked();
                 dismiss();
             }
         });
@@ -80,7 +72,7 @@ public class AddStackBottomDialogFragment extends BottomSheetDialogFragment impl
                     mStackUserInput.setText("");
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(SpeedyApplication.getAppContext().INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mStackUserInput.getWindowToken(), 0);
-                    mDetectActivityCallback.onAddStackButtonClicked(new StackEntity(stackName));
+                    mPresenter.onAddButtonSelected(new StackEntity(stackName));
                 }
             }
         });
@@ -89,18 +81,19 @@ public class AddStackBottomDialogFragment extends BottomSheetDialogFragment impl
         mStackListRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
         mStackItemAdapter = new StackItemAdapter(this);
         mStackListRecyclerView.setAdapter(mStackItemAdapter);
-        mDetectActivityCallback.addDatabaseListener(mStackItemAdapter);
+        mPresenter.addDatabaseListener(mStackItemAdapter);
         setCancelable(false);
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public StackItemAdapter getStackItemAdapter() {
-        return mStackItemAdapter;
+    @Override
+    public void onWordAddToStack(StackEntity stackEntity) {
+        mPresenter.onStackSelected(stackEntity);
+        dismiss();
     }
 
     @Override
-    public void onWordAddToStack(StackEntity stackEntity) {
-        mDetectActivityCallback.onStackSelected(stackEntity);
-        dismiss();
+    public void setPresenter(AddStackBottomDialogContract.Presenter presenter) {
+
     }
 }

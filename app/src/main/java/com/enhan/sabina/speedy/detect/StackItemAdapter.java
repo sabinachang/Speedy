@@ -11,20 +11,16 @@ import android.widget.TextView;
 import com.enhan.sabina.speedy.R;
 import com.enhan.sabina.speedy.SpeedyApplication;
 import com.enhan.sabina.speedy.callbacks.BottomSheetDialogFragmentCallback;
-import com.enhan.sabina.speedy.callbacks.DetectActivityCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
-import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHolder>{
-
+public class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.StackViewHolder> {
     private List<StackEntity> mStackEntities;
-    private List<WordEntity> mWordEntities;
     private BottomSheetDialogFragmentCallback mBottomSheetCallback;
 
-    public StackItemAdapter( BottomSheetDialogFragmentCallback callback) {
+    public StackItemAdapter(BottomSheetDialogFragmentCallback callback) {
         mBottomSheetCallback = callback;
         mStackEntities = new ArrayList<>();
     }
@@ -46,8 +42,7 @@ public class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.Stac
         return mStackEntities.size();
     }
 
-    public class StackViewHolder extends RecyclerView.ViewHolder{
-
+    public class StackViewHolder extends RecyclerView.ViewHolder {
         private TextView mStackName;
         private RelativeLayout mStackItem;
 
@@ -70,7 +65,4 @@ public class StackItemAdapter extends RecyclerView.Adapter<StackItemAdapter.Stac
 
     }
 
-    public void setCurrentSelectedWords(List<WordEntity> entityList) {
-
-    }
 }
