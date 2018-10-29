@@ -51,7 +51,6 @@ import java.util.List;
 public class DetectActivity extends AppCompatActivity implements DetectContract.View,UpdateTaglineCallback, DetectActivityCallback,AppBarLayout.OnOffsetChangedListener,GetDefinitionCallback{
 
     private DataRepository mDataRepository;
-    private String mFakeString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
     private List<Fragment> mFragmentList;
     private TextView mWordTagline;
     private AppBarLayout mAppBarLayout;
@@ -89,19 +88,10 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.secondaryColorDark));
 
-        mDataRepository = DataRepository.getInstance();
-//        transToDetectPhoto();
-        mFragmentList = new ArrayList<>();
-        DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
-        ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
-        mChosenWordCallback = chosenWordFragment;
-
+        mPresenter = new DetectPresenter(this);
 
         mAppBarLayout = findViewById(R.id.display_appbar);
         mAddButtonImageView = findViewById(R.id.add_word);
-//        mCloseBtn = findViewById(R.id.close_btn);
-//        mAddStackBtn = findViewById(R.id.add_stack_to_recyclerview);
-//        mStackUserInput = findViewById(R.id.stack_name_add);
         mDefinitionCard = findViewById(R.id.definition_preview);
         mFab = findViewById(R.id.fab);
 
@@ -115,24 +105,20 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         mFab.setBackgroundTintList(ColorStateList.valueOf(SpeedyApplication.getAppContext().getColor(R.color.colorPrimaryLight)));
         mFab.hide();
 
+        mFragmentList = new ArrayList<>();
+        DisplayTextFragment displayTextFragment = DisplayTextFragment.newInstance();
+        ChosenWordFragment chosenWordFragment = ChosenWordFragment.newInstance();
         mFragmentList.add(displayTextFragment);
         mFragmentList.add(chosenWordFragment);
+        mChosenWordCallback = chosenWordFragment;
+
         mAddStackBottomDialogFragment = AddStackBottomDialogFragment.newInstance();
 
-//        new DisplayTextPresenter(displayTextFragment,this,mDataRepository);
         mViewPager = findViewById(R.id.viewpager);
         mTabLayout = findViewById(R.id.tabs);
         mWordTagline = findViewById(R.id.word_tagline);
         mDefinitionCard.setText(R.string.detect_page_hine);
         mPos = findViewById(R.id.pos);
-
-        mBehavior = findViewById(R.id.bottom_sheet);
-
-//        mWordTagline.setTitle("");
-//        setSupportActionBar(mWordTagline);
-
-//        mTabLayout.getTabAt(0).setText(SpeedyApplication.getAppContext().getString(R.string.scan_result));
-//        mTabLayout.getTabAt(1).setText(SpeedyApplication.getAppContext().getString(R.string.word_found));
 
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -183,7 +169,7 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter = new DetectPresenter(this);
+
     }
 
     @Override
@@ -266,24 +252,6 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             if (!mButtonHidden) {
                 mButtonHidden = true;
                 ViewCompat.animate(mAddButtonImageView).scaleY(0).scaleX(0).start();
-//                mWordTagline.setTextSize(10);
-//                LinearLayout.LayoutParams params =  (LinearLayout.LayoutParams) mWordTagline.getLayoutParams();
-//                params.setMargins(params.leftMargin - 20, params.topMargin, params.rightMargin, params.bottomMargin - 20); // left, top, right, bottom
-//                mWordTagline.setLayoutParams(params);
-//                mWord
-
-//                AnimatorSet animSetXY = new AnimatorSet();
-//
-//                ObjectAnimator y = ObjectAnimator.ofFloat(mWordTagline,
-//                        "translationY",mWordTagline.getY(), mWordTagline.getY() - 300);
-//
-//                ObjectAnimator x = ObjectAnimator.ofFloat(mWordTagline,
-//                        "translationX", mWordTagline.getX(), mWordTagline.getX() + 300);
-//
-//                animSetXY.playTogether(x, y);
-//                animSetXY.setInterpolator(new LinearInterpolator());
-//                animSetXY.setDuration(300);
-//                animSetXY.start();
             }
         }
 
@@ -291,35 +259,6 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
             if (mButtonHidden) {
                 mButtonHidden = false;
                 ViewCompat.animate(mAddButtonImageView).scaleY(1).scaleX(1).start();
-
-//                Path path = new Path();
-//                path.arcTo((float)mWordTagline.getLeft(), (float)mWordTagline.getTop(), 1000f, 1000f, 270f, -180f, true);
-//                ObjectAnimator animator = ObjectAnimator.ofFloat(mWordTagline, View.X, View.Y, path);
-//                LinearLayout.LayoutParams params =  (LinearLayout.LayoutParams) mWordTagline.getLayoutParams();
-//                params.setMargins(params.leftMargin + 20, params.topMargin, params.rightMargin, params.bottomMargin + 20); // left, top, right, bottom
-//                mWordTagline.setLayoutParams(params);
-//                mWordTagline.setTextSize(30);
-//                mWordTagline.setPadding(0,0,0,20);\
-
-//                Path path = new Path();
-//                path.arcTo(0f, 0f, 1000f, 1000f, 270f, -180f, true);
-//                ObjectAnimator animator = ObjectAnimator.ofFloat(mWordTagline, View.X, View.Y, path);
-//                animator.setDuration(2000);
-//                animator.start();
-
-//
-//                AnimatorSet animSetXY = new AnimatorSet();
-//
-//                ObjectAnimator y = ObjectAnimator.ofFloat(mWordTagline,
-//                        "translationY",mWordTagline.getY(), mWordTagline.getY() + 300);
-//
-//                ObjectAnimator x = ObjectAnimator.ofFloat(mWordTagline,
-//                        "translationX", mWordTagline.getX(), mWordTagline.getX() - 300);
-//
-//                animSetXY.playTogether(x, y);
-//                animSetXY.setInterpolator(new LinearInterpolator());
-//                animSetXY.setDuration(300);
-//                animSetXY.start();
             }
         }
 
@@ -414,17 +353,6 @@ public class DetectActivity extends AppCompatActivity implements DetectContract.
         }
 
 
-    }
-
-    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
-        Window win = activity.getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
     }
 
     @Override

@@ -162,7 +162,6 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
 
     @Override
     public void getWordDefinition(String word, GetDefinitionCallback callback) {
-        Log.d("datarepository","getting definition");
         new GetDefinitionTask(word,mLocalDataRepository.getDictionaryKey(),callback).getDefinition();
     }
 

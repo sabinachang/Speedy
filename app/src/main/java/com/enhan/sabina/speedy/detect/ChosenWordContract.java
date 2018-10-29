@@ -4,15 +4,27 @@ import android.support.design.widget.FloatingActionButton;
 
 import com.enhan.sabina.speedy.BasePresenter;
 import com.enhan.sabina.speedy.BaseView;
+import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import com.enhan.sabina.speedy.data.roomdb.entity.WordEntity;
 
-public interface ChosenWordContract {
-    interface View extends BaseView<Presenter>{
+import java.util.List;
 
-        void setFab(FloatingActionButton fab);
+public interface ChosenWordContract {
+    interface View extends BaseView<Presenter> {
+        void notifyAdapterDatasetChange();
+
+        void addToAdapter(WordEntity wordEntity);
+
+        int getAdapterDatasetCount();
     }
 
     interface Presenter extends BasePresenter {
-        void addWord(WordEntity wordEntity);
+        void wordSelected(WordEntity wordEntity);
+
+        void wordRemoved(WordEntity wordEntity);
+
+        void updateWordEntityList(StackEntity stackEntity, List<WordEntity> wordEntityList);
+
+        void checkIfDuplicated(WordEntity wordEntity);
     }
 }

@@ -7,14 +7,22 @@ import com.enhan.sabina.speedy.detect.StackItemAdapter;
 import java.util.List;
 
 public interface DetectActivityCallback {
-    void onFabButtonClicked ();
-    void onDialogCloseButtonClicked();
-    void onStackSelected(StackEntity stackEntity);
-    void updateTabCountHint(int num);
-    void activateFab();
-    void deactivateFab();
-    void isWordDuplicate(boolean duplicate);
-    void onAddStackButtonClicked(StackEntity stackEntity);
-    void addDatabaseListener(StackItemAdapter adapter);
+    void onFabButtonClicked (); // detect activity
+
+    void onDialogCloseButtonClicked(); // dialog fragment
+
+    void onStackSelected(StackEntity stackEntity); // dialog fragment
+
+    void updateTabCountHint(int num); // chosen word fragment
+
+    void activateFab(); // chosen word fragment
+
+    void deactivateFab(); //  chosen word fragment
+
+    void isWordDuplicate(boolean duplicate); // chosen word fragment
+
+    void onAddStackButtonClicked(StackEntity stackEntity); // dialog fragment
+
+    void addDatabaseListener(StackItemAdapter adapter); // dialog fragment
 
 }
