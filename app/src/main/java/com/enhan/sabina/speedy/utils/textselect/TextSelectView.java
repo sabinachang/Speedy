@@ -78,12 +78,8 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         initData(mParentWidth);
         setMeasuredDimension(mParentWidth,mViewHeight);
-
-
-
     }
 
     @Override

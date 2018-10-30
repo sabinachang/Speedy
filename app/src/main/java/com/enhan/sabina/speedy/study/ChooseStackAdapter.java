@@ -17,8 +17,7 @@ import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudyStackViewHolder>{
-
+class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudyStackViewHolder> {
     private List<StackEntity> mStackEntities = new ArrayList<>();
     private ChooseStackCallback mChooseStackCallback;
     private int mPreviousPosition = -1;
@@ -44,7 +43,6 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
             studyStackViewHolder.mChosenStack.setTextColor(ContextCompat.getColor(SpeedyApplication.getAppContext(),R.color.colorPrimary));
             studyStackViewHolder.mStackStatus.setImageDrawable(ContextCompat.getDrawable(SpeedyApplication.getAppContext(),R.drawable.ic_rec));
         }
-
     }
 
     @Override
@@ -54,18 +52,15 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
 
     public void addStacks(List<StackEntity> stackEntities) {
         mStackEntities = stackEntities;
-
         notifyDataSetChanged();
     }
 
     public class StudyStackViewHolder extends RecyclerView.ViewHolder {
-
         private TextView mChosenStack;
         private ImageView mStackStatus;
 
         public StudyStackViewHolder(@NonNull View itemView) {
             super(itemView);
-
             mChosenStack = itemView.findViewById(R.id.chosen_stack);
             mStackStatus = itemView.findViewById(R.id.stack_selected_status);
 
@@ -85,13 +80,9 @@ class ChooseStackAdapter extends RecyclerView.Adapter<ChooseStackAdapter.StudySt
                         }
                     }
                     mPreviousPosition = getAdapterPosition();
-
                     notifyDataSetChanged();
                 }
             });
-
         }
     }
-
-
 }

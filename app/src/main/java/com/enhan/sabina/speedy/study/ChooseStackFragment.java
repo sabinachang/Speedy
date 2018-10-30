@@ -20,10 +20,7 @@ import com.enhan.sabina.speedy.callbacks.StudyCallback;
 import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 
 public class ChooseStackFragment extends Fragment implements ChooseStackContract.View,ChooseStackCallback {
-
-
     private TextView mStudyStackName;
-    private TextView mViewCount;
     private RecyclerView mRecyclerView;
     private ChooseStackAdapter mAdapter;
     private ImageView mStart;
@@ -40,7 +37,6 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
 
     @Override
     public void setPresenter(ChooseStackContract.Presenter presenter) {
-//        mPresenter = presenter;
     }
 
     @Nullable
@@ -60,25 +56,18 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mStudyStackName = view.findViewById(R.id.study_stack_name);
-//        mViewCount = view.findViewById(R.id.view_count);
-
-
         mStart = view.findViewById(R.id.start_study);
 
         mStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(SpeedyApplication.getAppContext(),"start studying",Toast.LENGTH_SHORT).show();
-
-//                transToReviewWords();
-
                 mStudyCallback.transToReviewWords(mStudyStackName.getText().toString());
             }
         });
 
-        mRecyclerView = view.findViewById(R.id.study_stack_recyclerview);
         mAdapter = new ChooseStackAdapter(this);
 
+        mRecyclerView = view.findViewById(R.id.study_stack_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeedyApplication.getAppContext()));
         mRecyclerView.setAdapter(mAdapter);
 
@@ -92,15 +81,8 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
         mPresenter.returnStackName(stackEntity);
     }
 
-
-
     @Override
     public void onStackSelected(StackEntity stackEntity) {
         mStudyStackName.setText(stackEntity.getStackName());
-//        mViewCount.setText(stackEntity.getWordCount() + " words");
-
     }
-
-
-
 }

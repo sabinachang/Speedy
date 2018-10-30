@@ -12,6 +12,7 @@ public interface ChooseStackContract {
 
     interface Presenter extends BasePresenter {
         void addAdapter(ChooseStackAdapter adapter);
+
         void returnStackName(StackEntity stackEntity);
     }
 }

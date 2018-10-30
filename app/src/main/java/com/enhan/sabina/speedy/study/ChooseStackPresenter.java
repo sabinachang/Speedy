@@ -20,14 +20,7 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
 
     public ChooseStackPresenter(ChooseStackContract.View view) {
         mView = view;
-
         mDataRepository = DataRepository.getInstance();
-
-
-//        mView.setPresenter(this);
-
-
-
     }
 
 
@@ -37,32 +30,10 @@ public class ChooseStackPresenter implements ChooseStackContract.Presenter {
             @Override
             public void onChanged(@Nullable List<StackEntity> stackEntities) {
                 mAdapter.addStacks(stackEntities);
-//                mDataRepository.getAllStacks().removeObservers((ChooseStackFragment)mView);
-
             }
         };
 
         mDataRepository.getAllStacks().observe((ChooseStackFragment)mView,observer);
-        populateFakeDB();
-    }
-
-    private void populateFakeDB() {
-
-
-
-        StackEntity stackEntity = new StackEntity("First Stack ABC");
-        mDataRepository.insertStack(stackEntity);
-
-        stackEntity = new StackEntity("Janet Paris 1789");
-        mDataRepository.insertStack(stackEntity);
-
-        stackEntity = new StackEntity("Venture deals");
-        mDataRepository.insertStack(stackEntity);
-
-        mDataRepository.getStackInfo("First Stack ABC",(ChooseStackCallback) mView);
-        mDataRepository.getStackInfo("Janet Paris 1789",(ChooseStackCallback) mView);
-        mDataRepository.getStackInfo("Venture deals",(ChooseStackCallback) mView);
-//
     }
 
     @Override

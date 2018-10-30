@@ -22,8 +22,6 @@ import com.enhan.sabina.speedy.callbacks.StudyCallback;
 import io.fabric.sdk.android.Fabric;
 
 public class StudyActivity extends AppCompatActivity implements StudyContract.View,StudyCallback{
-
-
     private StudyContract.Presenter mPresenter;
     private final String CHOOSE_STACK = "choose_stack";
     private final String REVIEW_WORDS = "review_words";
@@ -50,23 +48,17 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.secondaryColorDark));
 
-//        mPresenter = new StudyPresenter(this,mAdapter);
-//        mPresenter.start();
         startChooseStack();
     }
 
     private void startChooseStack() {
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
         if (mChooseStackFragment == null){
             mChooseStackFragment = ChooseStackFragment.newInstance();
-//            mChooseStackPresenter = new ChooseStackPresenter(mChooseStackFragment);
         }
-
         if (mReviewWordFragment != null) transaction.hide(mReviewWordFragment);
-
         if (!mChooseStackFragment.isAdded()) {
             transaction.add(R.id.study_fragment_holder,mChooseStackFragment,CHOOSE_STACK);
         } else {
@@ -78,21 +70,17 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     }
 
     private void startReviewWords(String stackName) {
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
         if (mReviewWordFragment == null) {
             mReviewWordFragment = ReviewWordFragment.newInstance();
-
         }
 
         Bundle bundle = new Bundle();
         bundle.putString("stackName",stackName);
         mReviewWordFragment.setArguments(bundle);
-
         if (mChooseStackFragment != null) transaction.hide(mChooseStackFragment);
-
         if (!mReviewWordFragment.isAdded()) {
             transaction.add(R.id.study_fragment_holder,mReviewWordFragment,REVIEW_WORDS);
         } else {
@@ -103,13 +91,10 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
         transaction.commit();
     }
 
-
-
     @Override
     public void setPresenter(StudyContract.Presenter presenter) {
 
     }
-
 
     @Override
     public void transToReviewWords(String stackName) {
@@ -119,14 +104,9 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-//            super.onBackPressed();
-
-            Log.d("study","on back pressed");
             startActivity(new Intent(this,MainActivity.class));
-
         } else {
             getSupportFragmentManager().popBackStack();
         }
-
     }
 }

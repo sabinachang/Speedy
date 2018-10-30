@@ -45,6 +45,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public void updateTabTitle(int count) {
         mTabTitles[1] =  "Words (" + count + ")";
-
+        notifyDataSetChanged();
     }
 }

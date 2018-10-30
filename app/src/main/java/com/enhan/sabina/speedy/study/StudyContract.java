@@ -12,4 +12,8 @@ public interface StudyContract {
     interface Presenter extends BasePresenter {
 
     }
+
+    interface Navigator {
+
+    }
 }
