@@ -139,7 +139,9 @@ public class CameraActivity extends AppCompatActivity implements CameraActivityC
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            startActivity(new Intent(this,MainActivity.class));
+            getSupportFragmentManager().popBackStack();
+            startActivity(new Intent(this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
         }
         super.onBackPressed();
     }

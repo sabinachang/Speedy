@@ -27,11 +27,8 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     private final String REVIEW_WORDS = "review_words";
 
     private Toolbar mToolbar;
-    private FrameLayout mFrameLayout;
     private ChooseStackFragment mChooseStackFragment;
-    private ChooseStackPresenter mChooseStackPresenter;
     private ReviewWordFragment mReviewWordFragment;
-    private ReviewWordPresenter mReviewWordPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +39,6 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mFrameLayout = findViewById(R.id.study_fragment_holder);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -104,7 +100,9 @@ public class StudyActivity extends AppCompatActivity implements StudyContract.Vi
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            startActivity(new Intent(this,MainActivity.class));
+            getSupportFragmentManager().popBackStack();
+            startActivity(new Intent(this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
         } else {
             getSupportFragmentManager().popBackStack();
         }

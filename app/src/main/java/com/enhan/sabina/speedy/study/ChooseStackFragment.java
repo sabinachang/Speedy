@@ -64,6 +64,8 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
                 mStudyCallback.transToReviewWords(mStudyStackName.getText().toString());
             }
         });
+        mStart.setClickable(false);
+        mStart.setVisibility(View.INVISIBLE);
 
         mAdapter = new ChooseStackAdapter(this);
 
@@ -84,5 +86,11 @@ public class ChooseStackFragment extends Fragment implements ChooseStackContract
     @Override
     public void onStackSelected(StackEntity stackEntity) {
         mStudyStackName.setText(stackEntity.getStackName());
+    }
+
+    @Override
+    public void setStartButtonVisible() {
+        mStart.setClickable(true);
+        mStart.setVisibility(View.VISIBLE);
     }
 }

@@ -15,8 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/secondaryColorDark"
         app:titleTextColor="@color/colorAccent"
-        app:title="Review Vocab"
-        />
+        app:title=" "/>
 
     <FrameLayout
         android:id="@+id/study_fragment_holder"

@@ -7,7 +7,7 @@ import com.enhan.sabina.speedy.data.roomdb.entity.StackEntity;
 public interface ChooseStackContract {
 
     interface View extends BaseView<Presenter> {
-
+        void setStartButtonVisible();
     }
 
     interface Presenter extends BasePresenter {

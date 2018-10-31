@@ -45,19 +45,14 @@ import java.util.List;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView mGreetingTextView;
     private TextView mCameraButton;
     private TextView mReviewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-//        mGreetingTextView = findViewById(R.id.greetings);
 
         mCameraButton = findViewById(R.id.camera_page);
         mReviewButton = findViewById(R.id.preview_page);
@@ -73,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         if (! hasPermission(SpeedyApplication.getAppContext(), ConstantVariable.PERMISSIONS)) {
             ActivityCompat.requestPermissions(MainActivity.this,
                         ConstantVariable.PERMISSIONS,ConstantVariable.PERMISSION_ALL_REQUEST_CODE);
-
         } else {
             mCameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,76 +75,43 @@ public class MainActivity extends AppCompatActivity {
                     transToTakePhoto();
                 }
             });
-
             mReviewButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     transToReview();
                 }
             });
-//            transToTakePhoto();
-
-//            determineTime();
         }
     }
 
     private void transToReview() {
         Intent reviewIntent = new Intent(this,StudyActivity.class);
-
-        Log.d("Main","starting review");
         startActivity(reviewIntent);
     }
 
-    private void determineTime() {
-
-//        Calendar c = Calendar.getInstance();
-//        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-//
-//        if(timeOfDay >= 0 && timeOfDay < 12){
-//            mGreetingTextView.setText(R.string.morning_greeting);
-//        }else if(timeOfDay >= 12 && timeOfDay < 16){
-//           mGreetingTextView.setText(R.string.afternoon_greeting);
-//        }else if(timeOfDay >= 16 && timeOfDay < 24) {
-//            mGreetingTextView.setText(R.string.evening_greeting);
-//        }
-//        else if(timeOfDay >= 21 && timeOfDay < 24){
-//            Toast.makeText(this, "Good Night", Toast.LENGTH_SHORT).show();
-//        }
-    }
-
     private void transToTakePhoto() {
-
         Intent takePhotoIntent = new Intent(this,CameraActivity.class);
-//        Intent detectIntent = new Intent(MainActivity.this,DetectActivity.class);
         startActivity(takePhotoIntent);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case ConstantVariable.PERMISSION_ALL_REQUEST_CODE: {
-                if (grantResults.length > 0 ) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-//                        transToTakePhoto();
-                        mCameraButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                transToTakePhoto();
+        if (requestCode == ConstantVariable.PERMISSION_ALL_REQUEST_CODE) {
+            if (grantResults.length > 0 ) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                    mCameraButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            transToTakePhoto();
+                        }
+                    });
 
-
-                            }
-                        });
-
-                        mReviewButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                transToReview();
-                            }
-                        });
-//
-//                        determineTime();
-                    }
-
+                    mReviewButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            transToReview();
+                        }
+                    });
                 }
             }
         }
@@ -167,5 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
 
+        finish();
+        super.onBackPressed();
+    }
 }

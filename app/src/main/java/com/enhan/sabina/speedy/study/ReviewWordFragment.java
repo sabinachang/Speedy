@@ -43,25 +43,16 @@ public class ReviewWordFragment extends Fragment implements ReviewWordContract.V
         mDiscreteScrollView = view.findViewById(R.id.flashcards);
         mPresenter = new ReviewWordPresenter(this);
         mStackName = getArguments().getString("stackName");
-        Log.d("Review","stack name = " + mStackName);
-
         mPresenter.getWordsInStack(mStackName);
-
-
     }
 
     @Override
     public void setPresenter(ReviewWordContract.Presenter presenter) {
-//        mPresenter = presenter;
-//        mStackName = getArguments().getString("stackName");
-//        mPresenter.getWordsInStack(mStackName);
     }
 
 
     @Override
     public void returnWordsInStack(List<WordEntity> wordEntityList) {
-
-        Log.d("Review","return words" );
         mDiscreteScrollView.setOffscreenItems(2);
         mDiscreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
@@ -71,6 +62,4 @@ public class ReviewWordFragment extends Fragment implements ReviewWordContract.V
                 .build());
         mDiscreteScrollView.setAdapter(new ReviewWordAdapter(wordEntityList));
     }
-
-
 }

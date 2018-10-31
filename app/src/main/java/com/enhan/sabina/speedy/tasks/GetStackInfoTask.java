@@ -20,12 +20,10 @@ public class GetStackInfoTask extends AsyncTask<String,Void,StackEntity> {
     @Override
     protected StackEntity doInBackground(String... strings) {
         return mAsyncDao.getStackInfo(strings[0]);
-
     }
 
     @Override
     protected void onPostExecute(StackEntity stackEntity) {
-
         mChooseStackCallback.returnStackEntity(stackEntity);
     }
 }

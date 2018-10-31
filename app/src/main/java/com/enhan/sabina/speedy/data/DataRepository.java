@@ -147,12 +147,10 @@ public class DataRepository implements DataSource.Repository,DataRepositoryCallb
     @Override
     public void insertStack(StackEntity stackEntity) {
         new InsertStackTask(mStackDao).execute(stackEntity);
-
     }
 
     @Override
     public LiveData<List<StackEntity>> getAllStacks() {
-//        Log.d("Datarepository","fetching stacks");
         return mStackDao.getAllStacks();
     }
 

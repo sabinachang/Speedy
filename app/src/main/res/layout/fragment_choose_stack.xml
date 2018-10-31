@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-
-
         <LinearLayout
             android:orientation="vertical"
             android:background="@drawable/choose_stack_background"
@@ -20,7 +17,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintVertical_bias="0.272">
 
             <android.support.constraint.ConstraintLayout
@@ -119,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
                     android:gravity="bottom"
-
+                    android:id="@+id/current_stack"
                     android:text="@string/current_stack"
                     android:textColor="@color/colorPrimaryLightTwo" />
 
