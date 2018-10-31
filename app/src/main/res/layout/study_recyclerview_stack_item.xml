@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
-
         android:layout_marginTop="3dp"
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
@@ -21,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/stack_selected_area"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="stack 1" />
+        tools:text="stack 1"/>
 
     <RelativeLayout
         android:id="@+id/stack_selected_area"
@@ -33,18 +32,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-
             android:id="@+id/stack_selected_status"
             android:layout_width="12dp"
             android:layout_height="12dp"
-
             android:background="@drawable/ic_rec"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"/>
     </RelativeLayout>
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>

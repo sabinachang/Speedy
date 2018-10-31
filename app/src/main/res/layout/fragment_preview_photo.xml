@@ -2,9 +2,9 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,26 +22,22 @@
                 android:background="@drawable/preview_photo_boarder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
         </android.support.constraint.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.3"
             android:background="#fff"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@drawable/preview_photo_line"
-
-            />
+            android:background="@drawable/preview_photo_line"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,18 +62,12 @@
                 android:focusable="true">
 
                 <ImageView
-
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-
                     android:layout_gravity="center"
-
                     android:scaleType="fitCenter"
-
-                    android:src="@drawable/ic_retake"
-                    />
+                    android:src="@drawable/ic_retake"/>
             </FrameLayout>
-
 
             <FrameLayout
                 android:id="@+id/btn_accept"
@@ -87,31 +77,14 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true">
-                <ImageView
 
+                <ImageView
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_gravity="center"
-
                     android:scaleType="fitCenter"
-
-                    android:src="@drawable/ic_document_scanning" />
-
-
+                    android:src="@drawable/ic_document_scanning"/>
             </FrameLayout>
-
-
-
-
         </LinearLayout>
-
     </LinearLayout>
-
-
-
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>

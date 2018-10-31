@@ -9,21 +9,25 @@
     android:paddingEnd="20dp"
     android:layout_gravity="bottom"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/close_btn"
                 android:background="@drawable/ic_cancel"
                 android:layout_marginTop="4dp"
                 android:layout_width="16dp"
-                android:layout_height="16dp" />
+                android:layout_height="16dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,6 +36,7 @@
                 android:textSize="18dp"
                 android:text="@string/pick_stack_prompt"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -40,6 +45,7 @@
             android:layout_marginBottom="3dp"
             android:layout_weight="0.5"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
@@ -47,6 +53,7 @@
                 android:text="@string/current_stack"
                 android:textColor="@color/colorPrimaryLightTwo" />
         </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/stack_list_recyclerview"
             android:layout_marginStart="25dp"
@@ -59,18 +66,21 @@
             android:scrollbarThumbVertical="@color/secondaryColor"
             android:scrollbarTrackVertical="@color/primaryLightColor">
         </android.support.v7.widget.RecyclerView>
+
         <RelativeLayout
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
+
             <ImageView
                 android:id="@+id/add_stack_to_recyclerview"
                 android:layout_alignParentEnd="true"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_add_orange" />
+                android:background="@drawable/ic_add_orange"/>
+
             <EditText
                 android:hint="@string/add_stack"
                 android:textColorHint="@color/colorPrimaryLight"

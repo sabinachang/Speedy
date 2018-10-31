@@ -9,18 +9,14 @@
     tools:layout_marginTop="50dp">
 
     <TextView
-
         android:id="@+id/word_preview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Venture"/>
-    <TextView
 
+    <TextView
         android:id="@+id/definition_preview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="a risky or daring journey or undertaking."/>
-
-
-
 </LinearLayout>

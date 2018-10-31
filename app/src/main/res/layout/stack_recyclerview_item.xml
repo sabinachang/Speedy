@@ -6,11 +6,13 @@
     tools:layout_marginTop="10dp"
     android:gravity="center_vertical"
     android:id="@+id/choose_stack_item">
+
     <ImageView
         android:layout_width="17dp"
         android:layout_height="17dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/ic_rec"/>
+
     <TextView
         android:gravity="center_horizontal"
         android:id="@+id/stack_name"
@@ -18,27 +20,8 @@
         android:layout_height="wrap_content"
         tools:text="Stack one"
         android:textColor="@drawable/stack_item_text_selector"
-
         android:layout_marginBottom="2dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="2dp"
         android:textSize="17dp"/>
-
-    <!--<TextView-->
-        <!--android:id="@+id/chosen_word"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:textSize="16dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/button_select_area"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.347"-->
-        <!--tools:text="venture" />-->
-
-
 </RelativeLayout>

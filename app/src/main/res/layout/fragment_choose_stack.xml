@@ -2,8 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
         <LinearLayout
             android:orientation="vertical"
             android:background="@drawable/choose_stack_background"
@@ -20,7 +19,6 @@
             app:layout_constraintVertical_bias="0.272">
 
             <android.support.constraint.ConstraintLayout
-
                 android:id="@+id/stack_preview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -29,7 +27,6 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="8dp"
-
                 android:background="@drawable/stack_preview_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -60,13 +57,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="15dp"
                     android:layout_marginBottom="8dp"
-
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/stack_preview_line"
@@ -74,19 +69,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent" />
-
-
-                <!--<TextView-->
-                    <!--android:id="@+id/view_count"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="20dp"-->
-                    <!--android:layout_marginTop="8dp"-->
-
-                    <!--android:textColor="@color/colorAccent"-->
-                    <!--app:layout_constraintStart_toStartOf="parent"-->
-                    <!--app:layout_constraintTop_toBottomOf="@+id/study_stack_name"-->
-                    <!--tools:text="12 words" />-->
 
                 <ImageView
                     android:id="@+id/start_study"
@@ -97,31 +79,25 @@
                     android:src="@drawable/ic_next"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="parent" />
-
-
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-
-
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="3dp"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
                     android:gravity="bottom"
                     android:id="@+id/current_stack"
                     android:text="@string/current_stack"
-                    android:textColor="@color/colorPrimaryLightTwo" />
-
-
+                    android:textColor="@color/colorPrimaryLightTwo"/>
             </LinearLayout>
-
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/study_stack_recyclerview"
@@ -139,14 +115,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent">
-
             </android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
-
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>
