@@ -27,23 +27,18 @@ import com.enhan.sabina.speedy.callbacks.SelectTextCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextSelectView extends android.support.v7.widget.AppCompatTextView
-        implements View.OnTouchListener {
-    private static final String TAG = "Textselectview";
+public class TextSelectView extends android.support.v7.widget.AppCompatTextView implements View.OnTouchListener {
     private int mParentWidth;
-    private ViewGroup mViewGroup;
     private GestureDetector mGestureDetector;
-    private int offset = 20;
     private Context mContext;
     private SelectTextCallback mSelectTextCallback;
 
-    String TextData;
-    private Canvas mCanvas;
+    private String mTextData;
     private ShowChar mLastSelectedText;
 
     public TextSelectView(Context context, String textData,int width,SelectTextCallback selectTextCallback) {
         super(context);
-        TextData = textData;
+        mTextData = textData;
         mContext = context;
         mParentWidth = width;
         mSelectTextCallback = selectTextCallback;
@@ -52,29 +47,20 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
     public TextSelectView(Context context, AttributeSet attrs) {
         super(context, attrs);
-//            init();
     }
 
     public TextSelectView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//            init();
     }
 
-//    public void setTextData(String textData) {
-//        TextData = textData;
-//        init();
-//    }
-
-    private float Tounch_X = 0, Tounch_Y = 0;
-    private float Down_X = -1, Down_Y = -1;
+    private float mDownX = -1;
+    private float mDownY = -1;
     private Mode mCurrentMode = Mode.Normal;
-    private int LinePadding = 25;
-    private float LineYPosition = 0;
-    private float TextHeight = 0;
+    private int mLinePadding = 25;
+    private float mLineYPosition = 0;
+    private float mTextHeight = 0;
     private int mViewHeight;
-    private int mFirstTimeFlag = 0;
-
-    List<ShowLine> mLinseData = null;
+    private List<ShowLine> mLineData = null;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -85,48 +71,45 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mCanvas = canvas;
-        LineYPosition = TextHeight + LinePadding;
+        mLineYPosition = mTextHeight + mLinePadding;
 
-        for (ShowLine line : mLinseData) {
-            DrawLineText(line, canvas);
+        for (ShowLine line : mLineData) {
+            drawLineText(line, canvas);
         }
-        LineYPosition = 0;
+        mLineYPosition = 0;
 
         if (mCurrentMode != Mode.Normal) {
-            Log.d(TAG,"not normal mode");
-            DrawSelectText(canvas);
+            drawSelectText(canvas);
         }
     }
 
     private Paint mPaint = null;
     private Paint mTextSelectPaint = null;
-    private Paint mBorderPointPaint = null;
-    private int TextSelectColor = Color.parseColor("#77fadb08");
-    private int TextColor = Color.parseColor("#9e9e9e");
-    private int BorderPointColor = Color.RED;
+    private int mTextSelectColor = Color.parseColor("#77fadb08");
+    private int mTextColor = Color.parseColor("#9e9e9e");
 
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setTextSize(52);
-        mPaint.setColor(TextColor);
+        mPaint.setColor(mTextColor);
 
         mTextSelectPaint = new Paint();
         mTextSelectPaint.setAntiAlias(true);
         mTextSelectPaint.setTextSize(32);
-        mTextSelectPaint.setColor(TextSelectColor);
+        mTextSelectPaint.setColor(mTextSelectColor);
 
-        mBorderPointPaint = new Paint();
-        mBorderPointPaint.setAntiAlias(true);
-        mBorderPointPaint.setTextSize(32);
-        mBorderPointPaint.setColor(BorderPointColor);
+        Paint borderPointPaint = new Paint();
+        borderPointPaint.setAntiAlias(true);
+        borderPointPaint.setTextSize(32);
+        int borderPointColor = Color.RED;
+        borderPointPaint.setColor(borderPointColor);
         setPadding(0,0,0,10);
 
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-        TextHeight = Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent);
+        mTextHeight = Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent);
 
-        mGestureDetector = new GestureDetector(mContext,new gestureListener());
+        mGestureDetector = new GestureDetector(mContext,new GestureListener());
         setOnTouchListener(this);
         setFocusable(true);
         setClickable(true);
@@ -134,12 +117,10 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     }
 
     private OnLongClickListener mLongClickListener = new OnLongClickListener() {
-
         @Override
         public boolean onLongClick(View v) {
-
             if (mCurrentMode == Mode.Normal) {
-                if (Down_X > 0 && Down_Y > 0) {
+                if (mDownX > 0 && mDownY > 0) {
                     mCurrentMode = Mode.PressSelectText;
                     postInvalidate();
                 }
@@ -153,133 +134,125 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
         return mGestureDetector.onTouchEvent(event);
     }
 
-    private void initData(int viewwidth) {
-        if (mLinseData == null) {
-            mLinseData = BreakText(viewwidth);
+    private void initData(int viewWidth) {
+        if (mLineData == null) {
+            mLineData = breakText(viewWidth);
         }
     }
 
-    private void DrawSelectText(Canvas canvas) {
-
+    private void drawSelectText(Canvas canvas) {
         if (mCurrentMode == Mode.PressSelectText) {
-            DrawPressSelectText(canvas);
+            drawPressSelectText(canvas);
         }
     }
 
-    private void Release() {
-        Down_X = -1;
-        Down_Y = -1;
+    private void release() {
+        mDownX = -1;
+        mDownY = -1;
     }
 
-    private void DrawPressSelectText(Canvas canvas) {
-        ShowChar p = DetectPressShowChar(Down_X, Down_Y);
+    private void drawPressSelectText(Canvas canvas) {
+        ShowChar p = detectPressShowChar(mDownX, mDownY);
 
         if (p != null) {
-            canvas.drawRect(p.TopLeftPosition.x,p.TopLeftPosition.y,p.BottomRightPosition.x,p.BottomRightPosition.y,mTextSelectPaint);
+            canvas.drawRect(p.mTopLeftPosition.x,p.mTopLeftPosition.y,p.mBottomRightPosition.x,p.mBottomRightPosition.y,mTextSelectPaint);
 
             if (mLastSelectedText != null) {
-                boolean tlpx = mLastSelectedText.TopLeftPosition.x == p.TopLeftPosition.x;
-                boolean tlpy = mLastSelectedText.TopLeftPosition.y == p.TopLeftPosition.y;
-                boolean blpx = mLastSelectedText.BottomLeftPosition.x == p.BottomLeftPosition.x;
-                boolean blpy = mLastSelectedText.BottomRightPosition.y == p.BottomRightPosition.y;
-                if (! (tlpx && tlpy && blpx && blpy)) {
-                    mSelectTextCallback.onWordSelected(p.chardata);
+                boolean topLeftPointX = mLastSelectedText.mTopLeftPosition.x == p.mTopLeftPosition.x;
+                boolean topLeftPointY = mLastSelectedText.mTopLeftPosition.y == p.mTopLeftPosition.y;
+                boolean bottomLeftPointX = mLastSelectedText.mBottomLeftPosition.x == p.mBottomLeftPosition.x;
+                boolean bottomLeftPointY = mLastSelectedText.mBottomRightPosition.y == p.mBottomRightPosition.y;
+                if (! (topLeftPointX && topLeftPointY && bottomLeftPointX && bottomLeftPointY)) {
+                    mSelectTextCallback.onWordSelected(p.mChardata);
                 }
             } else {
-                    mSelectTextCallback.onWordSelected(p.chardata);
+                mSelectTextCallback.onWordSelected(p.mChardata);
             }
         }
 
         mLastSelectedText = p;
     }
 
-    private ShowChar DetectPressShowChar(float down_X2, float down_Y2) {
-
-        for (ShowLine l : mLinseData) {
-            for (ShowChar c : l.CharsData) {
-                if (down_Y2 > c.BottomLeftPosition.y) {
+    private ShowChar detectPressShowChar(float downX, float downY) {
+        for (ShowLine l : mLineData) {
+            for (ShowChar c : l.mCharsData) {
+                if (downY > c.mBottomLeftPosition.y) {
                     break;
                 }
-                if (down_X2 >= c.BottomLeftPosition.x && down_X2 <= c.BottomRightPosition.x) {
+                if (downX >= c.mBottomLeftPosition.x && downX <= c.mBottomRightPosition.x) {
                     return c;
                 }
             }
         }
-
         return null;
     }
 
-    private List<ShowLine> BreakText(int viewwidth) {
-        List<ShowLine> showLines = new ArrayList<ShowLine>();
-        while (TextData.length() > 0) {
-            BreakResult breakResult = TextBreakUtil.BreakText(TextData, viewwidth, 20, mPaint);
+    private List<ShowLine> breakText(int viewWidth) {
+        List<ShowLine> showLines = new ArrayList<>();
 
-            if (breakResult != null && breakResult.HasData()) {
+        while (mTextData.length() > 0) {
+            BreakResult breakResult = TextBreakUtil.breakText(mTextData, viewWidth, 20, mPaint);
+            if (breakResult != null && breakResult.hasData()) {
                 ShowLine showLine = new ShowLine();
-                showLine.CharsData = breakResult.showChars;
-
+                showLine.mCharsData = breakResult.mShowChars;
                 showLines.add(showLine);
             } else {
                 break;
             }
-            TextData = TextData.substring(breakResult.ChartNums);
+            mTextData = mTextData.substring(breakResult.mCharNum);
         }
+
         int index = 0;
         for (ShowLine l : showLines) {
-            for (ShowChar c : l.CharsData) {
-                c.Index = index++;
+            for (ShowChar c : l.mCharsData) {
+                c.mIndex = index++;
             }
         }
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-        int theight = (int) (Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent));
-        mViewHeight = 30 + (theight + 25) * showLines.size();
+        int textHeight = (int) (Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent));
+        mViewHeight = 30 + (textHeight + 25) * showLines.size();
         return showLines;
     }
 
+    private void drawLineText(ShowLine line, Canvas canvas) {
+        int offset = 20;
+        canvas.drawText(line.getLineData(), offset, mLineYPosition, mPaint);
+        float leftPosition = 20;
+        float rightPosition = 0;
+        float bottomPosition = mLineYPosition + mPaint.getFontMetrics().descent;
 
+        for (ShowChar c : line.mCharsData) {
+            rightPosition = leftPosition + c.mCharWidth;
+            Point topLeftPoint = new Point();
+            c.mTopLeftPosition = topLeftPoint;
+            topLeftPoint.x = (int) leftPosition;
+            topLeftPoint.y = (int) (bottomPosition - mTextHeight);
 
-    private void DrawLineText(ShowLine line, Canvas canvas) {
+            Point bottomLeftPoint = new Point();
+            c.mBottomLeftPosition = bottomLeftPoint;
+            bottomLeftPoint.x = (int) leftPosition;
+            bottomLeftPoint.y = (int) bottomPosition;
 
-        canvas.drawText(line.getLineData(), offset, LineYPosition, mPaint);
-        float leftposition = 20;
-        float rightposition = 0;
-        float bottomposition = LineYPosition + mPaint.getFontMetrics().descent;
+            Point topRightPoint = new Point();
+            c.mTopRightPosition = topRightPoint;
+            topRightPoint.x = (int) rightPosition;
+            topRightPoint.y = (int) (bottomPosition - mTextHeight);
 
-        for (ShowChar c : line.CharsData) {
-            rightposition = leftposition + c.charWidth;
-            Point tlp = new Point();
-            c.TopLeftPosition = tlp;
-            tlp.x = (int) leftposition ;
-            tlp.y = (int) (bottomposition - TextHeight);
+            Point bottomRightPoint = new Point();
+            c.mBottomRightPosition = bottomRightPoint;
+            bottomRightPoint.x = (int) rightPosition;
+            bottomRightPoint.y = (int) bottomPosition;
 
-            Point blp = new Point();
-            c.BottomLeftPosition = blp;
-            blp.x = (int) leftposition;
-            blp.y = (int) bottomposition;
-
-            Point trp = new Point();
-            c.TopRightPosition = trp;
-            trp.x = (int) rightposition;
-            trp.y = (int) (bottomposition - TextHeight);
-
-            Point brp = new Point();
-            c.BottomRightPosition = brp;
-            brp.x = (int) rightposition ;
-            brp.y = (int) bottomposition;
-
-            leftposition = rightposition;
-
+            leftPosition = rightPosition;
         }
-        LineYPosition = LineYPosition + TextHeight + LinePadding;
+        mLineYPosition = mLineYPosition + mTextHeight + mLinePadding;
     }
 
-
-    private class gestureListener implements GestureDetector.OnGestureListener{
+    private class GestureListener implements GestureDetector.OnGestureListener {
         @Override
         public boolean onDown(MotionEvent motionEvent) {
-
-            Down_X = motionEvent.getX();
-            Down_Y = motionEvent.getY();
+            mDownX = motionEvent.getX();
+            mDownY = motionEvent.getY();
             return false;
         }
 
@@ -291,8 +264,7 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
         @Override
         public boolean onSingleTapUp(MotionEvent motionEvent) {
             mCurrentMode = Mode.Normal;
-            Release();
-
+            release();
             return false;
         }
 
@@ -303,10 +275,9 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
 
         @Override
         public void onLongPress(MotionEvent motionEvent) {
-            Down_X = motionEvent.getX();
-            Down_Y = motionEvent.getY();
+            mDownX = motionEvent.getX();
+            mDownY = motionEvent.getY();
             mCurrentMode = Mode.PressSelectText;
-            Log.d("Text selct","long pressed");
         }
 
         @Override
@@ -318,6 +289,4 @@ public class TextSelectView extends android.support.v7.widget.AppCompatTextView
     private enum Mode {
         Normal, PressSelectText, SelectMoveForward, SelectMoveBack, SecondTouch
     }
-
-
 }

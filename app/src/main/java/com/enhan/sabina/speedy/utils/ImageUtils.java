@@ -33,6 +33,7 @@ public class ImageUtils {
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics metrics = new DisplayMetrics();
             wm.getDefaultDisplay().getMetrics(metrics);
+
             float height = metrics.heightPixels;
             float width =  metrics.widthPixels;
             int noCompress = 1;

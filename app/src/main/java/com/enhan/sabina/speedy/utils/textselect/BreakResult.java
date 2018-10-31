@@ -3,12 +3,11 @@ package com.enhan.sabina.speedy.utils.textselect;
 import java.util.List;
 
 public class BreakResult {
+    public int mCharNum = 0;
+    public Boolean isFullLine = false;
+    public List<ShowChar> mShowChars = null;
 
-    public int ChartNums = 0;
-    public Boolean IsFullLine = false;
-    public List<ShowChar> showChars = null;
-
-    public Boolean HasData() {
-        return showChars != null && showChars.size() > 0;
+    public Boolean hasData() {
+        return (mShowChars != null && mShowChars.size() > 0);
     }
 }
