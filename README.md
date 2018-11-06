@@ -29,7 +29,7 @@ Speedy contains two main sections: "Create Flashcards" and "Review Flashcards".
 # Screenshots
 <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/44166618_477544389318038_5669249825904787456_n.jpg" width="30%"> <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171227.png" width="30%"> 
 
-<img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171242.png" width="30%"> <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171301.png" width="30%"> < <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171155.png" width="30%">
+<img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171242.png" width="30%"> <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171301.png" width="30%"> <img src="https://github.com/sabinachang/Speedy/blob/master/ScreenShots/IMG_20181031_171155.png" width="30%">
 
 
     
