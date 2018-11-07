@@ -1,5 +1,6 @@
 # Speedy
 An Android app that helps English learner to create flashcards quickly. 
+Download on Google Play: goo.gl/a3B6cZ
 
 # Features
 Speedy contains two main sections: "Create Flashcards" and "Review Flashcards".
